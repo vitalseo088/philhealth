@@ -9,7 +9,18 @@
   }
   const D = window.PHData;
   const articles = window.PHArticles || [];
-  const path = window.location.pathname.replace(/\/$/, '') || '/index.html';
+  const requestedPath = window.location.pathname.replace(/\/$/, '') || '/index.html';
+  const path = requestedPath === '/tools'
+    ? '/tools/index.html'
+    : requestedPath === '/guides'
+      ? '/guides.html'
+      : requestedPath !== '/' &&
+        !requestedPath.endsWith('.html') &&
+        (requestedPath.startsWith('/tools/') || requestedPath.startsWith('/guides/'))
+        ? `${requestedPath}.html`
+        : requestedPath !== '/' && !requestedPath.endsWith('.html')
+          ? `${requestedPath}.html`
+          : requestedPath;
   const root = document.documentElement;
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (m) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
   const money = (n) => new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(Number(n) || 0);
