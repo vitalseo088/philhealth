@@ -1,0 +1,2538 @@
+You are a senior frontend engineer, UX/UI designer, SEO architect, accessibility specialist and information-architecture expert.
+
+Build a COMPLETE, BEAUTIFUL, FUNCTIONAL, PRODUCTION-QUALITY independent PhilHealth information website from scratch.
+
+IMPORTANT:
+
+This is not a prototype consisting of empty cards and placeholder screens.
+
+This must be a genuinely usable website.
+
+Every major tool must WORK.
+
+Every navigation item must lead somewhere meaningful.
+
+Every calculator must calculate something.
+
+Every finder must search/filter something.
+
+Every form must validate.
+
+Every page must have polished content structure.
+
+Do not create dead-end pages saying:
+
+"No verified data has been supplied."
+
+Do not create empty calculator shells.
+
+Do not create generic template pages.
+
+Do not stop after creating the visual design.
+
+The final result should feel like a premium healthcare information and utility website that could realistically be published.
+
+==================================================
+1. TECHNOLOGY — STRICT REQUIREMENT
+==================================================
+
+Use ONLY:
+
+- HTML5
+- CSS3
+- Vanilla JavaScript
+
+Do NOT use:
+
+- React
+- Next.js
+- Vue
+- Angular
+- Svelte
+- Bootstrap
+- Tailwind
+- jQuery
+- PHP
+- Node.js backend
+- Firebase
+- Supabase
+- WordPress
+- Material UI
+- frontend frameworks
+- CSS frameworks
+
+The website must work as a static website.
+
+Use ES modules where appropriate.
+
+Use semantic HTML5.
+
+Use clean modular CSS.
+
+Use modular JavaScript.
+
+No build system is required.
+
+The website should be runnable by opening the project through a static server.
+
+==================================================
+2. PRIMARY OBJECTIVE
+==================================================
+
+Create an independent PhilHealth information and tools platform.
+
+The website should help users:
+
+- understand PhilHealth contributions
+- calculate contribution estimates
+- understand benefits
+- find requirements
+- understand case rates
+- estimate hospital bills
+- explore YAKAP
+- find providers
+- find branches
+- troubleshoot common problems
+- find official sources
+- read detailed guides
+
+The website must prioritize:
+
+1. Accuracy
+2. Practical usefulness
+3. Beautiful UX
+4. Trust
+5. SEO
+6. Accessibility
+7. Mobile usability
+8. Performance
+
+The website must NOT pretend to be the official PhilHealth website.
+
+Clearly communicate:
+
+"Independent PhilHealth Information Resource"
+
+Use this statement in appropriate places.
+
+Never use language that suggests:
+
+- official ownership
+- official endorsement
+- official affiliation
+- access to private member records
+- official eligibility determination
+
+==================================================
+3. CORE DESIGN DIRECTION
+==================================================
+
+The website must NOT look generic.
+
+Do NOT use:
+
+- generic blue/purple SaaS templates
+- gradients
+- glassmorphism
+- excessive rounded cards
+- giant empty hero sections
+- emoji icons
+- random colorful cards
+- excessive animations
+- stock-template layouts
+- excessive shadows
+
+Create a sophisticated healthcare information design.
+
+VISUAL STYLE:
+
+- professional
+- trustworthy
+- clean
+- modern
+- editorial
+- utility-focused
+- premium
+- highly readable
+- warm
+- approachable
+
+Use the provided logo as the brand inspiration.
+
+==================================================
+4. COLOR SYSTEM
+==================================================
+
+Create CSS variables.
+
+Primary green:
+
+#0B5D3B
+
+Dark green:
+
+#07452C
+
+Navy:
+
+#17324D
+
+Golden yellow:
+
+#F4C542
+
+Light yellow:
+
+#FFF6D8
+
+Warm background:
+
+#F8FAF8
+
+White:
+
+#FFFFFF
+
+Main text:
+
+#1F2933
+
+Secondary text:
+
+#64748B
+
+Border:
+
+#DDE5E1
+
+Success:
+
+#16845B
+
+Warning:
+
+#B7791F
+
+Error:
+
+#C0392B
+
+Information:
+
+#286B8F
+
+Use green as the main trust color.
+
+Use navy for authority and informational sections.
+
+Use yellow selectively for highlights, CTAs and important visual accents.
+
+Do not use gradients.
+
+==================================================
+5. TYPOGRAPHY
+==================================================
+
+Use Poppins.
+
+Weights:
+
+400
+500
+600
+700
+
+Body:
+
+16px minimum.
+
+Article line-height:
+
+1.65–1.8.
+
+Use responsive clamp() typography.
+
+Create styles for:
+
+h1
+h2
+h3
+h4
+h5
+h6
+body
+lead
+small
+caption
+labels
+buttons
+table
+navigation
+breadcrumbs
+
+H1 should be visually strong but not oversized.
+
+==================================================
+6. GLOBAL LAYOUT
+==================================================
+
+Create:
+
+/index.html
+
+/assets/css/
+/assets/js/
+/assets/images/
+/data/
+/pages/
+/tools/
+/guides/
+/categories/
+
+Suggested structure:
+
+/assets/css/
+    variables.css
+    reset.css
+    typography.css
+    layout.css
+    components.css
+    forms.css
+    tools.css
+    articles.css
+    responsive.css
+
+/assets/js/
+    main.js
+    navigation.js
+    search.js
+    accordion.js
+    modal.js
+    forms.js
+    utilities.js
+    calculators.js
+    tools.js
+    filters.js
+    toc.js
+
+/data/
+    contribution-data.js
+    requirements-data.js
+    benefits-data.js
+    case-rates-data.js
+    yakap-data.js
+    provider-data.js
+    branch-data.js
+    sources-data.js
+    articles-data.js
+
+Do not create one enormous JavaScript file.
+
+==================================================
+7. DATA ARCHITECTURE — VERY IMPORTANT
+==================================================
+
+THIS IS THE MOST IMPORTANT CHANGE FROM THE PREVIOUS VERSION.
+
+Do not make the tools depend on an empty "verified data" state.
+
+Create a local data layer.
+
+Every tool must have usable seed data.
+
+The data layer must be independent from the UI.
+
+Example:
+
+const contributionRules = [
+    {
+        year: 2026,
+        memberType: "employed",
+        ...
+    }
+];
+
+Every factual dataset must contain:
+
+- id
+- title/name
+- category
+- description
+- source
+- sourceUrl
+- effectiveDate
+- lastVerified
+- status
+
+Possible status:
+
+"verified"
+"illustrative"
+"needs-review"
+
+CRITICAL:
+
+If current official information cannot be verified, do NOT fabricate it.
+
+Instead:
+
+- use clearly marked illustrative data for demonstration where calculation logic is useful;
+- explain the limitation;
+- provide the official source link;
+- keep the calculation engine fully functional;
+- allow the dataset to be replaced easily later.
+
+NEVER allow the entire tool to become blank merely because one dataset is unavailable.
+
+For example:
+
+BAD:
+
+"No verified data has been supplied."
+
+GOOD:
+
+"Enter your information below to calculate an illustrative estimate. The result is based on the rules currently loaded into this tool. Always verify the applicable amount with official PhilHealth information."
+
+Then show the result.
+
+Every tool must still perform a meaningful operation.
+
+==================================================
+8. DATA SOURCE TRANSPARENCY
+==================================================
+
+Create a reusable SourcePanel component.
+
+It should display:
+
+SOURCE
+
+Source:
+[Official source name]
+
+Source URL:
+[link]
+
+Effective:
+[date]
+
+Last reviewed:
+[date]
+
+Data status:
+Verified / Illustrative / Needs Review
+
+If a value is illustrative, clearly label it.
+
+Never label invented information as verified.
+
+Create:
+
+/sources.html
+
+with all source records.
+
+==================================================
+9. GLOBAL HEADER
+==================================================
+
+Create a premium responsive header.
+
+TOP BAR:
+
+Left:
+
+Independent PhilHealth Information Resource
+
+Right:
+
+About
+Sources
+Editorial Policy
+Contact
+
+MAIN HEADER:
+
+Logo
+
+Brand name:
+
+PhilHealth Guide
+
+or use the supplied final brand name if one exists.
+
+Navigation:
+
+Home
+Tools
+Contributions
+Benefits
+Requirements
+YAKAP
+Providers
+Guides
+
+Search button
+
+Mobile:
+
+Logo
+Search
+Menu
+
+Desktop navigation must be clean.
+
+Mobile menu must slide/open elegantly.
+
+Use real buttons.
+
+Keyboard accessible.
+
+==================================================
+10. GLOBAL SEARCH
+==================================================
+
+Create fully functional client-side search.
+
+Search through:
+
+- tools
+- guides
+- categories
+- important pages
+
+Create searchable data index.
+
+Search should provide:
+
+- matching title
+- description
+- category
+- URL
+- type
+
+Features:
+
+- instant results
+- keyboard navigation
+- clear button
+- no-results state
+- search page
+- highlighted query where appropriate
+
+Do not require a backend.
+
+==================================================
+11. HOMEPAGE
+==================================================
+
+Create a premium homepage.
+
+HERO:
+
+Small trust label:
+
+INDEPENDENT PHILHEALTH INFORMATION RESOURCE
+
+H1:
+
+PhilHealth Information Made Simple
+
+Subheading:
+
+Practical guides, calculators, requirements, benefits information and helpful tools — organized in one place.
+
+Large search box:
+
+"Search PhilHealth information..."
+
+Popular searches:
+
+Contribution
+Benefits
+Requirements
+MDR
+YAKAP
+Hospitals
+
+Primary CTA:
+
+Explore Tools
+
+Secondary CTA:
+
+Browse Guides
+
+Do NOT use a huge generic healthcare stock image.
+
+Use elegant abstract/illustrative healthcare elements derived from the brand colors.
+
+==================================================
+12. HOMEPAGE QUICK ACTIONS
+==================================================
+
+Section:
+
+"What can we help you with?"
+
+Cards:
+
+Calculate Contribution
+Find Requirements
+Explore Benefits
+Find a Provider
+Find a Branch
+Solve a Problem
+
+Each card must work.
+
+==================================================
+13. HOMEPAGE FEATURED TOOLS
+==================================================
+
+Section:
+
+"Useful PhilHealth Tools"
+
+Show:
+
+Contribution Calculator
+Requirements Finder
+Benefits Finder
+Case Rate Finder
+Hospital Bill Estimator
+YAKAP Finder
+Provider Finder
+Service Navigator
+
+Each card must have:
+
+icon
+title
+description
+action
+small category label
+
+==================================================
+14. TOOL 1 — CONTRIBUTION CALCULATOR
+==================================================
+
+URL:
+
+/tools/contribution-calculator.html
+
+This MUST ACTUALLY CALCULATE.
+
+Inputs:
+
+Member category:
+
+- Employed
+- Self-employed
+- Voluntary/Individual
+- OFW
+- Kasambahay
+- Other
+
+Income:
+
+Monthly income
+
+Year:
+
+2025
+2026
+and future years as data becomes available
+
+Calculate.
+
+Result should show:
+
+Estimated contribution
+Applicable rate/rule
+Calculation breakdown
+Member share where applicable
+Employer share where applicable
+Income used
+Data status
+Source
+Last reviewed
+
+Include a formula explanation.
+
+Example UI:
+
+YOUR ESTIMATE
+
+₱X,XXX.XX
+
+Calculation
+
+Monthly income:
+₱XX,XXX
+
+Applicable contribution rule:
+X%
+
+Estimated contribution:
+₱X,XXX
+
+Then:
+
+"How this was calculated"
+
+Then:
+
+"Important"
+
+Then:
+
+Source.
+
+Do not make users stare at a blank result.
+
+Validation:
+
+- required income
+- positive number
+- sensible maximum
+- member type required
+- year required
+
+Buttons:
+
+Calculate
+Reset
+Print
+Copy Result
+
+==================================================
+15. TOOL 2 — CONTRIBUTION TABLE
+==================================================
+
+URL:
+
+/tools/contribution-table.html
+
+Functional table.
+
+Filters:
+
+Year
+Member category
+Income range
+
+Generate table dynamically.
+
+Add:
+
+Search table
+Sort
+Print
+Copy
+
+Mobile table must horizontally scroll.
+
+Add a contribution calculator CTA.
+
+==================================================
+16. TOOL 3 — CONTRIBUTION CHECKER
+==================================================
+
+URL:
+
+/tools/contribution-checker.html
+
+Important:
+
+This cannot access private PhilHealth records.
+
+Instead create a manual reconciliation tool.
+
+Inputs:
+
+Number of expected periods
+Expected amount per period
+Amount actually recorded
+Optional individual period amounts
+
+Calculate:
+
+Expected total
+Recorded total
+Difference
+Percentage matched
+
+Show status:
+
+Matched
+Partially matched
+Difference found
+
+Provide troubleshooting guidance.
+
+This tool MUST work.
+
+==================================================
+17. TOOL 4 — REQUIREMENTS FINDER
+==================================================
+
+URL:
+
+/tools/requirements-finder.html
+
+Create a multi-step wizard.
+
+STEP 1:
+
+What are you trying to do?
+
+- Register
+- Update information
+- Add dependent
+- Get MDR
+- Get ID
+- Pay contribution
+- Claim benefits
+- Other
+
+STEP 2:
+
+Member type.
+
+STEP 3:
+
+Situation.
+
+Then generate a checklist.
+
+Example:
+
+REQUIREMENTS CHECKLIST
+
+✓ Valid identification
+✓ Applicable form
+○ Supporting document if applicable
+
+Each item:
+
+Document
+Required status
+Why it may be needed
+Source
+
+Allow:
+
+Print
+Copy checklist
+Start over
+
+The result must never be empty.
+
+==================================================
+18. TOOL 5 — BENEFITS FINDER
+==================================================
+
+URL:
+
+/tools/benefits-finder.html
+
+Search/filter benefits.
+
+Filters:
+
+Category
+Procedure
+Member situation
+
+Categories:
+
+Hospitalization
+Outpatient
+Maternity
+Dialysis
+Cancer
+Emergency
+Preventive
+YAKAP
+Other
+
+Results should display:
+
+Benefit name
+Description
+Eligibility considerations
+Coverage/package information where verified
+Important notes
+Source
+
+Never invent amounts.
+
+If amount unavailable:
+
+show:
+
+"See official source for current amount"
+
+but still provide the benefit information.
+
+==================================================
+19. TOOL 6 — CASE RATE FINDER
+==================================================
+
+URL:
+
+/tools/case-rate-finder.html
+
+Create a fully functional local searchable dataset.
+
+Search by:
+
+Procedure
+Condition
+Treatment
+Code
+
+Provide:
+
+Name
+Category
+Description
+Code if available
+Current data status
+Source
+
+If a financial value is available in the supplied/verified dataset, show it.
+
+If not:
+
+"Current amount: Verify with official source"
+
+Do not break the search.
+
+Include filters.
+
+==================================================
+20. TOOL 7 — HOSPITAL BILL ESTIMATOR
+==================================================
+
+URL:
+
+/tools/hospital-bill-estimator.html
+
+Inputs:
+
+Estimated hospital bill
+Benefit/package selection
+Optional procedure
+Optional facility type
+
+Calculate an illustrative estimate.
+
+Show:
+
+Estimated hospital bill
+Potential applicable benefit
+Illustrative remaining amount
+
+IMPORTANT:
+
+Never say:
+
+"You will definitely pay ₱X."
+
+Say:
+
+"Illustrative estimate"
+
+Then explain:
+
+Actual deductions may depend on eligibility, claim assessment, applicable package, facility and current policy.
+
+Make the calculation engine functional even if the benefit amount is illustrative.
+
+==================================================
+21. TOOL 8 — BENEFITS ELIGIBILITY GUIDE
+==================================================
+
+URL:
+
+/tools/benefits-eligibility.html
+
+Interactive questionnaire.
+
+Ask:
+
+Member category
+Treatment/service
+Facility
+Situation
+Relevant conditions
+
+Generate:
+
+Potentially applicable benefit
+Why it may apply
+What to verify
+Recommended next step
+Related guide
+Official source
+
+Never claim:
+
+"You are officially eligible."
+
+Use:
+
+"Potentially applicable — verify with PhilHealth/facility."
+
+==================================================
+22. TOOL 9 — YAKAP BENEFITS FINDER
+==================================================
+
+URL:
+
+/tools/yakap-benefits.html
+
+Create beautiful YAKAP information interface.
+
+Categories:
+
+Primary care
+Consultation
+Diagnostics
+Medicines
+Preventive care
+Screening
+
+Search/filter.
+
+Each result:
+
+Service
+Description
+Who it may be relevant to
+Provider information
+Source
+Last reviewed
+
+If exact benefit details are not available in the data:
+
+show useful explanatory information and direct users to the source.
+
+Do not leave the page empty.
+
+==================================================
+23. TOOL 10 — YAKAP CLINIC FINDER
+==================================================
+
+URL:
+
+/tools/yakap-clinic-finder.html
+
+Create local searchable clinic dataset.
+
+Filters:
+
+Province
+City
+Clinic name
+Service
+
+Cards:
+
+Clinic name
+Address
+Location
+Services
+Status
+Last verified
+
+Buttons:
+
+Details
+Directions
+
+Do not invent real clinic records.
+
+Use sample/demo records only if clearly labeled:
+
+"Demo data"
+
+Create architecture ready for replacement with verified data.
+
+==================================================
+24. TOOL 11 — PROVIDER FINDER
+==================================================
+
+URL:
+
+/tools/provider-finder.html
+
+Search facilities.
+
+Filters:
+
+Province
+City
+Facility type
+Service
+
+Facility categories:
+
+Hospital
+Dialysis
+Maternity
+Cancer
+YAKAP
+GAMOT
+Other
+
+Cards:
+
+Facility name
+Location
+Type
+Services
+Data status
+Source
+
+Again:
+
+Never invent real provider accreditation.
+
+If demo records are used, clearly mark:
+
+DEMO DATA
+
+==================================================
+25. TOOL 12 — BRANCH FINDER
+==================================================
+
+URL:
+
+/tools/branch-finder.html
+
+Search:
+
+Province
+City
+Branch
+
+Result:
+
+Branch name
+Address
+Services
+Phone
+Hours
+Last reviewed
+Source
+
+If current real-world information is not available, use clearly marked demo records and provide the official source link.
+
+Never present demo data as current official information.
+
+==================================================
+26. TOOL 13 — SERVICE / PROBLEM NAVIGATOR
+==================================================
+
+Although the original plan contained 12 major tools, include this as a core tool because it significantly improves UX.
+
+URL:
+
+/tools/service-navigator.html
+
+Question:
+
+"What are you trying to do?"
+
+Options:
+
+Calculate contribution
+Check contribution
+Register
+Update information
+Get MDR
+Get ID
+Find benefits
+Find requirements
+Find provider
+Find branch
+Find YAKAP clinic
+Understand hospital bill
+Fix login problem
+Payment problem
+OTP problem
+
+Generate:
+
+Recommended action
+Recommended tool
+Recommended guide
+Official source
+Next steps
+
+Create a beautiful step-by-step interface.
+
+==================================================
+27. TOOL DESIGN SYSTEM
+==================================================
+
+Every tool page must have:
+
+Breadcrumb
+
+Category label
+
+H1
+
+Short description
+
+Trust/source indicator
+
+Main tool card
+
+How it works
+
+Result section
+
+Explanation
+
+Important notice
+
+Source
+
+Last reviewed
+
+Related tools
+
+Related guides
+
+FAQ
+
+The calculator should not occupy the entire screen.
+
+Use a two-column layout on desktop:
+
+LEFT:
+Tool inputs
+
+RIGHT:
+Result / explanation
+
+On mobile:
+
+Inputs first
+Result second
+
+==================================================
+28. RESULT STATES
+==================================================
+
+Create beautiful result states.
+
+SUCCESS:
+
+Large result
+Explanation
+Breakdown
+
+WARNING:
+
+Important qualification
+
+ERROR:
+
+Specific correction
+
+EMPTY:
+
+Helpful instruction
+
+LOADING:
+
+Skeleton
+
+NO RESULTS:
+
+Suggest filters/search terms
+
+Never use ugly browser alerts.
+
+==================================================
+29. DATA STATUS SYSTEM
+==================================================
+
+Create visual badges:
+
+VERIFIED
+
+ILLUSTRATIVE
+
+DEMO DATA
+
+NEEDS REVIEW
+
+These must be visually distinct.
+
+Use a tooltip/explanation when appropriate.
+
+This solves the previous "No verified data supplied" problem.
+
+A tool should remain usable even when some data is illustrative.
+
+==================================================
+30. GUIDES / BLOG
+==================================================
+
+Create a full guide system.
+
+URLs:
+
+/guides/
+
+Create these initial guide pages:
+
+/guides/philhealth-contribution-guide.html
+/guides/philhealth-online-registration.html
+/guides/philhealth-requirements.html
+/guides/philhealth-benefits.html
+/guides/philhealth-id.html
+/guides/philhealth-mdr.html
+/guides/philhealth-portal-login.html
+/guides/how-to-check-contribution.html
+/guides/how-to-pay-contribution.html
+/guides/contribution-not-updated.html
+/guides/case-rates-guide.html
+/guides/yakap-guide.html
+
+IMPORTANT:
+
+Do not invent the final article content.
+
+Create beautifully designed article templates with content placeholders.
+
+The owner will later insert articles and images.
+
+Each article page must have:
+
+Category
+H1
+Excerpt
+Author
+Reviewed by
+Published date
+Updated date
+Reading time
+Hero image
+Quick answer
+Table of contents
+Article content
+Sources
+FAQ
+Related tools
+Related articles
+
+==================================================
+31. ARTICLE LAYOUT
+==================================================
+
+Desktop:
+
+Main content:
+approximately 70%
+
+Sidebar:
+approximately 30%
+
+Sidebar:
+
+Search
+Popular Tools
+On This Page
+Popular Guides
+Latest Updates
+Need Help
+
+Sticky sidebar where appropriate.
+
+Article typography must be excellent.
+
+Maximum content width:
+
+approximately 760–820px for article text.
+
+Use readable paragraphs.
+
+Tables should be responsive.
+
+==================================================
+32. CATEGORY PAGES
+==================================================
+
+Create:
+
+/contributions.html
+/benefits.html
+/requirements.html
+/yakap.html
+/providers.html
+/branches.html
+/payment.html
+/troubleshooting.html
+/portal.html
+/documents.html
+/guides.html
+
+Each category page must have:
+
+Hero
+Introduction
+Featured tool
+Popular tools
+Guides
+Subtopics
+FAQ
+Related categories
+
+==================================================
+33. ABOUT
+==================================================
+
+Create:
+
+/about.html
+
+Explain:
+
+- independent status
+- purpose
+- tools
+- guides
+- sources
+- update process
+
+Do not invent organization history.
+
+==================================================
+34. EDITORIAL POLICY
+==================================================
+
+Create:
+
+/editorial-policy.html
+
+Sections:
+
+Research process
+Source selection
+Review process
+Updates
+Corrections
+AI-assisted content policy
+Editorial independence
+
+==================================================
+35. SOURCES
+==================================================
+
+Create:
+
+/sources.html
+
+Build a beautiful source library.
+
+Categories:
+
+Official PhilHealth sources
+Circulars
+Advisories
+Provider sources
+Program information
+
+Each source:
+
+Title
+Type
+URL
+Date
+Last reviewed
+
+==================================================
+36. CORRECTIONS
+==================================================
+
+Create:
+
+/corrections.html
+
+Explain how users can report:
+
+- outdated information
+- incorrect calculation
+- broken source
+- incorrect requirement
+- provider information issue
+
+Provide correction form.
+
+==================================================
+37. CONTACT
+==================================================
+
+Create:
+
+/contact.html
+
+Beautiful contact form.
+
+Fields:
+
+Name
+Email
+Subject
+Reason
+Message
+
+Reasons:
+
+General inquiry
+Correction
+Source issue
+Technical problem
+Business inquiry
+Other
+
+Frontend validation.
+
+Do not pretend email delivery works unless configured.
+
+==================================================
+38. LEGAL PAGES
+==================================================
+
+Create:
+
+/privacy.html
+/terms.html
+/disclaimer.html
+/accessibility.html
+
+Use placeholders where site-owner-specific information is required.
+
+==================================================
+39. 404 PAGE
+==================================================
+
+Create beautiful custom 404.
+
+Include:
+
+Page not found
+
+Search
+
+Popular tools
+
+Popular guides
+
+Home
+
+==================================================
+40. FOOTER
+==================================================
+
+Professional multi-column footer.
+
+Columns:
+
+Tools
+Guides
+Topics
+Company
+Legal
+
+Footer disclaimer:
+
+"This is an independent informational resource and is not affiliated with, endorsed by, or operated by the Philippine Health Insurance Corporation (PhilHealth)."
+
+Add:
+
+Sources
+Editorial Policy
+Corrections
+Contact
+Privacy
+Terms
+Disclaimer
+
+==================================================
+41. HOMEPAGE SECTION ORDER
+==================================================
+
+Use this exact high-quality structure:
+
+1. Header
+
+2. Hero search
+
+3. Quick actions
+
+4. Popular tools
+
+5. Featured Contribution Calculator
+
+6. Benefits explorer
+
+7. Requirements Finder
+
+8. YAKAP section
+
+9. Provider/Branch finder
+
+10. Problem Solver
+
+11. Latest Guides
+
+12. Popular Guides
+
+13. Trust / Sources
+
+14. About the website
+
+15. Disclaimer
+
+16. Footer
+
+==================================================
+42. VISUAL COMPONENTS
+==================================================
+
+Create:
+
+Buttons
+Cards
+Tool cards
+Article cards
+Category cards
+Provider cards
+Source cards
+Alert cards
+Info boxes
+Checklists
+Tables
+Forms
+Tabs
+Accordions
+Breadcrumbs
+Badges
+Progress indicators
+Step indicators
+Search results
+Pagination
+Empty states
+Error states
+Success states
+Loading skeletons
+Modal
+Toast
+
+Everything must share the same design language.
+
+==================================================
+43. ICONS
+==================================================
+
+Do not use emoji.
+
+Use:
+
+inline SVG icons
+
+or one lightweight icon system if absolutely necessary.
+
+Icons should include:
+
+Calculator
+Search
+Heart/health
+Hospital
+Document
+Check
+Arrow
+Location
+Building
+Calendar
+Book
+Shield
+Source
+Warning
+Help
+Menu
+Close
+
+Keep icons consistent.
+
+==================================================
+44. ANIMATIONS
+==================================================
+
+Use subtle animation only.
+
+Examples:
+
+Card hover
+Button interaction
+Accordion
+Mobile menu
+Result appearance
+Search results
+
+Respect:
+
+prefers-reduced-motion
+
+No flashy animation.
+
+==================================================
+45. ACCESSIBILITY
+==================================================
+
+Target WCAG 2.2 AA.
+
+Implement:
+
+- skip link
+- semantic HTML
+- keyboard navigation
+- visible focus
+- labels
+- accessible errors
+- aria-expanded
+- aria-controls
+- alt text
+- proper table headings
+- sufficient contrast
+- reduced motion
+
+==================================================
+46. SEO
+==================================================
+
+Every indexable page must have:
+
+<title>
+<meta description>
+canonical
+Open Graph
+Twitter metadata
+one H1
+proper H2/H3 hierarchy
+
+Use JSON-LD where appropriate:
+
+Organization
+WebSite
+WebPage
+BreadcrumbList
+Article
+FAQPage
+WebApplication
+
+Do not use misleading schema.
+
+Tools should be described as independent tools.
+
+==================================================
+47. INTERNAL LINKING
+==================================================
+
+Create strong contextual linking.
+
+Contribution guide:
+
+→ calculator
+→ table
+→ checker
+
+Benefits guide:
+
+→ benefits finder
+→ case rate finder
+→ hospital estimator
+
+YAKAP guide:
+
+→ YAKAP benefits
+→ YAKAP clinic finder
+
+Requirements guide:
+
+→ requirements finder
+
+Every tool:
+
+→ related guide
+→ category
+→ related tool
+
+==================================================
+48. SEARCH ENGINE FRIENDLY URLS
+==================================================
+
+Use clean URLs/pages:
+
+/tools/
+/tools/contribution-calculator.html
+/tools/contribution-table.html
+/tools/contribution-checker.html
+/tools/requirements-finder.html
+/tools/benefits-finder.html
+/tools/case-rate-finder.html
+/tools/hospital-bill-estimator.html
+/tools/benefits-eligibility.html
+/tools/yakap-benefits.html
+/tools/yakap-clinic-finder.html
+/tools/provider-finder.html
+/tools/branch-finder.html
+/tools/service-navigator.html
+
+/guides/
+/contributions.html
+/benefits.html
+/requirements.html
+/yakap.html
+/providers.html
+/branches.html
+/about.html
+/sources.html
+/contact.html
+/editorial-policy.html
+/corrections.html
+/privacy.html
+/terms.html
+/disclaimer.html
+/accessibility.html
+
+==================================================
+49. MOBILE DESIGN
+==================================================
+
+The website must be designed mobile-first.
+
+Test mentally and structurally at:
+
+320px
+360px
+375px
+390px
+430px
+768px
+1024px
+1280px
+1440px
+
+At mobile:
+
+- no horizontal overflow
+- cards become one column where necessary
+- forms become one column
+- sidebar moves below content
+- tables horizontally scroll
+- buttons become easy to tap
+- header becomes compact
+- search remains prominent
+
+==================================================
+50. PERFORMANCE
+==================================================
+
+Optimize for fast loading.
+
+Do not use:
+
+- huge JS bundles
+- unnecessary libraries
+- autoplay video
+- giant images
+- unnecessary animation
+
+Use:
+
+- lazy images
+- width/height attributes
+- defer scripts where appropriate
+- modular CSS
+- optimized SVG
+- font-display
+
+==================================================
+51. SECURITY / INPUT HANDLING
+==================================================
+
+Sanitize user-generated text before inserting it into HTML.
+
+Do not use unsafe innerHTML with raw user input.
+
+Use textContent where appropriate.
+
+Validate:
+
+email
+numbers
+dates
+search
+forms
+
+==================================================
+52. PRINT SUPPORT
+==================================================
+
+Create print CSS.
+
+Users should be able to print:
+
+- contribution results
+- requirements checklist
+- benefit results
+- tool results
+- articles
+
+Hide:
+
+navigation
+ads
+unnecessary UI
+
+when printing.
+
+==================================================
+53. DATA EDITING
+==================================================
+
+Make updating data extremely easy.
+
+For example:
+
+/data/contribution-data.js
+
+should contain structured records.
+
+The developer should be able to update a contribution rule without modifying calculator JavaScript.
+
+Same architecture for:
+
+benefits
+requirements
+case rates
+YAKAP
+providers
+branches
+sources
+
+==================================================
+54. DO NOT CREATE FAKE CURRENT DATA
+==================================================
+
+This rule is critical.
+
+Do not invent:
+
+- PhilHealth contribution rates
+- benefit amounts
+- case rates
+- provider accreditation
+- branch addresses
+- current phone numbers
+- current requirements
+- current YAKAP policies
+
+If exact current information is available from an official source supplied to you or explicitly researched, structure it into the data layer with source metadata.
+
+If not:
+
+Use:
+
+ILLUSTRATIVE DATA
+
+or:
+
+DEMO DATA
+
+and make the tool functional.
+
+Never use fake information disguised as verified information.
+
+==================================================
+55. IMPORTANT — NO DEAD TOOLS
+==================================================
+
+This is a hard requirement.
+
+NEVER produce this as the main result:
+
+"No verified data has been supplied."
+
+Instead:
+
+The UI should still work.
+
+Example:
+
+Contribution calculator:
+
+Input:
+₱30,000
+
+Result:
+
+Illustrative estimate
+
+Calculation:
+₱30,000 × [loaded rule]
+
+Then:
+
+"This result uses illustrative/demo rules because the current official rate dataset has not yet been verified."
+
+Source:
+
+Official PhilHealth source
+
+This gives the user a functioning product without pretending the information is official.
+
+==================================================
+56. DEMO DATA MODE
+==================================================
+
+Create a global setting:
+
+DATA_MODE = "demo"
+
+or
+
+DATA_MODE = "verified"
+
+When DATA_MODE = demo:
+
+Show a subtle banner:
+
+"Demo data is being used for some results. Verify current information with official PhilHealth sources."
+
+When verified data is loaded:
+
+Hide the demo warning for those datasets.
+
+This makes development much easier.
+
+==================================================
+57. TOOL DATA STATUS
+==================================================
+
+Each result knows whether its data is:
+
+verified
+illustrative
+demo
+
+Example:
+
+{
+    status: "illustrative",
+    source: "...",
+    lastVerified: "..."
+}
+
+Display the status automatically.
+
+==================================================
+58. SEO CONTENT PLACEHOLDERS
+==================================================
+
+For guide pages, do NOT generate final articles.
+
+Use:
+
+[ARTICLE CONTENT WILL BE INSERTED HERE]
+
+[IMAGE WILL BE PROVIDED]
+
+[OFFICIAL SOURCE WILL BE PROVIDED]
+
+However, the surrounding page must look complete and professional.
+
+==================================================
+59. NO GENERIC PLACEHOLDER UI
+==================================================
+
+Do not fill the website with:
+
+Lorem ipsum
+
+"Sample text"
+
+"Coming soon"
+
+"Feature coming soon"
+
+"Data not available"
+
+unless absolutely necessary.
+
+If content is intentionally missing, use a professional content slot explaining what will be inserted.
+
+==================================================
+60. HOMEPAGE COPY STYLE
+==================================================
+
+Use concise, helpful language.
+
+Avoid exaggerated marketing phrases.
+
+Avoid:
+
+"ultimate"
+"revolutionary"
+"best ever"
+"100% accurate"
+
+Prefer:
+
+"Find"
+"Calculate"
+"Compare"
+"Understand"
+"Check"
+"Explore"
+"Learn"
+
+==================================================
+61. FINAL FILE STRUCTURE
+==================================================
+
+Produce a coherent project such as:
+
+/
+index.html
+
+/about.html
+/sources.html
+/contact.html
+/editorial-policy.html
+/corrections.html
+/privacy.html
+/terms.html
+/disclaimer.html
+/accessibility.html
+/404.html
+
+/contributions.html
+/benefits.html
+/requirements.html
+/yakap.html
+/providers.html
+/branches.html
+/payment.html
+/troubleshooting.html
+/portal.html
+/documents.html
+/guides.html
+
+/tools/
+    contribution-calculator.html
+    contribution-table.html
+    contribution-checker.html
+    requirements-finder.html
+    benefits-finder.html
+    case-rate-finder.html
+    hospital-bill-estimator.html
+    benefits-eligibility.html
+    yakap-benefits.html
+    yakap-clinic-finder.html
+    provider-finder.html
+    branch-finder.html
+    service-navigator.html
+
+/guides/
+    philhealth-contribution-guide.html
+    philhealth-online-registration.html
+    philhealth-requirements.html
+    philhealth-benefits.html
+    philhealth-id.html
+    philhealth-mdr.html
+    philhealth-portal-login.html
+    how-to-check-contribution.html
+    how-to-pay-contribution.html
+    contribution-not-updated.html
+    case-rates-guide.html
+    yakap-guide.html
+
+/assets/css/
+assets/js/
+data/
+
+==================================================
+62. IMPLEMENTATION ORDER
+==================================================
+
+Do not implement the project as a collection of disconnected pages.
+
+Build in this order:
+
+STEP 1
+Design system
+
+STEP 2
+Global header/footer/navigation
+
+STEP 3
+Reusable components
+
+STEP 4
+Data architecture
+
+STEP 5
+Functional tools
+
+STEP 6
+Guide templates
+
+STEP 7
+Category pages
+
+STEP 8
+Trust/legal pages
+
+STEP 9
+Homepage
+
+STEP 10
+Search
+
+STEP 11
+SEO
+
+STEP 12
+Accessibility
+
+STEP 13
+Performance
+
+STEP 14
+Final QA
+
+==================================================
+63. CRITICAL DEVELOPMENT BEHAVIOR
+==================================================
+
+After creating each major feature:
+
+TEST IT.
+
+Do not simply write code and move on.
+
+For every tool verify:
+
+Can the user enter data?
+
+Can the user click calculate?
+
+Does a result appear?
+
+Does reset work?
+
+Does validation work?
+
+Does the result explain itself?
+
+Does the source panel appear?
+
+Does mobile layout work?
+
+Does print work?
+
+Does copy work?
+
+Does the console contain errors?
+
+==================================================
+64. VISUAL QUALITY STANDARD
+==================================================
+
+The final website should resemble a professionally designed healthcare information product.
+
+Think:
+
+professional editorial website
++
+calculator platform
++
+knowledge base
++
+healthcare directory
+
+The design should have:
+
+strong hierarchy
+excellent whitespace
+clean cards
+high-quality typography
+consistent icons
+clear CTAs
+subtle borders
+professional result panels
+beautiful forms
+excellent mobile UX
+
+Do not make every section look like a card.
+
+Use:
+
+full-width sections
+editorial layouts
+split layouts
+grids
+lists
+tables
+callouts
+
+to create visual variety.
+
+==================================================
+65. FINAL HOMEPAGE VISUAL HIERARCHY
+==================================================
+
+The homepage should feel like this:
+
+------------------------------------------------
+HEADER
+------------------------------------------------
+
+Independent resource notice
+
+Logo | Navigation | Search
+
+------------------------------------------------
+HERO
+------------------------------------------------
+
+PhilHealth Information Made Simple
+
+[ Search PhilHealth information................ ]
+
+Popular:
+Contribution | Benefits | Requirements | MDR | YAKAP
+
+------------------------------------------------
+QUICK ACTIONS
+------------------------------------------------
+
+Calculate | Requirements | Benefits | Providers
+Branches | Problem Solver
+
+------------------------------------------------
+POPULAR TOOLS
+------------------------------------------------
+
+[ Contribution Calculator ]
+[ Requirements Finder ]
+[ Benefits Finder ]
+[ Case Rate Finder ]
+[ Hospital Estimator ]
+[ YAKAP Finder ]
+
+------------------------------------------------
+FEATURED CALCULATOR
+------------------------------------------------
+
+Calculate your contribution
+
+[ Form ]
+
+                  [ RESULT ]
+
+------------------------------------------------
+EXPLORE BENEFITS
+------------------------------------------------
+
+Benefit categories
+
+------------------------------------------------
+REQUIREMENTS
+------------------------------------------------
+
+Find the documents you need
+
+------------------------------------------------
+YAKAP
+------------------------------------------------
+
+Benefits Finder | Clinic Finder
+
+------------------------------------------------
+PROVIDERS
+------------------------------------------------
+
+Find a facility
+
+------------------------------------------------
+PROBLEM SOLVER
+------------------------------------------------
+
+Something not working?
+
+------------------------------------------------
+GUIDES
+------------------------------------------------
+
+Latest guides
+
+------------------------------------------------
+TRUST
+------------------------------------------------
+
+Sources | Reviews | Updates
+
+------------------------------------------------
+DISCLAIMER
+------------------------------------------------
+
+Independent resource notice
+
+------------------------------------------------
+FOOTER
+------------------------------------------------
+
+==================================================
+66. FINAL QUALITY BAR
+==================================================
+
+The finished website must NOT feel like:
+
+"AI generated HTML."
+
+It should feel like:
+
+"A real product designed by a professional healthcare UX team."
+
+Prioritize polish over quantity.
+
+Do not create 100 mediocre components.
+
+Create a smaller number of excellent components and reuse them consistently.
+
+==================================================
+67. FINAL TEST CHECKLIST
+==================================================
+
+Before declaring the project complete, verify:
+
+[ ] Homepage works
+[ ] Header works
+[ ] Mobile menu works
+[ ] Search works
+[ ] Contribution calculator works
+[ ] Contribution table works
+[ ] Contribution checker works
+[ ] Requirements finder works
+[ ] Benefits finder works
+[ ] Case rate finder works
+[ ] Hospital estimator works
+[ ] Eligibility guide works
+[ ] YAKAP benefits works
+[ ] YAKAP clinic finder works
+[ ] Provider finder works
+[ ] Branch finder works
+[ ] Service navigator works
+[ ] Guide pages exist
+[ ] Category pages exist
+[ ] About works
+[ ] Sources works
+[ ] Editorial policy works
+[ ] Corrections works
+[ ] Contact works
+[ ] Privacy works
+[ ] Terms works
+[ ] Disclaimer works
+[ ] Accessibility works
+[ ] 404 works
+[ ] Footer works
+[ ] No broken internal links
+[ ] No console errors
+[ ] No horizontal overflow
+[ ] Mobile responsive
+[ ] Keyboard accessible
+[ ] SEO metadata exists
+[ ] Canonicals exist
+[ ] JSON-LD valid
+[ ] sitemap.xml exists
+[ ] robots.txt exists
+[ ] Print styles work
+[ ] Data status system works
+[ ] No fake official claims
+[ ] No fake current PhilHealth data
+[ ] No dead calculator screens
+[ ] No "No verified data" dead ends
+
+==================================================
+68. FINAL INSTRUCTION
+==================================================
+
+DO NOT STOP AFTER CREATING THE DESIGN.
+
+DO NOT STOP AFTER CREATING THE HEADER.
+
+DO NOT STOP AFTER CREATING THE HOMEPAGE.
+
+DO NOT STOP AFTER CREATING TOOL CARDS.
+
+DO NOT CREATE NON-FUNCTIONAL CALCULATORS.
+
+DO NOT CREATE EMPTY FINDERS.
+
+DO NOT CREATE "NO VERIFIED DATA HAS BEEN SUPPLIED" AS THE PRIMARY TOOL EXPERIENCE.
+
+BUILD THE COMPLETE WEBSITE.
+
+BUILD THE FUNCTIONAL DATA LAYER.
+
+BUILD THE CALCULATION LOGIC.
+
+BUILD THE SEARCH.
+
+BUILD THE FILTERS.
+
+BUILD THE FORMS.
+
+BUILD THE RESULTS.
+
+BUILD THE GUIDES.
+
+BUILD THE CATEGORIES.
+
+BUILD THE TRUST PAGES.
+
+BUILD THE HOMEPAGE.
+
+THEN PERFORM A FULL QA PASS.
+
+If a real-world data value cannot safely be verified, use clearly labelled illustrative/demo data while keeping the functionality operational.
+
+Do not fabricate official information.
+
+The final result must be a beautiful, functional, responsive, SEO-first static website ready for the owner to replace demo/illustrative datasets with verified official data.
+
+At the end, provide:
+
+1. Complete file tree
+2. List of all working tools
+3. List of all pages
+4. Data files and what each controls
+5. How to update official data
+6. How to add a new tool
+7. How to add a new article
+8. Any remaining placeholders
+9. Any known limitations
+10. Confirmation that the website has no intentional dead-end tool screens
