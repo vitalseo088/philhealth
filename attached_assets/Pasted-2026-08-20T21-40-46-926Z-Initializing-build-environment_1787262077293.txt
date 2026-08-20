@@ -1,0 +1,34 @@
+2026-08-20T21:40:46.926Z	Initializing build environment...
+2026-08-20T21:40:48.822Z	Success: Finished initializing build environment
+2026-08-20T21:40:49.544Z	Cloning repository...
+2026-08-20T21:40:50.873Z	No build output detected to cache. Skipping.
+2026-08-20T21:40:50.873Z	No dependencies detected to cache. Skipping.
+2026-08-20T21:40:50.875Z	Detected the following tools from environment: 
+2026-08-20T21:40:51.017Z	Executing user deploy command: npx wrangler pages deploy
+2026-08-20T21:41:01.742Z	npm warn exec The following package was not found and will be installed: wrangler@4.125.0
+2026-08-20T21:41:15.933Z	
+2026-08-20T21:41:15.933Z	 ⛅️ wrangler 4.125.0
+2026-08-20T21:41:15.934Z	────────────────────
+2026-08-20T21:41:16.342Z	
+2026-08-20T21:41:16.474Z	✘ [ERROR] A request to the Cloudflare API (/accounts/cc0090a481dfd6987704beb479930b8a/pages/projects/philhealth) failed.
+2026-08-20T21:41:16.474Z	
+2026-08-20T21:41:16.475Z	  Authentication error [code: 10000]
+2026-08-20T21:41:16.475Z	  To learn more about this error, visit: https://developers.cloudflare.com/api/resources/pages
+2026-08-20T21:41:16.475Z	
+2026-08-20T21:41:16.475Z	
+2026-08-20T21:41:16.475Z	📎 It looks like you are authenticating Wrangler via a custom API token set in an environment variable.
+2026-08-20T21:41:16.475Z	Please ensure it has the correct permissions for this operation.
+2026-08-20T21:41:16.475Z	
+2026-08-20T21:41:16.480Z	Getting User settings...
+2026-08-20T21:41:17.018Z	👋 You are logged in with an User API Token, associated with the email vitalseo088@gmail.com.
+2026-08-20T21:41:17.019Z	ℹ️  The API Token is read from the CLOUDFLARE_API_TOKEN environment variable.
+2026-08-20T21:41:17.025Z	┌─────────────────────────────────┬──────────────────────────────────┐
+2026-08-20T21:41:17.026Z	│ Account Name                    │ Account ID                       │
+2026-08-20T21:41:17.026Z	├─────────────────────────────────┼──────────────────────────────────┤
+2026-08-20T21:41:17.026Z	│ Vitalseo088@gmail.com's Account │ cc0090a481dfd6987704beb479930b8a │
+2026-08-20T21:41:17.026Z	└─────────────────────────────────┴──────────────────────────────────┘
+2026-08-20T21:41:17.026Z	🔓 To see token permissions visit https://dash.cloudflare.com/profile/api-tokens
+2026-08-20T21:41:17.167Z	🎢 Membership roles in "Vitalseo088@gmail.com's Account": Contact account super admin to change your permissions.
+2026-08-20T21:41:17.167Z	- Super Administrator - All Privileges
+2026-08-20T21:41:17.170Z	🪵  Logs were written to "/opt/buildhome/.config/.wrangler/logs/wrangler-2026-08-20_21-41-15_160.log"
+2026-08-20T21:41:17.321Z	Failed: error occurred while running deploy command
