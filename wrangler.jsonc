@@ -1,6 +1,0 @@
-{
-  "$schema": "https://unpkg.com/wrangler@latest/config-schema.json",
-  "name": "philhealth",
-  "compatibility_date": "2026-08-21",
-  "pages_build_output_dir": "."
-}
