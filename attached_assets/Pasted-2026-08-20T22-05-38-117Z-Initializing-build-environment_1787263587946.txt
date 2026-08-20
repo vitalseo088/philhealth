@@ -1,0 +1,50 @@
+2026-08-20T22:05:38.117Z	Initializing build environment...
+2026-08-20T22:05:38.117Z	Initializing build environment...
+2026-08-20T22:05:39.929Z	Success: Finished initializing build environment
+2026-08-20T22:05:41.274Z	Cloning repository...
+2026-08-20T22:05:43.350Z	No build output detected to cache. Skipping.
+2026-08-20T22:05:43.350Z	No dependencies detected to cache. Skipping.
+2026-08-20T22:05:43.352Z	Detected the following tools from environment: 
+2026-08-20T22:05:43.439Z	Executing user deploy command: npx wrangler deploy
+2026-08-20T22:05:46.489Z	npm warn exec The following package was not found and will be installed: wrangler@4.125.0
+2026-08-20T22:05:59.576Z	
+2026-08-20T22:05:59.576Z	 ⛅️ wrangler 4.125.0
+2026-08-20T22:05:59.576Z	────────────────────
+2026-08-20T22:05:59.759Z	▲ [WARNING] It seems that you have run `wrangler deploy` on a Pages project, `wrangler pages deploy` should be used instead. Proceeding will likely produce unwanted results.
+2026-08-20T22:05:59.759Z	
+2026-08-20T22:05:59.759Z	
+2026-08-20T22:05:59.759Z	? Are you sure that you want to proceed?
+2026-08-20T22:05:59.759Z	🤖 Using fallback value in non-interactive context: yes
+2026-08-20T22:05:59.815Z	
+2026-08-20T22:05:59.815Z	Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
+2026-08-20T22:05:59.817Z	
+2026-08-20T22:05:59.822Z	✘ [ERROR] Missing entry-point to Worker script or to assets directory
+2026-08-20T22:05:59.822Z	
+2026-08-20T22:05:59.822Z	  
+2026-08-20T22:05:59.822Z	  If there is code to deploy, you can either:
+2026-08-20T22:05:59.822Z	  - Specify an entry-point to your Worker script via the command line (ex: `npx wrangler deploy src/index.ts`)
+2026-08-20T22:05:59.822Z	  - Or add the following to your "wrangler.jsonc" file:
+2026-08-20T22:05:59.822Z	  
+2026-08-20T22:05:59.823Z	  ```
+2026-08-20T22:05:59.823Z	  {
+2026-08-20T22:05:59.823Z	    "main": "src/index.ts"
+2026-08-20T22:05:59.823Z	  }
+2026-08-20T22:05:59.823Z	  ```
+2026-08-20T22:05:59.823Z	  
+2026-08-20T22:05:59.823Z	  
+2026-08-20T22:05:59.824Z	  If are uploading a directory of assets, you can either:
+2026-08-20T22:05:59.824Z	  - Specify the path to the directory of assets via the command line: (ex: `npx wrangler deploy --assets=./dist`)
+2026-08-20T22:05:59.824Z	  - Or add the following to your "wrangler.jsonc" file:
+2026-08-20T22:05:59.824Z	  
+2026-08-20T22:05:59.824Z	  ```
+2026-08-20T22:05:59.824Z	  {
+2026-08-20T22:05:59.824Z	    "assets": {
+2026-08-20T22:05:59.825Z	      "directory": "./dist"
+2026-08-20T22:05:59.825Z	    }
+2026-08-20T22:05:59.825Z	  }
+2026-08-20T22:05:59.828Z	  ```
+2026-08-20T22:05:59.828Z	  
+2026-08-20T22:05:59.829Z	
+2026-08-20T22:05:59.829Z	
+2026-08-20T22:06:00.075Z	🪵  Logs were written to "/opt/buildhome/.config/.wrangler/logs/wrangler-2026-08-20_22-05-58_891.log"
+2026-08-20T22:06:00.183Z	Failed: error occurred while running deploy command
