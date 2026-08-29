@@ -389,6 +389,10 @@ tr:hover td { background: #fbfdfc; }
   .section { padding: 54px 0; }
   .section-heading { align-items: start; flex-direction: column; }
   .grid-3, .grid-4, .info-grid { grid-template-columns: 1fr; }
+  .category-layout { display: block; }
+  .category-layout > .library-sidebar { margin-top: 2rem; position: static; }
+  .guide-grid { grid-template-columns: minmax(0, 1fr); }
+  .guide-card { min-width: 0; width: 100%; }
   .actions-grid { grid-template-columns: repeat(2, 1fr); }
   .filter-bar { grid-template-columns: 1fr 1fr; }
   .filter-bar > :first-child { grid-column: 1 / -1; }
