@@ -283,6 +283,8 @@ tr:hover td { background: #fbfdfc; }
 .article-layout { align-items: start; display: grid; gap: 2.2rem; grid-template-columns: minmax(0, 1fr) 290px; }
 .article { background: var(--white); border: 1px solid var(--border); padding: clamp(1.2rem, 4vw, 3rem); }
 .article .article-meta { color: var(--muted); font-size: .78rem; margin-bottom: 1.8rem; }
+.article, .article-body { min-width: 0; max-width: 100%; }
+.article img { display: block; height: auto; max-width: 100%; width: auto; }
 .article h2 { font-size: 1.55rem; margin-top: 2.1rem; }
 .article h3 { margin-top: 1.5rem; }
 .article p, .article li { color: #33414d; line-height: 1.8; }
@@ -332,7 +334,7 @@ tr:hover td { background: #fbfdfc; }
 .pagination a:hover, .pagination a.current { background: var(--green); border-color: var(--green); color: #fff; }
 .pagination .disabled { color: #a0aaa6; }
 .article-hero-art { align-items: center; background: var(--green); color: var(--yellow); display: flex; height: 230px; justify-content: center; margin: 0 0 1.5rem; overflow: hidden; position: relative; }
-.article-hero-art img { height: 100%; inset: 0; object-fit: cover; opacity: .5; position: absolute; width: 100%; }
+.article-hero-art img { height: 100%; inset: 0; max-width: none; object-fit: cover; opacity: .5; position: absolute; width: 100%; }
 .article-hero-art > span, .article-hero-art > svg { position: relative; z-index: 1; }
 
 .prose { max-width: 850px; }
