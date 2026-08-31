@@ -1,5 +1,17 @@
 (function () {
   'use strict';
+  const GA_MEASUREMENT_ID = 'G-P7GBYEKLYJ';
+  if (!window.__philHealthAnalyticsInstalled) {
+    window.__philHealthAnalyticsInstalled = true;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('config', GA_MEASUREMENT_ID);
+    const analyticsScript = document.createElement('script');
+    analyticsScript.async = true;
+    analyticsScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+    document.head.appendChild(analyticsScript);
+  }
   if (!document.querySelector('link[rel~="icon"]')) {
     const favicon = document.createElement('link');
     favicon.rel = 'icon';
