@@ -1,5 +1,6 @@
 (function () {
   'use strict';
+  const SITE_ORIGIN = 'https://philbenefits.com';
   const GA_MEASUREMENT_ID = 'G-P7GBYEKLYJ';
   if (!window.__philHealthAnalyticsInstalled) {
     window.__philHealthAnalyticsInstalled = true;
@@ -33,6 +34,27 @@
         : requestedPath !== '/' && !requestedPath.endsWith('.html')
           ? `${requestedPath}.html`
           : requestedPath;
+  const canonicalPath = requestedPath === '/' || requestedPath === '/index.html'
+    ? '/'
+    : requestedPath.endsWith('/index.html')
+      ? requestedPath.replace(/index\.html$/, '')
+      : requestedPath.endsWith('.html')
+        ? `${requestedPath.slice(0, -5)}/`
+        : requestedPath.endsWith('/')
+          ? requestedPath
+          : `${requestedPath}/`;
+  function addContactDetails() {
+    const email = '<a href="mailto:hello@philbenefits.com">hello@philbenefits.com</a>';
+    if (path === '/contact.html') {
+      document.querySelector('.page-hero .lead')?.insertAdjacentHTML('afterend', `<p class="small" style="color:#d7eee4">You can also email <a href="mailto:hello@philbenefits.com" style="color:#fff">hello@philbenefits.com</a>.</p>`);
+    }
+    if (path === '/about.html') {
+      document.querySelector('.prose')?.insertAdjacentHTML('beforeend', `<p class="small muted"><strong>Contact:</strong> ${email}</p>`);
+    }
+    if (path === '/privacy.html') {
+      document.querySelector('.prose')?.insertAdjacentHTML('beforeend', `<p class="small muted"><strong>Privacy questions:</strong> Email ${email} without including sensitive personal information.</p>`);
+    }
+  }
   const root = document.documentElement;
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (m) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
   const money = (n) => new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(Number(n) || 0);
@@ -91,10 +113,11 @@
   }
   function shell(content, title='PhilHealth Guide') {
     document.title = `${title} | PhilHealth Guide`;
-    document.head.insertAdjacentHTML('beforeend', `<meta name="description" content="Independent PhilHealth information, calculators, guides and practical tools."><meta property="og:title" content="${esc(title)} | PhilHealth Guide"><meta property="og:description" content="Independent PhilHealth information, calculators, guides and practical tools."><meta property="og:type" content="website"><link rel="canonical" href="${location.origin}${path}"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"PhilHealth Guide","url":"${location.origin}"}</script>`);
+    document.head.insertAdjacentHTML('beforeend', `<meta name="description" content="Independent PhilHealth information, calculators, guides and practical tools."><meta property="og:title" content="${esc(title)} | PhilHealth Guide"><meta property="og:description" content="Independent PhilHealth information, calculators, guides and practical tools."><meta property="og:type" content="website"><link rel="canonical" href="${SITE_ORIGIN}${canonicalPath}"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"PhilHealth Guide","url":"${SITE_ORIGIN}"}</script>`);
     const mainContent = content.trimStart().startsWith('<main') ? content : `<main id="main">${content}</main>`;
     document.body.innerHTML = header() + mainContent + footer() + `<div class="toast" role="status" aria-live="polite"></div><div class="search-overlay" aria-hidden="true"><div class="search-dialog" role="dialog" aria-modal="true" aria-label="Search PhilHealth Guide"><div class="search-dialog-head"><h2 style="font-size:1.25rem;margin:0">Search the guide</h2><button class="icon-btn js-close-search" aria-label="Close search">${icon('close')}</button></div><input class="global-search" type="search" placeholder="Search contributions, benefits, guides..." autocomplete="off"><div class="search-results"></div></div></div>`;
     bindGlobal();
+    addContactDetails();
   }
   function bindGlobal() {
     const menu = document.querySelector('.menu-btn'), head = document.querySelector('.main-header');
