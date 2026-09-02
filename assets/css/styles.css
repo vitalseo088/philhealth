@@ -296,6 +296,12 @@ tr:hover td { background: #fbfdfc; }
 .article-body table { min-width: 560px; }
 .article-body code { background: #edf5f1; color: var(--green-dark); padding: .1rem .3rem; }
 .article-body blockquote { border-left: 4px solid var(--green); color: var(--muted); margin: 1.2rem 0; padding: .2rem 1rem; }
+.internal-guides { border-top: 1px solid var(--border); margin-top: 2.5rem; padding-top: 1.5rem; }
+.internal-guides h2 { margin-top: 0; }
+.related-guide-links { display: grid; gap: .65rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.related-guide-links a { background: #f7faf8; border: 1px solid var(--border); color: var(--navy); display: flex; flex-direction: column; gap: .25rem; padding: .75rem .85rem; text-decoration: none; }
+.related-guide-links a:hover { border-color: var(--green); color: var(--green-dark); }
+.related-guide-links span { color: var(--muted); font-size: .75rem; }
 .article-placeholder { border-left: 4px solid var(--yellow); background: var(--yellow-pale); color: var(--navy); margin: 1.4rem 0; padding: 1rem 1.1rem; }
 .article-sidebar { position: sticky; top: 102px; }
 .side-box { background: var(--white); border: 1px solid var(--border); margin-bottom: 1rem; padding: 1rem; }
@@ -400,6 +406,7 @@ tr:hover td { background: #fbfdfc; }
   .article-sidebar { position: static; }
   .article-layout, .article { max-width: 100%; min-width: 0; width: 100%; }
   .article-hero-art { height: clamp(170px, 55vw, 230px); }
+  .related-guide-links { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-grid > :first-child { grid-column: 1 / -1; }
 }

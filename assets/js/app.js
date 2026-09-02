@@ -22,6 +22,21 @@
   }
   const D = window.PHData;
   const articles = window.PHArticles || [];
+  const seoArticles = [
+    { slug: 'philhealth-contribution-online-2026.html', title: 'PhilHealth Contribution Online: How to Pay & Check (2026)', category: 'Contributions', date: 'August 19, 2026', author: 'PhilHealth Guide Editorial Team', image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1200&q=82', excerpt: 'Learn how to check and pay your PhilHealth contribution online in 2026 — current rates, Member Portal steps, payment options, and what to do if a payment is missing.', metaDescription: 'Learn how to check and pay your PhilHealth contribution online in 2026 — current rates, Member Portal steps, payment options, and what to do if a payment is missing.', sourceFile: '/attached_assets/philhealth-contribution-online-2026_1788372499752.md', seoImport: true },
+    { slug: 'philhealth-login-guide-2026.html', title: 'PhilHealth Login 2026: Steps, Forgot Password & Errors', category: 'Portal', date: 'August 20, 2026', author: 'PhilHealth Guide Editorial Team', image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=82', excerpt: 'How to complete your PhilHealth login in 2026 — official portal steps, password/PIN recovery, and fixes for common login errors, from official PhilHealth sources.', metaDescription: 'How to complete your PhilHealth login in 2026 — official portal steps, password/PIN recovery, and fixes for common login errors, from official PhilHealth sources.', sourceFile: '/attached_assets/philhealth-login-guide-2026_1788372499753.md', seoImport: true },
+    { slug: 'philhealth-mdr-online-2026.html', title: 'PhilHealth MDR Online: How to View & Print It (2026)', category: 'Portal', date: 'August 21, 2026', author: 'PhilHealth Guide Editorial Team', image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1200&q=82', excerpt: 'Get your PhilHealth MDR online in 2026 — what it is, how it differs from your PhilHealth ID, step-by-step Member Portal instructions, and how to fix errors.', metaDescription: 'Get your PhilHealth MDR online in 2026 — what it is, how it differs from your PhilHealth ID, step-by-step Member Portal instructions, and how to fix errors.', sourceFile: '/attached_assets/philhealth-mdr-online-2026_1788372499753.md', seoImport: true },
+    { slug: 'philhealth-member-portal-guide-2026.html', title: 'PhilHealth Member Portal Guide 2026: Register & Log In', category: 'Portal', date: 'August 22, 2026', author: 'PhilHealth Guide Editorial Team', image: 'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=1200&q=82', excerpt: 'Learn how to register, log in, and use the official PhilHealth Member Portal in 2026 — check contributions, view your profile, and get your MDR.', metaDescription: 'Learn how to register, log in, and use the official PhilHealth Member Portal in 2026 — check contributions, view your profile, and get your MDR.', sourceFile: '/attached_assets/philhealth-member-portal-guide-2026_1788372499754.md', seoImport: true },
+    { slug: 'philhealth-member-portal-login.html', title: 'PhilHealth Member Portal Login: 2026 Step-by-Step Guide', category: 'Portal', date: 'August 23, 2026', author: 'PhilHealth Guide Editorial Team', image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1200&q=82', excerpt: 'How to access the PhilHealth member portal login in 2026 — account access, password reset, and what to do when login fails.', metaDescription: 'How to access the PhilHealth member portal login in 2026 — account access, password reset, and what to do when login fails.', sourceFile: '/attached_assets/philhealth-member-portal-login-guide-2026_1788372499755.md', seoImport: true },
+    { slug: 'philhealth-online-account-guide.html', title: 'PhilHealth Online Account: How to Create & Use It (2026)', category: 'Portal', date: 'August 24, 2026', author: 'PhilHealth Guide Editorial Team', image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=82', excerpt: 'Set up and manage your PhilHealth online account in 2026 — registration steps, what you can do with it, and fixes for common access issues.', metaDescription: 'Set up and manage your PhilHealth online account in 2026 — registration steps, what you can do with it, and fixes for common access issues.', sourceFile: '/attached_assets/philhealth-online-account-guide-2026_1788372499755.md', seoImport: true },
+    { slug: 'philhealth-portal-forgot-password.html', title: 'PhilHealth Portal Forgot Password? Reset It (2026)', category: 'Portal', date: 'August 25, 2026', author: 'PhilHealth Guide Editorial Team', image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1200&q=82', excerpt: 'Locked out of the PhilHealth Member Portal? Here is the official way to reset your PhilHealth password using your PIN and registered email, plus what to do if that email is gone.', metaDescription: 'Locked out of the PhilHealth Member Portal? Here is the official way to reset your PhilHealth password using your PIN and registered email, plus what to do if that email is gone.', sourceFile: '/attached_assets/philhealth-portal-forgot-password_1788372499756.md', seoImport: true },
+    { slug: 'philhealth-portal-login-guide.html', title: 'PhilHealth Portal Login: Step-by-Step Guide (2026)', category: 'Portal', date: 'August 26, 2026', author: 'PhilHealth Guide Editorial Team', image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=82', excerpt: 'Learn how to access the PhilHealth portal login in 2026 — account setup, login steps, password recovery, and fixes for common access problems.', metaDescription: 'Learn how to access the PhilHealth portal login in 2026 — account setup, login steps, password recovery, and fixes for common access problems.', sourceFile: '/attached_assets/philhealth-portal-login-guide-2026_1788372499756.md', seoImport: true },
+    { slug: 'philhealth-portal-not-working.html', title: 'PhilHealth Portal Not Working? What To Do (2026)', category: 'Portal', date: 'August 27, 2026', author: 'PhilHealth Guide Editorial Team', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=82', excerpt: 'Cannot access the PhilHealth Member Portal? Learn the real reasons it may be down, how to check for official maintenance advisories, and who to contact — 2026 guide.', metaDescription: 'Cannot access the PhilHealth Member Portal? Learn the real reasons it may be down, how to check for official maintenance advisories, and who to contact — 2026 guide.', sourceFile: '/attached_assets/philhealth-portal-not-working_1788372499757.md', seoImport: true },
+    { slug: 'philhealth-portal-password-reset.html', title: 'PhilHealth Portal Password Reset: 2026 Step-by-Step Guide', category: 'Portal', date: 'August 28, 2026', author: 'PhilHealth Guide Editorial Team', image: 'https://images.unsplash.com/photo-1551808525-51a94da548ce?auto=format&fit=crop&w=1200&q=82', excerpt: 'Locked out of your account? Here is how to do a PhilHealth portal password reset in 2026, plus what to do if the reset link or email does not work.', metaDescription: 'Locked out of your account? Here is how to do a PhilHealth portal password reset in 2026, plus what to do if the reset link or email does not work.', sourceFile: '/attached_assets/philhealth-portal-password-reset-2026_1788372499757.md', seoImport: true },
+    { slug: 'philhealth-portal-registration.html', title: 'PhilHealth Portal Registration 2026: Step-by-Step Guide', category: 'Portal', date: 'August 29, 2026', author: 'PhilHealth Guide Editorial Team', image: 'https://images.unsplash.com/photo-1516321165247-4aa89a48be28?auto=format&fit=crop&w=1200&q=82', excerpt: 'Learn how to complete PhilHealth portal registration in 2026 — from getting your PIN to creating your Member Portal account, step by step.', metaDescription: 'Learn how to complete PhilHealth portal registration in 2026 — from getting your PIN to creating your Member Portal account, step by step.', sourceFile: '/attached_assets/philhealth-portal-registration-2026_1788372499758.md', seoImport: true },
+    { slug: 'philhealth-prn-online-2026.html', title: "PhilHealth PRN Online 2026: It's Now Called the SPA", category: 'Contributions', date: 'August 30, 2026', author: 'PhilHealth Guide Editorial Team', image: 'https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=1200&q=82', excerpt: 'Searching for a PhilHealth PRN online? Here is what PhilHealth actually calls it in 2026, how to get your SPA, and why “No SPA, No Payment” now applies.', metaDescription: 'Searching for a PhilHealth PRN online? Here is what PhilHealth actually calls it in 2026, how to get your SPA, and why “No SPA, No Payment” now applies.', sourceFile: '/attached_assets/philhealth-prn-online-guide-2026_1788372499758.md', seoImport: true }
+  ];
+  D.guides = [...seoArticles.map(article => [article.slug, article.title, article.category, article.excerpt, article]), ...D.guides];
   const requestedPath = window.location.pathname.replace(/\/$/, '') || '/index.html';
   const path = requestedPath === '/tools'
     ? '/tools/index.html'
@@ -112,12 +127,15 @@
       </div><div class="container footer-bottom"><p>This is an independent informational resource and is not affiliated with, endorsed by, or operated by the Philippine Health Insurance Corporation (PhilHealth).</p><p class="footer-legal-links"><a href="/privacy.html">Privacy</a><span> · </span><a href="/terms.html">Terms</a><span> · </span><a href="/disclaimer.html">Disclaimer</a></p></div></footer>`;
   }
   function shell(content, title='PhilHealth Guide') {
+    const pageGuide = D.guides.find(guide => guide[0] === path.split('/').pop());
+    const description = pageGuide?.[4]?.metaDescription || 'Independent PhilHealth information, calculators, guides and practical tools.';
     document.title = `${title} | PhilHealth Guide`;
-    document.head.insertAdjacentHTML('beforeend', `<meta name="description" content="Independent PhilHealth information, calculators, guides and practical tools."><meta property="og:title" content="${esc(title)} | PhilHealth Guide"><meta property="og:description" content="Independent PhilHealth information, calculators, guides and practical tools."><meta property="og:type" content="website"><link rel="canonical" href="${SITE_ORIGIN}${canonicalPath}"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"PhilHealth Guide","url":"${SITE_ORIGIN}"}</script>`);
+    document.head.insertAdjacentHTML('beforeend', `<meta name="description" content="${esc(description)}"><meta property="og:title" content="${esc(title)} | PhilHealth Guide"><meta property="og:description" content="${esc(description)}"><meta property="og:type" content="website"><link rel="canonical" href="${SITE_ORIGIN}${canonicalPath}"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","url":"${SITE_ORIGIN}"}</script>`);
     const mainContent = content.trimStart().startsWith('<main') ? content : `<main id="main">${content}</main>`;
     document.body.innerHTML = header() + mainContent + footer() + `<div class="toast" role="status" aria-live="polite"></div><div class="search-overlay" aria-hidden="true"><div class="search-dialog" role="dialog" aria-modal="true" aria-label="Search PhilHealth Guide"><div class="search-dialog-head"><h2 style="font-size:1.25rem;margin:0">Search the guide</h2><button class="icon-btn js-close-search" aria-label="Close search">${icon('close')}</button></div><input class="global-search" type="search" placeholder="Search contributions, benefits, guides..." autocomplete="off"><div class="search-results"></div></div></div>`;
     bindGlobal();
     addContactDetails();
+    loadUploadedArticle();
   }
   function bindGlobal() {
     const menu = document.querySelector('.menu-btn'), head = document.querySelector('.main-header');
@@ -158,12 +176,15 @@
     if (guide[2] === 'YAKAP') return '/assets/images/guide-yakap.svg';
     return '/assets/images/guide-benefits.svg';
   }
+  function guideUrl(guide) {
+    return `/guides/${guide[0].replace(/\.html$/, '')}/`;
+  }
   function guideCard(guide, index) {
     const article = guide[4] || {};
-    return `<a class="card guide-card" href="/guides/${guide[0]}" style="text-decoration:none"><div class="guide-thumb guide-thumb-${(index % 3) + 1}"><img src="${guideAsset(guide, index)}" alt="${esc(guide[2])} guide image"><span class="guide-thumb-kicker">${esc(guide[2])}</span></div><div class="guide-card-content"><div class="meta">${esc(guide[2])} · ${esc(article.date || 'Guide')} · 8 min read</div><h3>${esc(guide[1])}</h3><p class="muted small">${esc(guide[3])}</p><p class="small guide-author">By ${esc(article.author || 'PhilHealth Guide')}</p><span class="card-link">Read guide ${icon('arrow')}</span></div></a>`;
+    return `<a class="card guide-card" href="${guideUrl(guide)}" style="text-decoration:none"><div class="guide-thumb guide-thumb-${(index % 3) + 1}"><img src="${guideAsset(guide, index)}" alt="${esc(guide[2])} guide image"><span class="guide-thumb-kicker">${esc(guide[2])}</span></div><div class="guide-card-content"><div class="meta">${esc(guide[2])} · ${esc(article.date || 'Guide')} · 8 min read</div><h3>${esc(guide[1])}</h3><p class="muted small">${esc(guide[3])}</p><p class="small guide-author">By ${esc(article.author || 'PhilHealth Guide')}</p><span class="card-link">Read guide ${icon('arrow')}</span></div></a>`;
   }
   function guideLinks(items) {
-    return items.map(g => `<a class="sidebar-guide" href="/guides/${g[0]}"><span class="sidebar-guide-category">${esc(g[2])}</span><strong>${esc(g[1])}</strong></a>`).join('');
+    return items.map(g => `<a class="sidebar-guide" href="${guideUrl(g)}"><span class="sidebar-guide-category">${esc(g[2])}</span><strong>${esc(g[1])}</strong></a>`).join('');
   }
   function guideSidebar(current) {
     const related = D.guides.filter(g => g[0] !== current[0] && g[2] === current[2]).slice(0, 3);
@@ -209,6 +230,59 @@
       out.push(`<p>${markdownInline(paragraph.join(' '))}</p>`);
     }
     return out.join('');
+  }
+  function uploadedArticleBody(markdown, article) {
+    let body = String(markdown || '').replace(/\r\n/g, '\n');
+    const articleSection = body.match(/^#{1,2}\s*2\.\s*Article\s*$/mi);
+    if (articleSection) body = body.slice(articleSection.index + articleSection[0].length);
+    const editorialSection = body.search(/^#{1,2}\s*[34]\.\s+(?:Internal Linking Suggestions|Official Sources|Fact-Check Summary)/mi);
+    if (editorialSection >= 0) body = body.slice(0, editorialSection);
+    const officialUrl = article.category === 'Contributions' ? D.official.contributionUrl : 'https://memberinquiry.philhealth.gov.ph/member/';
+    body = body.replace(/\s*(?:\*\*)?\[VERIFY[^\]]*\](?:\*\*)?/gi, match => {
+      const note = match.toLowerCase();
+      const url = article.category === 'Contributions'
+        ? officialUrl
+        : /support|contact|office|directory|help/.test(note)
+          ? D.official.branchDirectoryUrl
+          : /registration|register|pin|account/.test(note)
+            ? 'https://memberinquiry.philhealth.gov.ph/member/accountCreation.xhtml'
+            : /password|reset|email/.test(note)
+              ? 'https://memberinquiry.philhealth.gov.ph/member/forgotPassword.xhtml'
+              : officialUrl;
+      return ` (verify with [the official PhilHealth source](${url}))`;
+    });
+    return body.replace(/^---\s*$/gm, '').trim();
+  }
+  function articleToc(markdown) {
+    return String(markdown || '').split(/\r?\n/).filter(line => /^##\s+/.test(line)).slice(0, 8).map((line, i) => `<a href="#section-${i}">${esc(line.replace(/^##\s+/, ''))}</a>`).join('');
+  }
+  function internalGuideLinks(current) {
+    const related = seoArticles.filter(article => article.slug !== current[0]);
+    return `<section class="internal-guides"><h2>Related PhilHealth guides</h2><p>Continue with another practical guide in this series:</p><div class="related-guide-links">${related.map(article => `<a href="/guides/${article.slug.replace(/\.html$/, '')}/"><strong>${esc(article.title)}</strong><span>${esc(article.category)} · ${esc(article.date)}</span></a>`).join('')}</div></section>`;
+  }
+  function loadUploadedArticle() {
+    const file = path.split('/').pop(), current = D.guides.find(guide => guide[0] === file);
+    const body = document.querySelector('.article-body');
+    if (!current || !body) return;
+    const article = current[4] || {};
+    const renderBody = markdown => {
+      article.content = uploadedArticleBody(markdown, article);
+      let rendered = markdownHtml(article.content), sectionIndex = 0;
+      rendered = rendered.replace(/<h2>/g, () => `<h2 id="section-${sectionIndex++}">`);
+      body.innerHTML = rendered + internalGuideLinks(current);
+      const toc = document.querySelector('.article-sidebar .side-box');
+      if (toc) toc.innerHTML = `<h3>On this page</h3>${articleToc(article.content) || '<a href="#article-content">Article sections</a>'}<a href="#faq">FAQ</a>`;
+    };
+    if (article.sourceFile) {
+      fetch(article.sourceFile)
+        .then(response => { if (!response.ok) throw new Error(`Article source returned ${response.status}`); return response.text(); })
+        .then(renderBody)
+        .catch(() => {
+          body.innerHTML = `<div class="notice"><strong>Article content unavailable</strong>Use the official PhilHealth source panel below or return to the <a href="/guides.html">guide library</a>.</div>${internalGuideLinks(current)}`;
+        });
+    } else if (!body.querySelector('.internal-guides')) {
+      body.insertAdjacentHTML('beforeend', internalGuideLinks(current));
+    }
   }
   function featuredToolCard(tool, index) {
     return `<a class="featured-tool" href="${tool.url}"><div class="featured-tool-inner"><div class="featured-tool-top"><span class="card-icon">${icon(tool.icon)}</span><span class="category-label">${esc(tool.category)}</span></div><h3>${esc(tool.title)}</h3><p>${esc(tool.description)}</p><span class="card-link">${esc(tool.action)} ${icon('arrow')}</span></div></a>`;
@@ -306,7 +380,7 @@
      const options = {'Calculate contribution':['Use the contribution calculator','Contribution calculator','Contribution guide','/tools/contribution-calculator.html'],'Check contribution':['Reconcile your own records','Contribution checker','How to check your contribution','/tools/contribution-checker.html'],'Register':['Prepare a registration checklist','Requirements finder','Online registration guide','/tools/requirements-finder.html'],'Update information':['Start an update checklist','Requirements finder','Requirements guide','/tools/requirements-finder.html'],'Get MDR':['Review the MDR checklist','Requirements finder','MDR guide','/tools/requirements-finder.html'],'Get ID':['Review ID documents to ask about','Requirements finder','PhilHealth ID guide','/tools/requirements-finder.html'],'Find benefits':['Search benefit categories','Benefits finder','Benefits guide','/tools/benefits-finder.html'],'Find requirements':['Build a tailored checklist','Requirements finder','Requirements guide','/tools/requirements-finder.html'],'Find provider':['Open the official facility directory','Provider finder','Benefits guide','/tools/provider-finder.html'],'Find branch':['Use official PhilHealth contact channels','Branch finder','Portal login guide','/tools/branch-finder.html'],'Find YAKAP clinic':['Open the official YAKAP clinic list','YAKAP clinic finder','YAKAP guide','/tools/yakap-clinic-finder.html'],'Understand hospital bill':['Calculate a balance from a facility quote','Hospital bill estimator','Case rates guide','/tools/hospital-bill-estimator.html'],'Fix login problem':['Review access troubleshooting steps','Portal login guide','Portal login guide','/guides/philhealth-portal-login.html'],'Payment problem':['Gather payment evidence and compare periods','Contribution checker','How to pay contribution','/tools/contribution-checker.html'],'OTP problem':['Review account safety and contact the official channel','Service navigator','Portal login guide','/guides/philhealth-portal-login.html']}; shell(`${toolBase('service-navigator','Service navigator','Choose what you are trying to do and get a useful next step, tool and guide.','Help')}<section class="section"><div class="container"><div class="tool-layout"><div class="tool-card-shell"><h2>What are you trying to do?</h2><div class="wizard-option-grid" id="nav-options">${Object.keys(options).map(x => `<button class="option" data-key="${esc(x)}">${esc(x)}</button>`).join('')}</div></div><div id="nav-result">${emptyResult('Choose a goal to receive a recommended action.')}</div></div></div></section>`, 'Service navigator'); document.querySelectorAll('.option').forEach(btn => btn.addEventListener('click', () => { document.querySelectorAll('.option').forEach(x=>x.classList.remove('selected')); btn.classList.add('selected'); const x = options[btn.dataset.key]; document.querySelector('#nav-result').innerHTML = `<div class="result-panel"><div class="result-kicker">Recommended next step</div><h2 style="margin:.5rem 0">${x[0]}</h2><div class="breakdown"><div><span>Recommended tool</span><strong>${x[1]}</strong></div><div><span>Recommended guide</span><strong>${x[2]}</strong></div></div><div class="button-row"><a class="btn btn-primary" href="${x[3]}">Open recommendation ${icon('arrow')}</a></div><div class="notice info" style="margin-top:1rem"><strong>Official source</strong>For current account-specific help, use official PhilHealth channels. Never share your password, OTP or private member data with an information site.</div></div>`; })); }
 
   function librarySidebar(category = '') {
-    const categories = ['Contributions', 'Benefits', 'Requirements', 'YAKAP', 'Providers'];
+     const categories = ['Contributions', 'Benefits', 'Requirements', 'YAKAP', 'Providers', 'Portal'];
     const current = category ? D.guides.filter(g => g[2] === category).slice(0, 4) : D.guides.slice(0, 4);
     return `<aside class="library-sidebar"><div class="side-box"><h3>Browse by topic</h3>${categories.map(x => `<a class="${x === category ? 'sidebar-active' : ''}" href="/${x.toLowerCase()}.html">${x}<span>${D.guides.filter(g => g[2] === x).length}</span></a>`).join('')}</div><div class="side-box"><h3>Latest guides</h3><div class="sidebar-guide-list">${guideLinks(current)}</div><a class="sidebar-more" href="/guides.html">View all guides ${icon('arrow')}</a></div><div class="side-box"><h3>Useful tools</h3><a href="/tools/contribution-calculator.html">Contribution calculator</a><a href="/tools/requirements-finder.html">Requirements finder</a><a href="/tools/provider-finder.html">Provider finder</a><a href="/tools/yakap-benefits.html">YAKAP benefits finder</a></div><div class="side-box sidebar-note"><strong>Independent resource</strong><p class="small muted">Verify current rates, benefits, requirements, and facility details with official PhilHealth channels.</p></div></aside>`;
   }
