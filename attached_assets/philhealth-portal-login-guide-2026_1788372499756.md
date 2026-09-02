@@ -1,4 +1,4 @@
-# PhilHealth Portal Login Guide (2026)
+## PhilHealth Portal Login Guide (2026)
 
 > **Verification note:** This draft was written without live web access, so it does not cite specific PhilHealth circulars, screenshots, or the exact current portal URL/interface. Every place where a fact must be confirmed against the official PhilHealth website is marked **[VERIFY]**. Please check philhealth.gov.ph directly (or use a search-enabled research tool) before publishing, and replace or remove any [VERIFY] item that cannot be confirmed.
 
@@ -29,7 +29,7 @@
 
 ## 2. Article
 
-# PhilHealth Portal Login: Step-by-Step Guide (2026)
+## PhilHealth Portal Login: Step-by-Step Guide (2026)
 
 If you're trying to access your PhilHealth account online, this guide walks you through what the PhilHealth portal is for, how to log in, and what to do if you can't get in. It's written for members — employed, self-paying, voluntary, or OFW — who already have (or want to create) an online PhilHealth account in 2026.
 

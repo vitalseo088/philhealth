@@ -1,4 +1,4 @@
-# PhilHealth Online Account Guide (2026)
+## PhilHealth Online Account Guide (2026)
 
 > **Verification note:** I don't have live web access in this session, so I could not pull current PhilHealth circulars, screenshots, or confirm the exact live state of the online account system. Every fact that needs live confirmation is marked **[VERIFY]** instead of being guessed. Please check philhealth.gov.ph directly (or run this through a search-enabled workflow) before publishing, and resolve every [VERIFY] tag first.
 
@@ -29,7 +29,7 @@
 
 ## 2. Article
 
-# PhilHealth Online Account: How to Create and Use It (2026)
+## PhilHealth Online Account: How to Create and Use It (2026)
 
 A PhilHealth online account lets you manage parts of your PhilHealth membership over the internet instead of visiting a branch office. This guide explains what the account is for, how to set one up if you don't have one yet, how to use it once it's active, and what to do if something goes wrong. It's written for individual members — employed, self-paying, voluntary, or OFW — in 2026.
 

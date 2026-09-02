@@ -16,7 +16,7 @@
 
 # 2. Article
 
-# PhilHealth Login: How to Sign In and Fix Common Problems (2026)
+## PhilHealth Login: How to Sign In and Fix Common Problems (2026)
 
 If you're trying to log in to your PhilHealth account, you need two things: your 12-digit PhilHealth Identification Number (PIN) and the password you set when you created your Member Portal account. This guide explains where to log in, what to do if you're locked out or can't remember your password, and how to tell the real PhilHealth login page from an unofficial look-alike. It's written for individual PhilHealth members in 2026 — a separate login system exists for employers, which is noted briefly below.
 

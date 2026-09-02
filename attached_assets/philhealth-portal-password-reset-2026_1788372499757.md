@@ -16,7 +16,7 @@
 
 # 2. Article
 
-# PhilHealth Portal Password Reset: How to Regain Access (2026)
+## PhilHealth Portal Password Reset: How to Regain Access (2026)
 
 A PhilHealth portal password reset is done through the **Forgot Password** page on the official Member Portal, using your PhilHealth Identification Number (PIN) and the email address linked to your account. PhilHealth sends a reset link to that email, and you use it to set a new password.
 

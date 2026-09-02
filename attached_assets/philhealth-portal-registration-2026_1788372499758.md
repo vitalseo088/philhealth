@@ -16,7 +16,7 @@
 
 # 2. Article
 
-# PhilHealth Portal Registration: How to Create Your Member Portal Account (2026 Guide)
+## PhilHealth Portal Registration: How to Create Your Member Portal Account (2026 Guide)
 
 If you already have a PhilHealth Identification Number (PIN), PhilHealth portal registration means creating your **Member Portal account** at the official portal, `memberinquiry.philhealth.gov.ph`. If you don't have a PIN yet, you need to complete the **online PIN application** first — that's a separate step, and this guide walks through both.
 

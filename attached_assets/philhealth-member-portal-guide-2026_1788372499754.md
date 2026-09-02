@@ -16,7 +16,7 @@
 
 # 2. Article
 
-# PhilHealth Member Portal: How to Register, Log In, and Use It (2026)
+## PhilHealth Member Portal: How to Register, Log In, and Use It (2026)
 
 If you're trying to check your PhilHealth contributions, view your membership details, or get a copy of your Member Data Record (MDR) without visiting a branch, the PhilHealth Member Portal is the official tool for that. This guide walks through what the portal actually does, who can use it, and how to register and log in, based on PhilHealth's own advisories and official website. It's for any registered PhilHealth member — employed, self-paying, or otherwise — who wants to manage their records online in 2026.
 

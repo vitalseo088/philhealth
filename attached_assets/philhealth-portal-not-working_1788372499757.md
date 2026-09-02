@@ -16,7 +16,7 @@
 
 # 2. Article
 
-# PhilHealth Portal Not Working? Here's What To Check (2026)
+## PhilHealth Portal Not Working? Here's What To Check (2026)
 
 If you're trying to log in to the **PhilHealth Member Portal** and it isn't loading, won't accept your credentials, or times out, you're not alone — this happens for a few different reasons, and most of them aren't a problem with your account. This guide walks you through how to tell the difference between scheduled system maintenance, a login error, and a fake or unofficial website, plus who to contact if the real portal genuinely won't work for you.
 

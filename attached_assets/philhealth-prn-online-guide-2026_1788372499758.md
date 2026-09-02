@@ -16,7 +16,7 @@
 
 # 2. Article
 
-# PhilHealth PRN Online: What It's Actually Called in 2026 and How to Get It
+## PhilHealth PRN Online: What It's Actually Called in 2026 and How to Get It
 
 If you're searching for a "PhilHealth PRN online," here's the most important thing to know upfront: PhilHealth's own official advisories and circulars do not use the term "PRN" (Payment Reference Number). The document you're actually looking for — the one that shows your reference number and amount due before you pay — is called the **Statement of Premium Account (SPA)**. This guide explains what the SPA is, how to get it online, and why it now matters more than ever for certain members in 2026.
 
