@@ -215,8 +215,8 @@
         }
         out.push(`<div class="table-wrap article-table"><table><thead><tr>${headers}</tr></thead><tbody>${rows.join('')}</tbody></table></div>`); continue;
       }
-      const heading = line.match(/^(#{2,4})\s+(.+)/);
-      if (heading) { const level = Math.min(4, heading[1].length); out.push(`<h${level}>${markdownInline(heading[2])}</h${level}>`); i++; continue; }
+      const heading = line.match(/^(#{1,4})\s+(.+)/);
+      if (heading) { const level = Math.min(4, Math.max(2, heading[1].length)); out.push(`<h${level}>${markdownInline(heading[2])}</h${level}>`); i++; continue; }
       if (/^[-*]\s+/.test(line)) {
         const list = []; while (i < lines.length && /^[-*]\s+/.test(lines[i].trim())) { list.push(`<li>${markdownInline(lines[i].trim().replace(/^[-*]\s+/, ''))}</li>`); i++; }
         out.push(`<ul>${list.join('')}</ul>`); continue;
