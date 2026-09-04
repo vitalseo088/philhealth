@@ -195,11 +195,23 @@
     return `<div class="side-box"><h3>Share this guide</h3><div class="share-grid"><a class="share-btn share-reddit" href="https://www.reddit.com/submit?url=${shareUrl}&title=${shareTitle}" target="_blank" rel="noreferrer" aria-label="Share on Reddit">${icon('reddit')}<span>Reddit</span></a><a class="share-btn share-linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}" target="_blank" rel="noreferrer" aria-label="Share on LinkedIn">${icon('linkedin')}<span>LinkedIn</span></a><a class="share-btn share-x" href="https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}" target="_blank" rel="noreferrer" aria-label="Share on X">${icon('x')}<span>X</span></a><a class="share-btn share-facebook" href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" target="_blank" rel="noreferrer" aria-label="Share on Facebook">${icon('facebook')}<span>Facebook</span></a><a class="share-btn share-pinterest" href="https://pinterest.com/pin/create/button/?url=${shareUrl}&description=${shareTitle}" target="_blank" rel="noreferrer" aria-label="Share on Pinterest">${icon('pinterest')}<span>Pinterest</span></a><button class="share-btn share-copy js-copy-link" type="button" aria-label="Copy guide link">${icon('link')}<span>Copy link</span></button></div></div><div class="side-box"><h3>Related to this page</h3><div class="sidebar-guide-list">${guideLinks(related.length ? related : fallback)}</div><a class="sidebar-more" href="/guides.html">Browse all guides ${icon('arrow')}</a></div><div class="side-box"><h3>Popular guides</h3><div class="sidebar-guide-list">${guideLinks(popular)}</div></div>`;
   }
   function markdownInline(value) {
-    return esc(value)
-      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noreferrer">$1</a>')
+    const links = [];
+    let text = esc(value).replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, href) => {
+      links.push(`<a href="${href}" target="_blank" rel="noreferrer">${label}</a>`);
+      return `PHMARKDOWNLINK${links.length - 1}END`;
+    });
+    const portalBase = 'https://memberinquiry.philhealth.gov.ph/member/';
+    text = text.replace(/https:\/\/memberinquiry\.philhealth\.gov\.ph(?:\/[A-Za-z0-9._~:/?#[\]@!$&'()*+,;=%-]+)?|memberinquiry\.philhealth\.gov\.ph(?:\/member\/?)?/gi, match => {
+      let href = match.startsWith('http') ? match : `https://${match}`;
+      href = href.replace(/[.,;:!?]+$/, '');
+      if (/^https:\/\/memberinquiry\.philhealth\.gov\.ph(?:\/member\/?)?$/i.test(href)) href = portalBase;
+      return `[${href}](${href})`;
+    });
+    return text
       .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
       .replace(/\*([^*]+)\*/g, '<em>$1</em>')
-      .replace(/`([^`]+)`/g, '<code>$1</code>');
+      .replace(/`([^`]+)`/g, '<code>$1</code>')
+      .replace(/PHMARKDOWNLINK(\d+)END/g, (_, index) => links[Number(index)]);
   }
   function markdownHtml(markdown) {
     const lines = markdown.split(/\r?\n/), out = [];
