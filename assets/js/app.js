@@ -187,6 +187,13 @@
   function guideUrl(guide) {
     return `/guides/${guide[0].replace(/\.html$/, '')}/`;
   }
+  function guideSlug(value) {
+    return String(value || '').replace(/^\/+|\/+$/g, '').split('/').pop().replace(/\.html$/, '');
+  }
+  function findGuide(value) {
+    const slug = guideSlug(value);
+    return D.guides.find(guide => guideSlug(guide[0]) === slug);
+  }
   function guideCard(guide, index) {
     const article = guide[4] || {};
     return `<a class="card guide-card" href="${guideUrl(guide)}" style="text-decoration:none"><div class="guide-thumb guide-thumb-${(index % 3) + 1}"><img src="${guideAsset(guide, index)}" alt="${esc(guide[2])} guide image"><span class="guide-thumb-kicker">${esc(guide[2])}</span></div><div class="guide-card-content"><div class="meta">${esc(guide[2])} · ${esc(article.date || 'Guide')} · 8 min read</div><h3>${esc(guide[1])}</h3><p class="muted small">${esc(guide[3])}</p><p class="small guide-author">By ${esc(article.author || 'PhilHealth Guide')}</p><span class="card-link">Read guide ${icon('arrow')}</span></div></a>`;
@@ -281,7 +288,7 @@
     return `<section class="internal-guides"><h2>Related ${esc(current[2])} guides</h2><p>Continue with more practical information in this ${esc(current[2].toLowerCase())} series:</p><div class="related-guide-links">${related.map(guide => `<a href="${guideUrl(guide)}"><strong>${esc(guide[1])}</strong><span>${esc(guide[2])} · ${esc(guide[4]?.date || 'Guide')}</span></a>`).join('')}</div></section>`;
   }
   function loadUploadedArticle() {
-    const file = path.split('/').pop(), current = D.guides.find(guide => guide[0] === file);
+    const current = findGuide(path);
     const body = document.querySelector('.article-body');
     if (!current || !body) return;
     const article = current[4] || {};
@@ -438,7 +445,12 @@
      shell(`<div class="page-hero"><div class="container"><div class="breadcrumbs"><a href="/index.html">Home</a><span>/</span>Tools</div><div class="eyebrow">Practical utilities</div><h1>Tools for the next useful step.</h1><p class="lead">Calculators, finders and checklists that work locally in your browser. Every result explains its source and limits.</p></div></div><section class="section"><div class="container"><div class="grid grid-4">${tools.map(t => `<a class="card tool-card" href="${t[3]}" style="text-decoration:none"><span class="category-label">${t[4]}</span><span class="card-icon">${icon(t[0])}</span><h3>${t[1]}</h3><p>${t[2]}</p><span class="card-link">Open tool ${icon('arrow')}</span></a>`).join('')}</div></div></section><section class="section compact"><div class="container"><div class="notice"><strong>Trust boundary</strong>Calculators show only the arithmetic supported by their inputs. Directory and case-rate tools link to official lists when a verified local record is not loaded.</div></div></section>`, 'Tools');
   }
   function article() {
-    const file = path.split('/').pop(), g = D.guides.find(x => x[0] === file) || D.guides[0], articleData = g[4] || {};
+    const g = findGuide(path);
+    if (!g) {
+      shell(`<div class="page-hero"><div class="container"><div class="breadcrumbs"><a href="/index.html">Home</a><span>/</span><a href="/guides.html">Guides</a></div><div class="eyebrow">Guide not found</div><h1>This guide is not available.</h1><p class="lead">The requested guide could not be matched to a published article. Browse the guide library to find the correct page.</p><div class="button-row"><a class="btn btn-primary" href="/guides.html">Browse guides ${icon('arrow')}</a><a class="btn btn-ghost" href="/index.html">Return home</a></div></div></div>`, 'Guide not found');
+      return;
+    }
+    const articleData = g[4] || {};
     const toc = (articleData.content || '').split(/\r?\n/).filter(line => /^##\s+/.test(line)).slice(0, 8).map((line, i) => `<a href="#section-${i}">${esc(line.replace(/^##\s+/, ''))}</a>`).join('');
     let rendered = markdownHtml(articleData.content || '');
     let sectionIndex = 0;

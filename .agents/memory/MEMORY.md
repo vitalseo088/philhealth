@@ -1,2 +1,3 @@
 - [Data trust model](data-trust-model.md) — keep uncertain healthcare facts usable but visibly labeled, sourced, and replaceable.
+- [Article route resolution](article-route-resolution.md) — normalize clean and `.html` guide URLs; never silently substitute an unrelated article.
 - [Static article data loading](static-article-data-loading.md) — pages that render shared article records must load the article dataset before the shared renderer.
