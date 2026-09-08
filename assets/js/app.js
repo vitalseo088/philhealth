@@ -41,7 +41,10 @@
     { slug: 'philhealth-cesarean-coverage-2026.html', title: 'PhilHealth Cesarean Coverage 2026: How Much It Pays', category: 'Benefits', date: 'September 3, 2026', author: 'PhilHealth Guide Editorial Team', image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=82', excerpt: 'Learn how much PhilHealth pays for a Cesarean delivery in 2026, who qualifies, what the case rate includes, and how the hospital deduction works.', metaDescription: 'PhilHealth Cesarean coverage in 2026 pays ₱58,000–₱62,000 under Circular No. 2026-0005. See eligibility, inclusions, and how the deduction works.', sourceFile: '/attached_assets/philhealth-cesarean-coverage-2026_1788880332563.md', seoImport: true },
     { slug: 'philhealth-maternity-benefits.html', title: "PhilHealth Maternity Benefits (2026): What's Covered and How to Claim", category: 'Benefits', date: 'September 4, 2026', author: 'PhilHealth Guide Editorial Team', image: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=1200&q=82', excerpt: 'A practical guide to PhilHealth maternity benefits, including delivery coverage, eligibility, accredited facilities, billing deductions, and what still needs verification.', metaDescription: "Understand PhilHealth maternity benefits in 2026, what is generally covered, how accredited facilities process claims, and which amounts to verify.", sourceFile: '/attached_assets/philhealth-maternity-benefits_1788880332565.md', seoImport: true }
   ];
-  D.guides = [...seoArticles.map(article => [article.slug, article.title, article.category, article.excerpt, article]), ...D.guides];
+  const importedGuides = seoArticles
+    .map(article => [article.slug, article.title, article.category, article.excerpt, article])
+    .sort((a, b) => Date.parse(b[4]?.date || '') - Date.parse(a[4]?.date || ''));
+  D.guides = [...importedGuides, ...D.guides];
   const requestedPath = window.location.pathname.replace(/\/$/, '') || '/index.html';
   const path = requestedPath === '/tools'
     ? '/tools/index.html'
