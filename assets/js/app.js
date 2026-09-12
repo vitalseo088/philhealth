@@ -56,7 +56,12 @@
   const importedGuides = seoArticles
     .map(article => [article.slug, article.title, article.category, article.excerpt, article])
     .sort((a, b) => Date.parse(b[4]?.date || '') - Date.parse(a[4]?.date || ''));
-  D.guides = [...importedGuides, ...D.guides];
+  D.guides = [...importedGuides, ...D.guides].sort((a, b) => {
+    const aTime = Date.parse(a[4]?.date || '');
+    const bTime = Date.parse(b[4]?.date || '');
+    if (aTime !== bTime) return (Number.isFinite(bTime) ? bTime : -Infinity) - (Number.isFinite(aTime) ? aTime : -Infinity);
+    return String(a[1] || '').localeCompare(String(b[1] || ''));
+  });
   const requestedPath = window.location.pathname.replace(/\/$/, '') || '/index.html';
   const path = requestedPath === '/tools'
     ? '/tools/index.html'
