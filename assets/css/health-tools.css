@@ -1,0 +1,58 @@
+/* Health and food tools */
+.health-tool { max-width: 1120px; }
+.health-tool-layout { align-items: stretch; }
+.health-disclaimer { margin-bottom: 1.25rem; }
+.health-season { border-left: 4px solid var(--green); background: #edf7f1; color: var(--navy); margin-bottom: 1.25rem; padding: .9rem 1rem; }
+.health-privacy { margin: .8rem 0 0; }
+.health-tool .tool-card-shell { border-radius: 12px; box-shadow: 0 8px 28px rgba(13, 45, 35, .05); }
+.health-tool .result-panel { border-radius: 12px; }
+.health-tool .health-result-panel { min-height: 320px; }
+.health-tool .result-value { overflow-wrap: anywhere; }
+.health-tool .health-result-danger { background: #fff3ef; border-color: #e6b5a8; }
+.health-flag-list { color: var(--ink); line-height: 1.6; margin: .4rem 0 1.1rem; padding-left: 1.25rem; }
+.health-flag-list li + li { margin-top: .25rem; }
+.health-checks { border: 1px solid var(--border); border-radius: 8px; margin: 1.1rem 0; padding: .85rem 1rem .3rem; }
+.health-checks legend { color: var(--navy); font-size: .92rem; font-weight: 700; padding: 0 .35rem; }
+.health-checks label { align-items: flex-start; border-bottom: 1px solid #e8efeb; display: flex; gap: .65rem; line-height: 1.45; padding: .7rem 0; }
+.health-checks label:last-child { border-bottom: 0; }
+.health-checks input { accent-color: var(--green); flex: 0 0 auto; margin: .2rem 0 0; min-height: 0; width: 1.1rem; }
+.health-sources { background: #f7faf8; border: 1px solid var(--border); border-radius: 10px; margin-top: 1.5rem; padding: 1rem 1.1rem; }
+.health-sources summary { color: var(--navy); cursor: pointer; font-weight: 700; }
+.health-sources ul { line-height: 1.6; margin: .8rem 0; padding-left: 1.25rem; }
+.health-sources li + li { margin-top: .35rem; }
+.health-sources a { overflow-wrap: anywhere; }
+.health-grid-note { display: grid; gap: 1rem; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 1.5rem; }
+.health-grid-note .card { border-radius: 10px; }
+.health-grid-note .category-label { display: inline-block; font-size: .68rem; margin-bottom: .5rem; }
+.health-grid-note h3 { font-size: 1rem; }
+.health-grid-note p { font-size: .84rem; line-height: 1.55; margin-bottom: 0; }
+.health-band { border: 1px solid #c9d9d0; border-radius: 99px; color: var(--navy); display: inline-flex; font-size: .78rem; font-weight: 700; margin: -.7rem 0 1rem; padding: .35rem .75rem; }
+.health-band-below-caution, .health-band-caution { background: #edf7f1; }
+.health-band-extreme-caution { background: #fff8df; border-color: #e5d27f; }
+.health-band-danger { background: #fff0e7; border-color: #e8b48c; }
+.health-band-extreme-danger { background: #ffe9e9; border-color: #e4a3a3; }
+.health-heat-value { font-size: clamp(1.65rem, 4vw, 2.6rem); }
+.health-emergency { margin-top: 1.3rem; }
+.health-currency-input { align-items: center; background: var(--white); border: 1px solid #c6d5ce; border-radius: 7px; display: flex; min-height: 46px; padding-left: .75rem; }
+.health-currency-input span { color: var(--navy); font-weight: 700; }
+.health-currency-input input { border: 0; min-height: 44px; }
+.health-currency-input:focus-within { border-color: var(--green); box-shadow: 0 0 0 3px rgba(34, 110, 78, .12); }
+.health-currency-input input:focus { box-shadow: none; outline: 0; }
+.health-rice-swaps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.health-tool .notice.info { margin-top: 1rem; }
+.health-tool .field-error { color: var(--muted); font-weight: 400; }
+.health-tool input:invalid:not(:focus):not(:placeholder-shown) { border-color: #c6d5ce; }
+.health-tool input:user-invalid { border-color: #d77a6f; }
+.health-tool input:focus-visible, .health-tool select:focus-visible, .health-sources summary:focus-visible { outline: 3px solid rgba(27, 113, 77, .3); outline-offset: 2px; }
+[hidden] { display: none !important; }
+@media (max-width: 1000px) {
+  .health-grid-note { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .health-grid-note { grid-template-columns: 1fr 1fr; }
+  .health-tool .health-result-panel { min-height: 0; }
+}
+@media (max-width: 480px) {
+  .health-grid-note, .health-rice-swaps { grid-template-columns: 1fr; }
+  .health-checks { padding-inline: .75rem; }
+}
