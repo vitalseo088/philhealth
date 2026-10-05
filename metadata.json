@@ -1,0 +1,8 @@
+{
+  "name": "PhilHealth Guide",
+  "description": "Comprehensive guide, directories, calculators, and tools for PhilHealth members and healthcare programs.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
