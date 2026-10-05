@@ -60,3 +60,69 @@ test('rice estimates include cup size, swaps, and optional PHP-based cost input'
   assert.ok(priced.pricePerServing > 0);
   assert.equal(tools.riceEstimate({ cups: 1, rice: 'white' }).pricePerServing, null);
 });
+
+test('PhilHealth PIN formatting and validation', () => {
+  assert.deepEqual(tools.formatPIN('123456789012'), {
+    clean: '123456789012',
+    formatted: '12-345678901-2',
+    valid: true
+  });
+  assert.deepEqual(tools.formatPIN('12-345678901-2'), {
+    clean: '123456789012',
+    formatted: '12-345678901-2',
+    valid: true
+  });
+  assert.equal(tools.formatPIN('12345').valid, false);
+  assert.equal(tools.formatPIN('').valid, false);
+});
+
+test('PhilHealth SPA premium calculation with 5% rate, ₱10,000 floor, and ₱100,000 ceiling', () => {
+  // Mid salary
+  const mid = tools.computeSPAPremium({ income: 25000, months: 3 });
+  assert.equal(mid.monthlyPremium, 1250);
+  assert.equal(mid.totalPremium, 3750);
+  assert.equal(mid.isFloor, false);
+  assert.equal(mid.isCeiling, false);
+
+  // Floor salary (₱8,000 -> floor base ₱10,000 -> ₱500/mo)
+  const floor = tools.computeSPAPremium({ income: 8000, months: 1 });
+  assert.equal(floor.base, 10000);
+  assert.equal(floor.monthlyPremium, 500);
+  assert.equal(floor.totalPremium, 500);
+  assert.equal(floor.isFloor, true);
+
+  // Ceiling salary (₱150,000 -> ceiling base ₱100,000 -> ₱5,000/mo)
+  const ceiling = tools.computeSPAPremium({ income: 150000, months: 12 });
+  assert.equal(ceiling.base, 100000);
+  assert.equal(ceiling.monthlyPremium, 5000);
+  assert.equal(ceiling.totalPremium, 60000);
+  assert.equal(ceiling.isCeiling, true);
+
+  assert.throws(() => tools.computeSPAPremium({ income: 0 }), RangeError);
+  assert.throws(() => tools.computeSPAPremium({ income: -500 }), RangeError);
+});
+
+test('PhilHealth SPA reference format and due date calculations', () => {
+  const ref = tools.generateSPAReference({ year: 2026, pin: '12-345678901-2' });
+  assert.match(ref, /^SPA-2026-\d{4}-\d{6}$/);
+
+  // Quarter 1 (Jan to March 2026)
+  const q1 = tools.calculateSPADueDate({ year: 2026, startMonth: 1, months: 3 });
+  assert.equal(q1.endMonth, 3);
+  assert.equal(q1.dueDateFormatted, 'March 31, 2026');
+  assert.equal(q1.coverageLabel, 'January 2026 – March 2026 (3 months)');
+
+  // 1 month (April 2026)
+  const apr = tools.calculateSPADueDate({ year: 2026, startMonth: 4, months: 1 });
+  assert.equal(apr.endMonth, 4);
+  assert.equal(apr.dueDateFormatted, 'April 30, 2026');
+  assert.equal(apr.coverageLabel, 'April 2026');
+});
+
+test('PhilHealth SPA QR Code SVG generation', () => {
+  const svg = tools.generateQRCodeSVG('SPA-2026-9012-123456');
+  assert.ok(svg.startsWith('<svg'));
+  assert.ok(svg.includes('viewBox='));
+  assert.ok(svg.includes('rect'));
+  assert.ok(svg.endsWith('</svg>'));
+});

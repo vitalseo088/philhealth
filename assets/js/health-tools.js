@@ -604,6 +604,270 @@
     return { bmi, diabetes, hypertension, heatIndex, hydration, rice };
   }
 
+  function formatPIN(pin) {
+    const clean = String(pin || '').replace(/\D/g, '');
+    const valid = clean.length === 12;
+    const formatted = clean.length >= 12
+      ? `${clean.slice(0, 2)}-${clean.slice(2, 11)}-${clean.slice(11, 12)}`
+      : clean;
+    return { clean, formatted, valid };
+  }
+
+  function computeSPAPremium({ income, months = 1, memberCategory = 'Self-Earning Individual' } = {}) {
+    const entered = Number(income);
+    if (!Number.isFinite(entered) || entered <= 0) {
+      throw new RangeError('Enter a valid monthly basic income greater than ₱0.');
+    }
+    const numMonths = Math.max(1, Math.min(24, Math.floor(Number(months) || 1)));
+    const FLOOR = 10000;
+    const CEILING = 100000;
+    const RATE = 0.05; // 5.0% official rate
+
+    const base = Math.min(Math.max(entered, FLOOR), CEILING);
+    const monthlyPremium = Math.round(base * RATE * 100) / 100;
+    const totalPremium = Math.round(monthlyPremium * numMonths * 100) / 100;
+
+    return {
+      income: entered,
+      base,
+      rate: RATE,
+      ratePercent: 5.0,
+      monthlyPremium,
+      months: numMonths,
+      totalPremium,
+      isFloor: entered < FLOOR,
+      isCeiling: entered > CEILING,
+      floor: FLOOR,
+      ceiling: CEILING,
+      memberCategory
+    };
+  }
+
+  function generateSPAReference({ year = 2026, pin = '' } = {}) {
+    const cleanPin = String(pin || '').replace(/\D/g, '');
+    const pinPart = cleanPin.length >= 4 ? cleanPin.slice(-4) : String(Math.floor(1000 + Math.random() * 9000));
+    const randomSuffix = String(Math.floor(100000 + Math.random() * 900000));
+    return `SPA-${year}-${pinPart}-${randomSuffix}`;
+  }
+
+  const MONTH_NAMES = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+
+  function calculateSPADueDate({ year = 2026, startMonth = 1, months = 1 } = {}) {
+    const y = Number(year) || 2026;
+    const sm = Math.max(1, Math.min(12, Number(startMonth) || 1));
+    const m = Math.max(1, Math.min(24, Number(months) || 1));
+
+    const totalEndMonth = sm + m - 1;
+    const endYear = y + Math.floor((totalEndMonth - 1) / 12);
+    const endMonth = ((totalEndMonth - 1) % 12) + 1;
+
+    const lastDay = new Date(endYear, endMonth, 0).getDate();
+    const dueDateFormatted = `${MONTH_NAMES[endMonth - 1]} ${lastDay}, ${endYear}`;
+    const startMonthName = MONTH_NAMES[sm - 1];
+    const endMonthName = MONTH_NAMES[endMonth - 1];
+    const coverageLabel = m === 1
+      ? `${startMonthName} ${y}`
+      : `${startMonthName} ${y} – ${endMonthName} ${endYear} (${m} months)`;
+
+    return {
+      startMonth: sm,
+      startMonthName,
+      startYear: y,
+      endMonth,
+      endMonthName,
+      endYear,
+      months: m,
+      dueDateFormatted,
+      coverageLabel
+    };
+  }
+
+  function generateQRMatrix(text) {
+    const str = String(text || '');
+    const bytes = [];
+    for (let i = 0; i < str.length; i++) {
+      let code = str.charCodeAt(i);
+      if (code < 128) bytes.push(code);
+      else if (code < 2048) { bytes.push((code >> 6) | 192); bytes.push((code & 63) | 128); }
+      else { bytes.push((code >> 12) | 224); bytes.push(((code >> 6) & 63) | 128); bytes.push((code & 63) | 128); }
+    }
+
+    const VERSIONS = [
+      null,
+      { v: 1, size: 21, dataCap: 14, ecLen: 10, align: [] },
+      { v: 2, size: 25, dataCap: 26, ecLen: 16, align: [18] },
+      { v: 3, size: 29, dataCap: 42, ecLen: 26, align: [22] },
+      { v: 4, size: 33, dataCap: 62, ecLen: 36, align: [26] },
+      { v: 5, size: 37, dataCap: 84, ecLen: 48, align: [30] },
+      { v: 6, size: 41, dataCap: 106, ecLen: 64, align: [34] },
+    ];
+    let conf = VERSIONS.find(c => c && bytes.length <= c.dataCap);
+    if (!conf) conf = VERSIONS[6];
+
+    const bits = [];
+    function pushBits(val, len) {
+      for (let i = len - 1; i >= 0; i--) bits.push((val >> i) & 1);
+    }
+    pushBits(4, 4); // byte mode
+    pushBits(bytes.length, 8);
+    for (let i = 0; i < bytes.length; i++) pushBits(bytes[i], 8);
+    pushBits(0, Math.min(4, conf.dataCap * 8 - bits.length));
+    while (bits.length % 8 !== 0) bits.push(0);
+
+    const dataBytes = [];
+    for (let i = 0; i < bits.length; i += 8) {
+      let b = 0;
+      for (let j = 0; j < 8; j++) b = (b << 1) | bits[i + j];
+      dataBytes.push(b);
+    }
+    const pad = [0xEC, 0x11];
+    let padIdx = 0;
+    while (dataBytes.length < conf.dataCap) {
+      dataBytes.push(pad[padIdx % 2]);
+      padIdx++;
+    }
+
+    const exp = new Uint8Array(512), log = new Uint8Array(256);
+    for (let i = 0, x = 1; i < 255; i++) { exp[i] = x; log[x] = i; x <<= 1; if (x & 256) x ^= 0x11d; }
+    for (let i = 255; i < 512; i++) exp[i] = exp[i - 255];
+    const mul = (a, b) => (a === 0 || b === 0) ? 0 : exp[log[a] + log[b]];
+
+    let g = [1];
+    for (let i = 0; i < conf.ecLen; i++) {
+      const next = new Array(g.length + 1).fill(0);
+      for (let j = 0; j < g.length; j++) {
+        next[j] ^= mul(g[j], exp[i]);
+        next[j + 1] ^= g[j];
+      }
+      g = next;
+    }
+
+    const ec = new Uint8Array(conf.ecLen);
+    for (let i = 0; i < dataBytes.length; i++) {
+      const factor = dataBytes[i] ^ ec[0];
+      for (let j = 0; j < conf.ecLen - 1; j++) {
+        ec[j] = ec[j + 1] ^ mul(g[conf.ecLen - 1 - j], factor);
+      }
+      ec[conf.ecLen - 1] = mul(g[0], factor);
+    }
+
+    const allCodewords = [...dataBytes, ...ec];
+    const allBits = [];
+    for (let i = 0; i < allCodewords.length; i++) {
+      const b = allCodewords[i];
+      for (let j = 7; j >= 0; j--) allBits.push((b >> j) & 1);
+    }
+
+    const N = conf.size;
+    const mat = Array.from({ length: N }, () => new Array(N).fill(null));
+    const isFunc = Array.from({ length: N }, () => new Array(N).fill(false));
+
+    function setFunc(r, c, v) {
+      mat[r][c] = v;
+      isFunc[r][c] = true;
+    }
+
+    function finder(r0, c0) {
+      for (let r = 0; r < 7; r++) {
+        for (let c = 0; c < 7; c++) {
+          const border = r === 0 || r === 6 || c === 0 || c === 6;
+          const center = r >= 2 && r <= 4 && c >= 2 && c <= 4;
+          setFunc(r0 + r, c0 + c, border || center ? 1 : 0);
+        }
+      }
+      for (let r = -1; r <= 7; r++) {
+        for (let c = -1; c <= 7; c++) {
+          const nr = r0 + r, nc = c0 + c;
+          if (nr >= 0 && nr < N && nc >= 0 && nc < N && !isFunc[nr][nc]) {
+            setFunc(nr, nc, 0);
+          }
+        }
+      }
+    }
+    finder(0, 0);
+    finder(0, N - 7);
+    finder(N - 7, 0);
+
+    if (conf.align.length) {
+      for (let i = 0; i < conf.align.length; i++) {
+        const r = conf.align[i];
+        for (let j = 0; j < conf.align.length; j++) {
+          const c = conf.align[j];
+          if (isFunc[r][c]) continue;
+          for (let dr = -2; dr <= 2; dr++) {
+            for (let dc = -2; dc <= 2; dc++) {
+              const edge = Math.abs(dr) === 2 || Math.abs(dc) === 2;
+              const center = dr === 0 && dc === 0;
+              setFunc(r + dr, c + dc, edge || center ? 1 : 0);
+            }
+          }
+        }
+      }
+    }
+
+    for (let i = 8; i < N - 8; i++) {
+      if (!isFunc[6][i]) setFunc(6, i, i % 2 === 0 ? 1 : 0);
+      if (!isFunc[i][6]) setFunc(i, 6, i % 2 === 0 ? 1 : 0);
+    }
+
+    setFunc(4 * conf.v + 9, 8, 1);
+
+    for (let i = 0; i < 9; i++) {
+      if (!isFunc[8][i]) setFunc(8, i, 0);
+      if (!isFunc[i][8]) setFunc(i, 8, 0);
+    }
+    for (let i = N - 8; i < N; i++) {
+      if (!isFunc[8][i]) setFunc(8, i, 0);
+      if (!isFunc[i][8]) setFunc(i, 8, 0);
+    }
+
+    let bitIdx = 0;
+    for (let right = N - 1; right > 0; right -= 2) {
+      if (right === 6) right--;
+      const up = ((N - 1 - right) >> 1) % 2 === 0;
+      for (let vert = 0; vert < N; vert++) {
+        const r = up ? N - 1 - vert : vert;
+        for (let c = right; c >= right - 1; c--) {
+          if (!isFunc[r][c]) {
+            const bit = bitIdx < allBits.length ? allBits[bitIdx++] : 0;
+            const mask = (r + c) % 2 === 0;
+            mat[r][c] = mask ? bit ^ 1 : bit;
+          }
+        }
+      }
+    }
+
+    const FORMAT_BITS = [1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1];
+    for (let i = 0; i < 6; i++) mat[8][i] = FORMAT_BITS[i];
+    mat[8][7] = FORMAT_BITS[6];
+    mat[8][8] = FORMAT_BITS[7];
+    mat[7][8] = FORMAT_BITS[8];
+    for (let i = 9; i < 15; i++) mat[14 - i][8] = FORMAT_BITS[i];
+
+    for (let i = 0; i < 8; i++) mat[N - 1 - i][8] = FORMAT_BITS[i];
+    for (let i = 8; i < 15; i++) mat[8][N - 15 + i] = FORMAT_BITS[i];
+
+    return { N, mat };
+  }
+
+  function generateQRCodeSVG(text, size = 180) {
+    const { N, mat } = generateQRMatrix(String(text || ''));
+    const margin = 2;
+    const viewBoxSize = N + margin * 2;
+    let rects = '';
+    for (let r = 0; r < N; r++) {
+      for (let c = 0; c < N; c++) {
+        if (mat[r][c] === 1) {
+          rects += `<rect x="${c + margin}" y="${r + margin}" width="1" height="1" fill="#17324D"/>`;
+        }
+      }
+    }
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${viewBoxSize} ${viewBoxSize}" width="${size}" height="${size}" shape-rendering="crispEdges" role="img" aria-label="PhilHealth SPA QR Code"><rect width="100%" height="100%" fill="#ffffff"/>${rects}</svg>`;
+  }
+
   const api = {
     create,
     computeBMI,
@@ -613,7 +877,12 @@
     pagasaHeatBand,
     hydrationEstimate,
     riceEstimate,
-    constants: { LB_TO_KG, IN_TO_CM, STANDARD_CUP_ML, RICE_REFERENCE }
+    formatPIN,
+    computeSPAPremium,
+    generateSPAReference,
+    calculateSPADueDate,
+    generateQRCodeSVG,
+    constants: { LB_TO_KG, IN_TO_CM, STANDARD_CUP_ML, RICE_REFERENCE, MONTH_NAMES }
   };
   root.PHHealthTools = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;

@@ -9,7 +9,9 @@ window.PHData = {
     branchDirectoryUrl: 'https://www.philhealth.gov.ph/about_us/directory/',
     yakapDirectoryUrl: 'https://www.philhealth.gov.ph/partners/providers/facilities/accredited/YAKAP.pdf',
     circularsUrl: 'https://www.philhealth.gov.ph/circulars/2026/',
-    caseRateSearchUrl: 'https://www.philhealth.gov.ph/services/acr'
+    caseRateSearchUrl: 'https://www.philhealth.gov.ph/services/acr',
+    spagenUrl: 'https://spagen.philhealth.gov.ph/',
+    spaAdvisoryUrl: 'https://www.philhealth.gov.ph/advisories/2026/'
   },
   contributionRules: [
     { id: 'rule-direct-contributors-2025', title: 'Premium schedule for direct contributors', category: 'Contribution', description: 'The official 2025 advisory states a 5.0% premium rate for direct contributors, applied to monthly basic salary between the published floor and ceiling.', source: 'PhilHealth Advisory No. 2025-0002', sourceUrl: 'https://www.philhealth.gov.ph/advisories/2025/PA2025-0002.pdf', effectiveDate: 'Applicable period beginning January 2025', lastVerified: '13 August 2026', status: 'verified', year: 2025, rate: .05, floor: 10000, ceiling: 100000 }

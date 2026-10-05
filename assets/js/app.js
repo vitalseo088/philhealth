@@ -90,7 +90,10 @@
     if (aTime !== bTime) return (Number.isFinite(bTime) ? bTime : -Infinity) - (Number.isFinite(aTime) ? aTime : -Infinity);
     return String(a[1] || '').localeCompare(String(b[1] || ''));
   });
-  const requestedPath = window.location.pathname.replace(/\/$/, '') || '/index.html';
+  const rawPath = window.location.pathname.replace(/\/$/, '') || '/index.html';
+  const requestedPath = rawPath.endsWith('/index.html') && rawPath !== '/index.html' && rawPath !== '/tools/index.html'
+    ? `${rawPath.slice(0, -11)}.html`
+    : rawPath;
   const path = requestedPath === '/tools'
     ? '/tools/index.html'
     : requestedPath === '/guides'
@@ -173,7 +176,7 @@
   }
   function footer() {
     return `<footer class="footer"><div class="container footer-grid"><div><a class="brand" href="/index.html"><i class="brand-mark">${icon('heart')}</i><strong style="color:#fff">PhilHealth Guide<span style="color:#c7d4de">Independent resource</span></strong></a><p style="margin-top:1rem">Practical tools and plain-language information for navigating PhilHealth questions.</p></div>
-      <div><h3>Tools</h3><a href="/tools/contribution-calculator.html">Contribution calculator</a><a href="/tools/requirements-finder.html">Requirements finder</a><a href="/tools/benefits-finder.html">Benefits finder</a><a href="/tools/provider-finder.html">Provider finder</a></div>
+      <div><h3>Tools</h3><a href="/tools/spa-generator.html">PhilHealth SPA generator</a><a href="/tools/contribution-calculator.html">Contribution calculator</a><a href="/tools/requirements-finder.html">Requirements finder</a><a href="/tools/benefits-finder.html">Benefits finder</a><a href="/tools/provider-finder.html">Provider finder</a></div>
       <div><h3>Guides</h3><a href="/guides.html">Browse guides</a><a href="/guides/philhealth-yakap-benefits-2026.html">YAKAP benefits</a><a href="/guides/philhealth-dialysis-coverage-2026.html">Dialysis coverage</a><a href="/guides/philhealth-contribution-self-employed-2026.html">Self-employed contributions</a></div>
       <div><h3>Topics</h3><a href="/contributions.html">Contributions</a><a href="/requirements.html">Requirements</a><a href="/providers.html">Providers</a><a href="/branches.html">Branches</a></div>
       <div><h3>Trust</h3><a href="/sources.html">Sources</a><a href="/editorial-policy.html">Editorial policy</a><a href="/corrections.html">Corrections</a><a href="/contact.html">Contact</a></div>
@@ -197,6 +200,7 @@
     const index = [
        ...D.guides.map(g => ({ title:g[1], desc:g[3], type:'Guide', url:guideUrl(g) })),
       ...[
+        ['PhilHealth SPA generator','Generate a Statement of Premium Account (SPA) with QR code for self-paying contributions.','/tools/spa-generator.html'],
         ['Contribution calculator','Calculate from the latest official schedule loaded in this resource.','/tools/contribution-calculator.html'],
         ['Requirements finder','Build a practical transaction checklist.','/tools/requirements-finder.html'],
         ['Benefits finder','Search benefit topics and questions to verify.','/tools/benefits-finder.html'],
@@ -258,12 +262,21 @@
     const popular = D.guides.filter(g => g[0] !== current[0]).slice(0, 4);
     const shareUrl = encodeURIComponent(location.href);
     const shareTitle = encodeURIComponent(current[1]);
-    return `<div class="side-box"><h3>Share this guide</h3><div class="share-grid"><a class="share-btn share-reddit" href="https://www.reddit.com/submit?url=${shareUrl}&title=${shareTitle}" target="_blank" rel="noreferrer" aria-label="Share on Reddit">${icon('reddit')}<span>Reddit</span></a><a class="share-btn share-linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}" target="_blank" rel="noreferrer" aria-label="Share on LinkedIn">${icon('linkedin')}<span>LinkedIn</span></a><a class="share-btn share-x" href="https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}" target="_blank" rel="noreferrer" aria-label="Share on X">${icon('x')}<span>X</span></a><a class="share-btn share-facebook" href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" target="_blank" rel="noreferrer" aria-label="Share on Facebook">${icon('facebook')}<span>Facebook</span></a><a class="share-btn share-pinterest" href="https://pinterest.com/pin/create/button/?url=${shareUrl}&description=${shareTitle}" target="_blank" rel="noreferrer" aria-label="Share on Pinterest">${icon('pinterest')}<span>Pinterest</span></a><button class="share-btn share-copy js-copy-link" type="button" aria-label="Copy guide link">${icon('link')}<span>Copy link</span></button></div></div><div class="side-box"><h3>Related to this page</h3><div class="sidebar-guide-list">${guideLinks(related.length ? related : fallback)}</div><a class="sidebar-more" href="/guides.html">Browse all guides ${icon('arrow')}</a></div><div class="side-box"><h3>Popular guides</h3><div class="sidebar-guide-list">${guideLinks(popular)}</div></div>`;
+    const isSpaRelevant = current[2] === 'Contributions' || current[2] === 'Portal' || /spa|payment|contribution|prn|salary|freelance|ofw|voluntary|missed/i.test(`${current[0]} ${current[1]}`);
+    const spaSideBox = isSpaRelevant ? `
+      <div class="side-box" style="background:#eef7f3;border:1px solid #b7dcce;border-radius:10px">
+        <span class="category-label" style="background:var(--green);color:#fff">2026 Mandate</span>
+        <h4 style="font-size:.95rem;margin:.55rem 0 .3rem;color:var(--navy)">PhilHealth SPA Generator</h4>
+        <p class="small muted" style="margin:0 0 .8rem;line-height:1.45">Under the "No SPA, No Payment" policy, generate your official Statement of Premium Account and payment QR code before paying.</p>
+        <a class="btn btn-primary small" href="/tools/spa-generator.html" style="width:100%;text-align:center;box-sizing:border-box">Generate SPA ${icon('arrow')}</a>
+      </div>` : '';
+    return `${spaSideBox}<div class="side-box"><h3>Share this guide</h3><div class="share-grid"><a class="share-btn share-reddit" href="https://www.reddit.com/submit?url=${shareUrl}&title=${shareTitle}" target="_blank" rel="noreferrer" aria-label="Share on Reddit">${icon('reddit')}<span>Reddit</span></a><a class="share-btn share-linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}" target="_blank" rel="noreferrer" aria-label="Share on LinkedIn">${icon('linkedin')}<span>LinkedIn</span></a><a class="share-btn share-x" href="https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}" target="_blank" rel="noreferrer" aria-label="Share on X">${icon('x')}<span>X</span></a><a class="share-btn share-facebook" href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" target="_blank" rel="noreferrer" aria-label="Share on Facebook">${icon('facebook')}<span>Facebook</span></a><a class="share-btn share-pinterest" href="https://pinterest.com/pin/create/button/?url=${shareUrl}&description=${shareTitle}" target="_blank" rel="noreferrer" aria-label="Share on Pinterest">${icon('pinterest')}<span>Pinterest</span></a><button class="share-btn share-copy js-copy-link" type="button" aria-label="Copy guide link">${icon('link')}<span>Copy link</span></button></div></div><div class="side-box"><h3>Related to this page</h3><div class="sidebar-guide-list">${guideLinks(related.length ? related : fallback)}</div><a class="sidebar-more" href="/guides.html">Browse all guides ${icon('arrow')}</a></div><div class="side-box"><h3>Popular guides</h3><div class="sidebar-guide-list">${guideLinks(popular)}</div></div>`;
   }
   function markdownInline(value) {
     const links = [];
     let text = esc(value).replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, href) => {
-      links.push(`<a href="${href}" target="_blank" rel="noreferrer">${label}</a>`);
+      const isInternal = href.startsWith('/') || href.startsWith('#');
+      links.push(`<a href="${href}" ${isInternal ? '' : 'target="_blank" rel="noreferrer'}>${label}</a>`);
       return `PHMARKDOWNLINK${links.length - 1}END`;
     });
     const portalBase = 'https://memberinquiry.philhealth.gov.ph/member/';
@@ -329,14 +342,38 @@
               : officialUrl;
       return ` (verify with [the official PhilHealth source](${url}))`;
     });
+    // Smart contextual in-text linking to SPA Generator
+    let spaLinksCount = 0;
+    body = body.replace(/\b(SPA generator|Statement of Premium Account \(SPA\)|Statement of Premium Account|No SPA, No Payment policy|No SPA, No Payment)\b/gi, (match, phrase) => {
+      if (spaLinksCount < 2) {
+        spaLinksCount++;
+        return `[${phrase}](/tools/spa-generator.html)`;
+      }
+      return match;
+    });
+
     return body.replace(/^---\s*$/gm, '').trim();
   }
   function articleToc(markdown) {
     return String(markdown || '').split(/\r?\n/).filter(line => /^##\s+/.test(line)).slice(0, 8).map((line, i) => `<a href="#section-${i}">${esc(line.replace(/^##\s+/, ''))}</a>`).join('');
   }
   function internalGuideLinks(current) {
+    const isSpaRelevant = current[2] === 'Contributions' || current[2] === 'Portal' || /spa|payment|contribution|prn|salary|freelance|ofw|voluntary|missed/i.test(`${current[0]} ${current[1]}`);
+    const spaPromo = isSpaRelevant ? `
+      <div class="article-spa-promo">
+        <div class="spa-promo-header">
+          <span class="category-label" style="background:var(--green);color:#fff">2026 Interactive Tool</span>
+          <span class="status verified">Advisory No. 2026-0016</span>
+        </div>
+        <h3>Need to generate your Statement of Premium Account (SPA)?</h3>
+        <p>Under PhilHealth's "No SPA, No Payment" policy for direct contributors, self-paying members, OFWs, and freelancers must present an official SPA reference number and QR code before paying at collecting agents or online (GCash, Maya, Link.BizPortal). Use our verified browser tool to compute your exact premium and generate a printable voucher.</p>
+        <div class="button-row">
+          <a class="btn btn-primary" href="/tools/spa-generator.html">Generate Your SPA Now ${icon('arrow')}</a>
+          <a class="btn btn-ghost" href="/tools/contribution-calculator.html">Contribution Calculator</a>
+        </div>
+      </div>` : '';
     const related = D.guides.filter(guide => guide[0] !== current[0] && guide[2] === current[2]);
-    return `<section class="internal-guides"><h2>Related ${esc(current[2])} guides</h2><p>Continue with more practical information in this ${esc(current[2].toLowerCase())} series:</p><div class="related-guide-links">${related.map(guide => `<a href="${guideUrl(guide)}"><strong>${esc(guide[1])}</strong><span>${esc(guide[2])} · ${esc(guide[4]?.date || 'Guide')}</span></a>`).join('')}</div></section>`;
+    return `${spaPromo}<section class="internal-guides"><h2>Related ${esc(current[2])} guides</h2><p>Continue with more practical information in this ${esc(current[2].toLowerCase())} series:</p><div class="related-guide-links">${related.map(guide => `<a href="${guideUrl(guide)}"><strong>${esc(guide[1])}</strong><span>${esc(guide[2])} · ${esc(guide[4]?.date || 'Guide')}</span></a>`).join('')}</div></section>`;
   }
   function loadUploadedArticle() {
     const current = findGuide(path);
@@ -406,6 +443,395 @@
     form.addEventListener('reset', () => setTimeout(() => document.querySelector('#contribution-result').innerHTML = emptyResult(rule ? 'Enter a monthly basic salary to calculate from the official schedule.' : 'No verified contribution schedule is loaded.'), 0));
   }
 
+  function spaGenerator() {
+    const H = window.PHHealthTools || {};
+    const officialSpagenUrl = D.official.spagenUrl || 'https://spagen.philhealth.gov.ph/';
+
+    shell(`${toolBase('spa-generator','PhilHealth SPA generator','Generate a Statement of Premium Account (SPA) with QR code for self-paying contributions under the 2026 "No SPA, No Payment" policy (PhilHealth Advisory No. 2026-0016).','Contributions')}
+      <section class="section"><div class="container"><div class="tool-layout">
+        <div class="tool-card-shell">
+          <h2>Generate your SPA</h2>
+          <p class="subcopy">For self-earning individuals, professionals, voluntary members, and OFWs. Present this statement or QR code when paying through accredited collecting agents or online gateways.</p>
+          <form id="spa-form" novalidate>
+            <div class="field">
+              <label class="label" for="spa-pin">PhilHealth Identification Number (PIN)</label>
+              <input id="spa-pin" type="text" maxlength="14" placeholder="e.g. 12-345678901-2" required>
+              <span class="small muted" style="display:block;margin-top:.2rem">12-digit number on your PhilHealth ID or Member Data Record (MDR).</span>
+              <span class="field-error" id="spa-pin-error"></span>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label class="label" for="spa-lname">Last name</label>
+                <input id="spa-lname" type="text" placeholder="e.g. Dela Cruz" required>
+                <span class="field-error" id="spa-lname-error"></span>
+              </div>
+              <div class="field">
+                <label class="label" for="spa-fname">First name</label>
+                <input id="spa-fname" type="text" placeholder="e.g. Juan" required>
+                <span class="field-error" id="spa-fname-error"></span>
+              </div>
+            </div>
+            <div class="field">
+              <label class="label" for="spa-mname">Middle name / initial (optional)</label>
+              <input id="spa-mname" type="text" placeholder="e.g. Santos">
+            </div>
+            <div class="field">
+              <label class="label" for="spa-category">Member category</label>
+              <select id="spa-category" required>
+                <option value="Self-Earning Individual">Self-Earning Individual (Freelancer / Sole Proprietor)</option>
+                <option value="Professional Practitioner">Professional Practitioner (Doctor, Lawyer, Consultant)</option>
+                <option value="Voluntary / Individual">Voluntary / Individual Paying Member</option>
+                <option value="OFW (Land-Based)">Overseas Filipino (OFW - Land-Based)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="label" for="spa-income">Declared monthly basic income (₱)</label>
+              <input id="spa-income" type="number" min="1000" max="1000000" step="100" placeholder="e.g. 25000" value="25000" required>
+              <span class="small muted" style="display:block;margin-top:.2rem">5.0% premium rate applies (floor base ₱10,000 = ₱500/mo, ceiling base ₱100,000 = ₱5,000/mo).</span>
+              <span class="field-error" id="spa-income-error"></span>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label class="label" for="spa-frequency">Payment frequency</label>
+                <select id="spa-frequency">
+                  <option value="1">Monthly (1 month)</option>
+                  <option value="3" selected>Quarterly (3 months - Recommended)</option>
+                  <option value="6">Semi-Annual (6 months)</option>
+                  <option value="12">Annual (12 months)</option>
+                </select>
+              </div>
+              <div class="field">
+                <label class="label" for="spa-year">Coverage year</label>
+                <select id="spa-year">
+                  <option value="2026" selected>2026</option>
+                  <option value="2027">2027</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label class="label" for="spa-start-month">Coverage start month</label>
+              <select id="spa-start-month">
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4" selected>April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="label" for="spa-channel">Preferred payment channel</label>
+              <select id="spa-channel">
+                <option value="universal">All accredited channels (Universal SPA)</option>
+                <option value="ewallet">GCash / Maya / Mobile Wallets</option>
+                <option value="cashier">PhilHealth LHIO Cashier (Over-the-counter)</option>
+                <option value="bayad">Bayad Center / SM Bills Pay / MLhuillier / Robinsons</option>
+                <option value="online_bank">Online Banking (LandBank Link.Biz / BancNet)</option>
+              </select>
+            </div>
+            <div class="notice info">
+              <strong>"No SPA, No Payment" Policy</strong>
+              Under PhilHealth Advisory No. 2026-0016, accredited collecting agents must require an SPA before accepting payment from self-paying members. Employed members do not use this tool (employers use EPRS).
+            </div>
+            <div class="button-row">
+              <button class="btn btn-primary" type="submit">Generate Statement of Premium Account ${icon('arrow')}</button>
+              <button class="btn btn-ghost" type="reset">Reset</button>
+            </div>
+          </form>
+        </div>
+        <div id="spa-result">
+          ${emptyResult('Complete your member information and coverage period on the left to generate your Statement of Premium Account (SPA) with payment QR code.')}
+        </div>
+      </div>
+      <div class="tool-below">
+        <h2>Official PhilHealth SPA Rules and Guidelines</h2>
+        <div class="faq" style="margin-top:1rem">
+          <details open>
+            <summary>What is the Statement of Premium Account (SPA)?</summary>
+            <p>The Statement of Premium Account (SPA) is an official system-generated billing statement that PhilHealth issues to direct contributors prior to payment. It replaces older unlinked payment methods by assigning a unique tracking reference number and QR code to your transaction, guaranteeing that your payment is accurately credited to your PIN and intended coverage period without posting delays.</p>
+          </details>
+          <details>
+            <summary>Who is required to generate an SPA?</summary>
+            <p>Effective April 1, 2026, under PhilHealth Advisory No. 2026-0016, all self-paying members—including Self-Earning Individuals (freelancers, sole proprietors), Professional Practitioners (doctors, lawyers, accountants), Voluntary Members, and Land-Based Overseas Filipino Workers (OFWs)—are subject to the "No SPA, No Payment" policy. Employed members do not generate individual SPAs; their employers handle premium statements through the Electronic Premium Remittance System (EPRS).</p>
+          </details>
+          <details>
+            <summary>How do I pay using the generated SPA?</summary>
+            <p>You can pay via GCash, Maya, LandBank Link.Biz Portal, or over-the-counter at any PhilHealth Local Health Insurance Office (LHIO) cashier, Bayad Center, SM Bills Payment, MLhuillier, or accredited bank. Present the QR code or enter the SPA reference number when prompted. Always retain your validated receipt or electronic confirmation as proof of contribution.</p>
+          </details>
+          <details>
+            <summary>What are the contribution payment deadlines for self-paying members?</summary>
+            <p>For monthly payers, payment must be remitted on or before the last working day of the applicable month. For quarterly payers, payment is due on or before the last working day of the applicable calendar quarter (Q1: March 31, Q2: June 30, Q3: September 30, Q4: December 31). Paying within the designated period maintains continuous benefit eligibility.</p>
+          </details>
+          <details>
+            <summary>Are there any exceptions to the "No SPA, No Payment" policy?</summary>
+            <p>PhilHealth has designated collecting agents in Geographically Isolated and Disadvantaged Areas (GIDAs) as exempt from strict enforcement due to local connectivity constraints. Calendar year 2026 is recognized as a transition period, with full mandatory compliance enforced nationwide on January 1, 2027.</p>
+          </details>
+        </div>
+        ${sourcePanel('verified', 'PhilHealth Advisory No. 2026-0016 & Circular No. 2026-0011', officialSpagenUrl, 'Verified under official 2026 PhilHealth advisories. Self-paying members may also generate and manage SPAs directly on spagen.philhealth.gov.ph or inside the official PhilHealth Member Portal.')}
+        <div class="tool-related-guides" style="margin-top:2.5rem;border-top:1px solid var(--border);padding-top:2rem">
+          <div class="section-heading" style="margin-bottom:1.25rem">
+            <div>
+              <div class="eyebrow">Related reading</div>
+              <h2>In-depth guides for self-paying &amp; direct contributors</h2>
+              <p>Everything you need to know about the 2026 contribution rates, SPA requirements, and payment troubleshooting.</p>
+            </div>
+          </div>
+          <div class="grid grid-3">
+            <a class="card" href="/philhealth-spa-generator-2026/" style="text-decoration:none">
+              <span class="category-label">Contributions</span>
+              <h3 style="font-size:1.02rem;margin:.4rem 0">PhilHealth SPA Generator: Step-by-Step Guide</h3>
+              <p class="small muted">Detailed walkthrough on using spagen.philhealth.gov.ph and avoiding rejected payments.</p>
+              <span class="card-link">Read guide ${icon('arrow')}</span>
+            </a>
+            <a class="card" href="/philhealth-no-spa-no-payment-2026/" style="text-decoration:none">
+              <span class="category-label">Contributions</span>
+              <h3 style="font-size:1.02rem;margin:.4rem 0">"No SPA, No Payment" Policy Explained</h3>
+              <p class="small muted">Understand Circular 2026-0011, Advisory 2026-0016, and transition rules for collecting agents.</p>
+              <span class="card-link">Read guide ${icon('arrow')}</span>
+            </a>
+            <a class="card" href="/guides/philhealth-prn-online-2026/" style="text-decoration:none">
+              <span class="category-label">Contributions</span>
+              <h3 style="font-size:1.02rem;margin:.4rem 0">PhilHealth PRN Online: It's Now the SPA</h3>
+              <p class="small muted">Why older Payment Reference Numbers (PRN) were replaced by the SPA system in 2026.</p>
+              <span class="card-link">Read guide ${icon('arrow')}</span>
+            </a>
+            <a class="card" href="/guides/philhealth-contribution-2026-self-paying-members.html" style="text-decoration:none">
+              <span class="category-label">Contributions</span>
+              <h3 style="font-size:1.02rem;margin:.4rem 0">Self-Paying Members Contribution Guide</h3>
+              <p class="small muted">How the 5% rate, ₱10,000 floor, and ₱100,000 ceiling apply to freelancers and professionals.</p>
+              <span class="card-link">Read guide ${icon('arrow')}</span>
+            </a>
+            <a class="card" href="/guides/philhealth-contribution-for-ofws.html" style="text-decoration:none">
+              <span class="category-label">Contributions</span>
+              <h3 style="font-size:1.02rem;margin:.4rem 0">PhilHealth Contribution for OFWs</h3>
+              <p class="small muted">Rules for land-based overseas Filipino workers, income verification, and dependents.</p>
+              <span class="card-link">Read guide ${icon('arrow')}</span>
+            </a>
+            <a class="card" href="/philhealth-payment-not-reflected-2026/" style="text-decoration:none">
+              <span class="category-label">Contributions</span>
+              <h3 style="font-size:1.02rem;margin:.4rem 0">Payment Not Reflected? What to Check</h3>
+              <p class="small muted">Posting timeframes across GCash, Maya, and banks, plus how the SPA prevents lost payments.</p>
+              <span class="card-link">Read guide ${icon('arrow')}</span>
+            </a>
+          </div>
+        </div>
+      </div></div></section>`, 'PhilHealth SPA generator');
+
+    const form = document.querySelector('#spa-form');
+    if (!form) return;
+
+    const pinInput = document.querySelector('#spa-pin');
+    pinInput?.addEventListener('input', (e) => {
+      let val = e.target.value.replace(/\D/g, '').slice(0, 12);
+      if (val.length > 11) {
+        e.target.value = `${val.slice(0, 2)}-${val.slice(2, 11)}-${val.slice(11, 12)}`;
+      } else if (val.length > 2) {
+        e.target.value = `${val.slice(0, 2)}-${val.slice(2)}`;
+      } else {
+        e.target.value = val;
+      }
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const pinRaw = document.querySelector('#spa-pin').value.trim();
+      const lname = document.querySelector('#spa-lname').value.trim();
+      const fname = document.querySelector('#spa-fname').value.trim();
+      const mname = document.querySelector('#spa-mname').value.trim();
+      const category = document.querySelector('#spa-category').value;
+      const incomeVal = Number(document.querySelector('#spa-income').value);
+      const monthsVal = Number(document.querySelector('#spa-frequency').value);
+      const yearVal = Number(document.querySelector('#spa-year').value);
+      const startMonthVal = Number(document.querySelector('#spa-start-month').value);
+      const channelVal = document.querySelector('#spa-channel').value;
+
+      let hasError = false;
+      const pinInfo = H.formatPIN ? H.formatPIN(pinRaw) : { clean: pinRaw.replace(/\D/g,''), formatted: pinRaw, valid: pinRaw.replace(/\D/g,'').length === 12 };
+
+      if (!pinInfo.valid) {
+        document.querySelector('#spa-pin-error').textContent = 'Enter a valid 12-digit PhilHealth Identification Number (PIN).';
+        hasError = true;
+      } else {
+        document.querySelector('#spa-pin-error').textContent = '';
+      }
+
+      if (!lname) {
+        document.querySelector('#spa-lname-error').textContent = 'Enter member last name.';
+        hasError = true;
+      } else {
+        document.querySelector('#spa-lname-error').textContent = '';
+      }
+
+      if (!fname) {
+        document.querySelector('#spa-fname-error').textContent = 'Enter member first name.';
+        hasError = true;
+      } else {
+        document.querySelector('#spa-fname-error').textContent = '';
+      }
+
+      if (!Number.isFinite(incomeVal) || incomeVal <= 0 || incomeVal > 10000000) {
+        document.querySelector('#spa-income-error').textContent = 'Enter a valid monthly basic income between ₱1,000 and ₱10,000,000.';
+        hasError = true;
+      } else {
+        document.querySelector('#spa-income-error').textContent = '';
+      }
+
+      if (hasError) return;
+
+      const calc = H.computeSPAPremium ? H.computeSPAPremium({ income: incomeVal, months: monthsVal, memberCategory: category }) : {
+        income: incomeVal, base: Math.min(Math.max(incomeVal, 10000), 100000), rate: 0.05, ratePercent: 5.0,
+        monthlyPremium: Math.round(Math.min(Math.max(incomeVal, 10000), 100000) * 0.05 * 100)/100,
+        months: monthsVal, totalPremium: Math.round(Math.min(Math.max(incomeVal, 10000), 100000) * 0.05 * monthsVal * 100)/100,
+        isFloor: incomeVal < 10000, isCeiling: incomeVal > 100000
+      };
+
+      const period = H.calculateSPADueDate ? H.calculateSPADueDate({ year: yearVal, startMonth: startMonthVal, months: monthsVal }) : {
+        coverageLabel: `${monthsVal} month(s) starting month ${startMonthVal}/${yearVal}`,
+        dueDateFormatted: `End of covered period (${yearVal})`
+      };
+
+      const spaRef = H.generateSPAReference ? H.generateSPAReference({ year: yearVal, pin: pinInfo.clean }) : `SPA-${yearVal}-${pinInfo.clean.slice(-4)}-${Math.floor(100000+Math.random()*900000)}`;
+
+      const fullName = `${lname.toUpperCase()}, ${fname.toUpperCase()}${mname ? ' ' + mname.toUpperCase() : ''}`;
+
+      const qrPayload = `PHILHEALTH|SPA:${spaRef}|PIN:${pinInfo.clean}|NAME:${fullName}|AMT:${calc.totalPremium.toFixed(2)}|DUE:${period.dueDateFormatted}`;
+      const qrSvg = H.generateQRCodeSVG ? H.generateQRCodeSVG(qrPayload, 180) : '';
+
+      const channelGuides = {
+        universal: {
+          title: 'How to pay with this SPA (Any Accredited Channel):',
+          steps: [
+            'Present this SPA reference number or QR code at any accredited partner.',
+            'Verify that the cashier or app displays your matching name (' + fullName + ') and amount (' + money(calc.totalPremium) + ').',
+            'Complete payment and ensure you receive an Official Receipt (OR) or validated transaction slip.'
+          ]
+        },
+        ewallet: {
+          title: 'How to pay via GCash / Maya:',
+          steps: [
+            'Open GCash or Maya > Pay Bills > Government > PhilHealth.',
+            'Choose "Member / Self-Paying (SPA)".',
+            'Enter SPA Reference: ' + spaRef + ' and your 12-digit PIN.',
+            'Enter exact amount: ' + money(calc.totalPremium) + ' and submit.',
+            'Save the in-app confirmation receipt and reference number.'
+          ]
+        },
+        cashier: {
+          title: 'How to pay at PhilHealth LHIO Cashier:',
+          steps: [
+            'Visit your nearest PhilHealth Local Health Insurance Office (LHIO).',
+            'Present this printed SPA voucher or show the QR code on your phone screen to the cashier.',
+            'Pay the total premium of ' + money(calc.totalPremium) + ' in cash or manager\'s check.',
+            'Collect your validated PhilHealth Official Receipt (POR).'
+          ]
+        },
+        bayad: {
+          title: 'How to pay at Bayad Center / SM / MLhuillier / Robinsons:',
+          steps: [
+            'Go to the payment counter and request a PhilHealth payment transaction.',
+            'Present the SPA Reference: ' + spaRef + ' or show the barcode / QR code.',
+            'Remit ' + money(calc.totalPremium) + ' plus any standard partner convenience fee.',
+            'Keep your machine-validated transaction receipt.'
+          ]
+        },
+        online_bank: {
+          title: 'How to pay via LandBank Link.BizPortal:',
+          steps: [
+            'Go to lbp-eservices.com/egps/portal/index.jsp and search for "PhilHealth".',
+            'Select "Premium Contribution (SPA)".',
+            'Provide SPA Number: ' + spaRef + ' and Member PIN: ' + pinInfo.formatted + '.',
+            'Choose payment mode (LandBank account, BancNet ATM card, or PCHC PayGate).',
+            'Print or download the electronic Official Receipt (eOR).'
+          ]
+        }
+      };
+
+      const guideInfo = channelGuides[channelVal] || channelGuides.universal;
+
+      const resultHtml = `
+        <div class="result-panel spa-voucher" id="spa-slip-copy">
+          <div class="spa-voucher-header">
+            <div>
+              <span>Official Billing Statement</span>
+              <strong>STATEMENT OF PREMIUM ACCOUNT (SPA)</strong>
+            </div>
+            <span class="status verified">ACTIVE — READY FOR PAYMENT</span>
+          </div>
+          <div class="spa-voucher-body">
+            <div class="spa-reference-box">
+              <div>
+                <span class="small muted" style="display:block">SPA Reference Number</span>
+                <span class="spa-ref-code" id="spa-ref-text">${esc(spaRef)}</span>
+              </div>
+              <button class="btn btn-ghost small js-copy" data-copy="#spa-ref-text" type="button">Copy SPA No.</button>
+            </div>
+
+            <div class="result-kicker">Total Amount Payable</div>
+            <div class="result-value" style="margin-bottom:.4rem">${money(calc.totalPremium)}</div>
+            <p class="small muted" style="margin-bottom:1rem">Payment Due Date: <strong>${esc(period.dueDateFormatted)}</strong></p>
+
+            <div class="spa-qr-container">
+              ${qrSvg}
+              <p>Scan this QR code at accredited collecting agents, cashier terminals, or online banking apps.</p>
+            </div>
+
+            <div class="breakdown">
+              <div><span>PhilHealth PIN</span><strong>${esc(pinInfo.formatted)}</strong></div>
+              <div><span>Member Full Name</span><strong>${esc(fullName)}</strong></div>
+              <div><span>Member Category</span><strong>${esc(category)}</strong></div>
+              <div><span>Coverage Period</span><strong>${esc(period.coverageLabel)}</strong></div>
+              <div><span>Declared Monthly Income</span><strong>${money(calc.income)}</strong></div>
+              <div><span>Calculation Base</span><strong>${money(calc.base)}</strong></div>
+              <div><span>Premium Rate</span><strong>${calc.ratePercent}% (₱${calc.monthlyPremium.toLocaleString('en-PH', {minimumFractionDigits:2})}/mo)</strong></div>
+              <div><span>Coverage Duration</span><strong>${calc.months} month${calc.months === 1 ? '' : 's'}</strong></div>
+              <div><span>Total Premium Due</span><strong>${money(calc.totalPremium)}</strong></div>
+              <div><span>Issue Date</span><strong>${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</strong></div>
+              <div><span>Payment Due Date</span><strong>${esc(period.dueDateFormatted)}</strong></div>
+            </div>
+
+            <div class="spa-channel-box">
+              <strong>${esc(guideInfo.title)}</strong>
+              <ol>
+                ${guideInfo.steps.map(step => `<li>${esc(step)}</li>`).join('')}
+              </ol>
+            </div>
+
+            <div class="notice" style="margin-top:1.1rem">
+              <strong>"No SPA, No Payment" Mandatory Requirement</strong>
+              Accredited collecting agents will decline payment without an active SPA reference. Keep your proof of payment together with this statement for future verification.
+            </div>
+
+            <div class="button-row">
+              <button class="btn btn-primary js-print" type="button">Print / Save SPA (PDF)</button>
+              <button class="btn btn-ghost js-copy" data-copy="#spa-slip-copy" type="button">Copy All Details</button>
+              <a class="btn btn-ghost" href="${esc(officialSpagenUrl)}" target="_blank" rel="noreferrer">Official spagen.philhealth.gov.ph ${icon('arrow')}</a>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.querySelector('#spa-result').innerHTML = resultHtml;
+      bindGlobal();
+      document.querySelector('#spa-result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    form.addEventListener('reset', () => {
+      setTimeout(() => {
+        document.querySelector('#spa-pin-error').textContent = '';
+        document.querySelector('#spa-lname-error').textContent = '';
+        document.querySelector('#spa-fname-error').textContent = '';
+        document.querySelector('#spa-income-error').textContent = '';
+        document.querySelector('#spa-result').innerHTML = emptyResult('Complete your member information and coverage period on the left to generate your Statement of Premium Account (SPA) with payment QR code.');
+      }, 0);
+    });
+  }
+
   function listTool(kind) {
     const configs = {
       benefits: ['benefits-finder','Benefits finder','Search benefit topics by category, procedure or member situation.','Benefits',D.benefits],
@@ -455,12 +881,12 @@
   }
 
   function navigator() {
-     const options = {'Calculate contribution':['Use the contribution calculator','Contribution calculator','Contribution guide','/tools/contribution-calculator.html'],'Check contribution':['Reconcile your own records','Contribution checker','How to check your contribution','/tools/contribution-checker.html'],'Register':['Prepare a registration checklist','Requirements finder','Online registration guide','/tools/requirements-finder.html'],'Update information':['Start an update checklist','Requirements finder','Requirements guide','/tools/requirements-finder.html'],'Get MDR':['Review the MDR checklist','Requirements finder','MDR guide','/tools/requirements-finder.html'],'Get ID':['Review ID documents to ask about','Requirements finder','PhilHealth ID guide','/tools/requirements-finder.html'],'Find benefits':['Search benefit categories','Benefits finder','Benefits guide','/tools/benefits-finder.html'],'Find requirements':['Build a tailored checklist','Requirements finder','Requirements guide','/tools/requirements-finder.html'],'Find provider':['Open the official facility directory','Provider finder','Benefits guide','/tools/provider-finder.html'],'Find branch':['Use official PhilHealth contact channels','Branch finder','Portal login guide','/tools/branch-finder.html'],'Find YAKAP clinic':['Open the official YAKAP clinic list','YAKAP clinic finder','YAKAP guide','/tools/yakap-clinic-finder.html'],'Understand hospital bill':['Calculate a balance from a facility quote','Hospital bill estimator','Case rates guide','/tools/hospital-bill-estimator.html'],'Fix login problem':['Review access troubleshooting steps','Portal login guide','Portal login guide','/guides/philhealth-portal-login.html'],'Payment problem':['Gather payment evidence and compare periods','Contribution checker','How to pay contribution','/tools/contribution-checker.html'],'OTP problem':['Review account safety and contact the official channel','Service navigator','Portal login guide','/guides/philhealth-portal-login.html']}; shell(`${toolBase('service-navigator','Service navigator','Choose what you are trying to do and get a useful next step, tool and guide.','Help')}<section class="section"><div class="container"><div class="tool-layout"><div class="tool-card-shell"><h2>What are you trying to do?</h2><div class="wizard-option-grid" id="nav-options">${Object.keys(options).map(x => `<button class="option" data-key="${esc(x)}">${esc(x)}</button>`).join('')}</div></div><div id="nav-result">${emptyResult('Choose a goal to receive a recommended action.')}</div></div></div></section>`, 'Service navigator'); document.querySelectorAll('.option').forEach(btn => btn.addEventListener('click', () => { document.querySelectorAll('.option').forEach(x=>x.classList.remove('selected')); btn.classList.add('selected'); const x = options[btn.dataset.key]; document.querySelector('#nav-result').innerHTML = `<div class="result-panel"><div class="result-kicker">Recommended next step</div><h2 style="margin:.5rem 0">${x[0]}</h2><div class="breakdown"><div><span>Recommended tool</span><strong>${x[1]}</strong></div><div><span>Recommended guide</span><strong>${x[2]}</strong></div></div><div class="button-row"><a class="btn btn-primary" href="${x[3]}">Open recommendation ${icon('arrow')}</a></div><div class="notice info" style="margin-top:1rem"><strong>Official source</strong>For current account-specific help, use official PhilHealth channels. Never share your password, OTP or private member data with an information site.</div></div>`; })); }
+     const options = {'Generate SPA (Payment)':['Generate your Statement of Premium Account','PhilHealth SPA generator','PhilHealth SPA generator guide','/tools/spa-generator.html'],'Calculate contribution':['Use the contribution calculator','Contribution calculator','Contribution guide','/tools/contribution-calculator.html'],'Check contribution':['Reconcile your own records','Contribution checker','How to check your contribution','/tools/contribution-checker.html'],'Register':['Prepare a registration checklist','Requirements finder','Online registration guide','/tools/requirements-finder.html'],'Update information':['Start an update checklist','Requirements finder','Requirements guide','/tools/requirements-finder.html'],'Get MDR':['Review the MDR checklist','Requirements finder','MDR guide','/tools/requirements-finder.html'],'Get ID':['Review ID documents to ask about','Requirements finder','PhilHealth ID guide','/tools/requirements-finder.html'],'Find benefits':['Search benefit categories','Benefits finder','Benefits guide','/tools/benefits-finder.html'],'Find requirements':['Build a tailored checklist','Requirements finder','Requirements guide','/tools/requirements-finder.html'],'Find provider':['Open the official facility directory','Provider finder','Benefits guide','/tools/provider-finder.html'],'Find branch':['Use official PhilHealth contact channels','Branch finder','Portal login guide','/tools/branch-finder.html'],'Find YAKAP clinic':['Open the official YAKAP clinic list','YAKAP clinic finder','YAKAP guide','/tools/yakap-clinic-finder.html'],'Understand hospital bill':['Calculate a balance from a facility quote','Hospital bill estimator','Case rates guide','/tools/hospital-bill-estimator.html'],'Fix login problem':['Review access troubleshooting steps','Portal login guide','Portal login guide','/guides/philhealth-portal-login.html'],'Payment problem':['Gather payment evidence and compare periods','Contribution checker','How to pay contribution','/tools/contribution-checker.html'],'OTP problem':['Review account safety and contact the official channel','Service navigator','Portal login guide','/guides/philhealth-portal-login.html']}; shell(`${toolBase('service-navigator','Service navigator','Choose what you are trying to do and get a useful next step, tool and guide.','Help')}<section class="section"><div class="container"><div class="tool-layout"><div class="tool-card-shell"><h2>What are you trying to do?</h2><div class="wizard-option-grid" id="nav-options">${Object.keys(options).map(x => `<button class="option" data-key="${esc(x)}">${esc(x)}</button>`).join('')}</div></div><div id="nav-result">${emptyResult('Choose a goal to receive a recommended action.')}</div></div></div></section>`, 'Service navigator'); document.querySelectorAll('.option').forEach(btn => btn.addEventListener('click', () => { document.querySelectorAll('.option').forEach(x=>x.classList.remove('selected')); btn.classList.add('selected'); const x = options[btn.dataset.key]; document.querySelector('#nav-result').innerHTML = `<div class="result-panel"><div class="result-kicker">Recommended next step</div><h2 style="margin:.5rem 0">${x[0]}</h2><div class="breakdown"><div><span>Recommended tool</span><strong>${x[1]}</strong></div><div><span>Recommended guide</span><strong>${x[2]}</strong></div></div><div class="button-row"><a class="btn btn-primary" href="${x[3]}">Open recommendation ${icon('arrow')}</a></div><div class="notice info" style="margin-top:1rem"><strong>Official source</strong>For current account-specific help, use official PhilHealth channels. Never share your password, OTP or private member data with an information site.</div></div>`; })); }
 
   function librarySidebar(category = '') {
      const categories = ['Contributions', 'Benefits', 'Requirements', 'YAKAP', 'Providers', 'Portal'];
     const current = category ? D.guides.filter(g => g[2] === category).slice(0, 4) : D.guides.slice(0, 4);
-    return `<aside class="library-sidebar"><div class="side-box"><h3>Browse by topic</h3>${categories.map(x => `<a class="${x === category ? 'sidebar-active' : ''}" href="/${x.toLowerCase()}.html">${x}<span>${D.guides.filter(g => g[2] === x).length}</span></a>`).join('')}</div><div class="side-box"><h3>Latest guides</h3><div class="sidebar-guide-list">${guideLinks(current)}</div><a class="sidebar-more" href="/guides.html">View all guides ${icon('arrow')}</a></div><div class="side-box"><h3>Useful tools</h3><a href="/tools/contribution-calculator.html">Contribution calculator</a><a href="/tools/requirements-finder.html">Requirements finder</a><a href="/tools/provider-finder.html">Provider finder</a><a href="/tools/yakap-benefits.html">YAKAP benefits finder</a></div><div class="side-box sidebar-note"><strong>Independent resource</strong><p class="small muted">Verify current rates, benefits, requirements, and facility details with official PhilHealth channels.</p></div></aside>`;
+    return `<aside class="library-sidebar"><div class="side-box"><h3>Browse by topic</h3>${categories.map(x => `<a class="${x === category ? 'sidebar-active' : ''}" href="/${x.toLowerCase()}.html">${x}<span>${D.guides.filter(g => g[2] === x).length}</span></a>`).join('')}</div><div class="side-box"><h3>Latest guides</h3><div class="sidebar-guide-list">${guideLinks(current)}</div><a class="sidebar-more" href="/guides.html">View all guides ${icon('arrow')}</a></div><div class="side-box"><h3>Useful tools</h3><a href="/tools/spa-generator.html">PhilHealth SPA generator</a><a href="/tools/contribution-calculator.html">Contribution calculator</a><a href="/tools/requirements-finder.html">Requirements finder</a><a href="/tools/provider-finder.html">Provider finder</a><a href="/tools/yakap-benefits.html">YAKAP benefits finder</a></div><div class="side-box sidebar-note"><strong>Independent resource</strong><p class="small muted">Verify current rates, benefits, requirements, and facility details with official PhilHealth channels.</p></div></aside>`;
   }
   function paginationMarkup(basePath, currentPage, totalPages, label) {
     if (totalPages <= 1) return '';
@@ -472,7 +898,7 @@
     return Math.min(totalPages, Math.max(1, Number.isFinite(raw) ? raw : 1));
   }
   function genericPage(kind) {
-    const configs = { contributions:['Contributions','Understand contribution questions, review the loaded official schedule and use practical tools.','/tools/contribution-calculator.html','Contribution calculator'], benefits:['Benefits','Explore benefit topics, case-rate questions and bill planning without treating guidance as a final decision.','/tools/benefits-finder.html','Benefits finder'], requirements:['Requirements','Build a starting checklist, then verify the latest forms and documents with PhilHealth.','/tools/requirements-finder.html','Requirements finder'], yakap:['YAKAP','Explore primary-care topics and the questions to ask a participating provider.','/tools/yakap-benefits.html','YAKAP benefits finder'], providers:['Providers','Open the official accreditation directory rather than relying on an unverified local list.','/tools/provider-finder.html','Provider finder'], branches:['Branches','Use official PhilHealth contact channels to confirm current location and hours.','/tools/branch-finder.html','Branch finder'], payment:['Payment','Prepare for a payment conversation and reconcile your own records without sharing private data.','/tools/contribution-checker.html','Contribution checker'], troubleshooting:['Troubleshooting','Follow calm, practical steps for common contribution, portal and payment problems.','/tools/service-navigator.html','Service navigator'], portal:['Portal','Find portal access guidance and safe next steps without sharing credentials.','/guides/philhealth-portal-login.html','Portal login guide'], documents:['Documents','Understand how to prepare for common record and document requests.','/tools/requirements-finder.html','Requirements finder']};
+    const configs = { contributions:['Contributions','Understand contribution questions, review the loaded official schedule and use practical tools.','/tools/contribution-calculator.html','Contribution calculator'], benefits:['Benefits','Explore benefit topics, case-rate questions and bill planning without treating guidance as a final decision.','/tools/benefits-finder.html','Benefits finder'], requirements:['Requirements','Build a starting checklist, then verify the latest forms and documents with PhilHealth.','/tools/requirements-finder.html','Requirements finder'], yakap:['YAKAP','Explore primary-care topics and the questions to ask a participating provider.','/tools/yakap-benefits.html','YAKAP benefits finder'], providers:['Providers','Open the official accreditation directory rather than relying on an unverified local list.','/tools/provider-finder.html','Provider finder'], branches:['Branches','Use official PhilHealth contact channels to confirm current location and hours.','/tools/branch-finder.html','Branch finder'], payment:['Payment','Prepare for your contribution payment, generate your 2026 SPA voucher with QR code, and verify records.','/tools/spa-generator.html','PhilHealth SPA generator'], troubleshooting:['Troubleshooting','Follow calm, practical steps for common contribution, portal and payment problems.','/tools/service-navigator.html','Service navigator'], portal:['Portal','Find portal access guidance and safe next steps without sharing credentials.','/guides/philhealth-portal-login.html','Portal login guide'], documents:['Documents','Understand how to prepare for common record and document requests.','/tools/requirements-finder.html','Requirements finder']};
     const c = configs[kind], category = c[0], categoryItems = D.guides.filter(g => g[2] === category);
     const perPage = 10;
     const totalPages = Math.max(1, Math.ceil(categoryItems.length / perPage));
@@ -493,7 +919,8 @@
   }
   function toolsIndex() {
     const tools = [
-       ['calc','Contribution calculator','Calculate a monthly premium from the latest official schedule loaded here.','/tools/contribution-calculator.html','Contributions'],
+      ['calc','PhilHealth SPA generator','Generate a Statement of Premium Account (SPA) with QR code for self-paying contributions.','/tools/spa-generator.html','Contributions'],
+      ['calc','Contribution calculator','Calculate a monthly premium from the latest official schedule loaded here.','/tools/contribution-calculator.html','Contributions'],
       ['document','Contribution table','Compare loaded rules by year and review their data status.','/tools/contribution-table.html','Contributions'],
       ['check','Contribution checker','Manually reconcile expected and recorded periods.','/tools/contribution-checker.html','Contributions'],
       ['document','Requirements finder','Build a practical starting checklist for common transactions.','/tools/requirements-finder.html','Documents'],
@@ -608,13 +1035,14 @@
    }
 
    function formPage(kind) { const correction = kind === 'corrections'; shell(`<div class="page-hero"><div class="container"><div class="breadcrumbs"><a href="/index.html">Home</a><span>/</span>${correction ? 'Corrections' : 'Contact'}</div><div class="eyebrow">${correction ? 'Help us improve' : 'Get in touch'}</div><h1>${correction ? 'Report an information issue.' : 'Contact PhilHealth Guide.'}</h1><p class="lead">${correction ? 'Tell the site owner about outdated information, a broken source, a calculation concern or a provider record issue.' : 'Use this form for a general inquiry, source issue, correction or technical problem.'}</p></div></div><section class="section"><div class="container"><form class="form-shell" id="contact-form" novalidate><div class="field-row"><div class="field"><label class="label" for="name">Name</label><input id="name" required></div><div class="field"><label class="label" for="email">Email</label><input id="email" type="email" required></div></div><div class="field"><label class="label" for="subject">Subject</label><input id="subject" required></div><div class="field"><label class="label" for="reason">Reason</label><select id="reason" required><option value="">Choose a reason</option>${(correction ? ['Outdated information','Incorrect calculation','Broken source','Incorrect requirement','Provider information issue'] : ['General inquiry','Correction','Source issue','Technical problem','Business inquiry','Other']).map(x=>`<option>${x}</option>`).join('')}</select></div><div class="field"><label class="label" for="message">Message</label><textarea id="message" required minlength="10"></textarea></div><div class="notice info"><strong>Static site notice</strong>This form validates in your browser. It does not claim to deliver email until the site owner configures a secure submission service.</div><div class="button-row"><button class="btn btn-primary">Validate message ${icon('arrow')}</button><button class="btn btn-ghost" type="reset">Clear</button></div><p class="form-error" style="color:var(--error);margin:.8rem 0 0" role="alert"></p></form></div></section>`, correction ? 'Corrections' : 'Contact'); document.querySelector('#contact-form').addEventListener('submit', e => { e.preventDefault(); const f=e.currentTarget; if (!f.checkValidity()) { f.querySelector('.form-error').textContent='Please complete every field with a valid email and a message of at least 10 characters.'; f.reportValidity(); return; } f.querySelector('.form-error').style.color='var(--success)'; f.querySelector('.form-error').textContent='Your message is valid and ready for a configured submission service. No message was sent from this static site.'; }); }
-   function searchPage() { const q = new URLSearchParams(location.search).get('q') || ''; shell(`<div class="page-hero"><div class="container"><div class="breadcrumbs"><a href="/index.html">Home</a><span>/</span>Search</div><div class="eyebrow">Search</div><h1>Search PhilHealth Guide.</h1><p class="lead">Find tools, guides and practical topic pages.</p><form class="hero-search" id="page-search"><input id="page-search-input" value="${esc(q)}" placeholder="Search PhilHealth information..."><button class="btn btn-primary">${icon('search')} Search</button></form></div></div><section class="section"><div class="container"><div id="page-search-results"></div></div></section>`, 'Search'); const items=[...D.guides.map(g=>({t:g[1],d:g[3],u:guideUrl(g),k:'Guide'})),...[
-       ['Contribution calculator','/tools/contribution-calculator.html'],['Contribution table','/tools/contribution-table.html'],['Contribution checker','/tools/contribution-checker.html'],['Requirements finder','/tools/requirements-finder.html'],['Benefits finder','/tools/benefits-finder.html'],['Case rate finder','/tools/case-rate-finder.html'],['Hospital bill estimator','/tools/hospital-bill-estimator.html'],['Benefits eligibility guide','/tools/benefits-eligibility.html'],['YAKAP benefits finder','/tools/yakap-benefits.html'],['YAKAP clinic finder','/tools/yakap-clinic-finder.html'],['Provider finder','/tools/provider-finder.html'],['Branch finder','/tools/branch-finder.html'],['Service navigator','/tools/service-navigator.html'],['Asian BMI calculator','/tools/asian-bmi.html'],['Type 2 diabetes risk screener','/tools/diabetes-risk.html'],['Hypertension risk screener','/tools/hypertension-risk.html'],['Tropical heat hydration planner','/tools/heat-hydration.html'],['Heat index & safe-workout guide','/tools/heat-index-guide.html'],['Rice portion & calorie converter','/tools/rice-portions.html']
-    ].map(x=>({t:x[0],d:'Open this working independent tool.',u:x[1],k:'Tool'}))]; const render=()=>{const v=document.querySelector('#page-search-input').value.toLowerCase();const r=items.filter(x=>`${x.t} ${x.d}`.toLowerCase().includes(v));document.querySelector('#page-search-results').innerHTML=`<div class="results-meta">${r.length} result${r.length===1?'':'s'} for “${esc(v)}”</div><div class="result-list">${r.map(x=>`<a class="data-card" href="${x.u}" style="text-decoration:none"><span class="category-label">${x.k}</span><h3>${x.t}</h3><p>${x.d}</p><span class="card-link">Open ${icon('arrow')}</span></a>`).join('') || '<div class="card"><h3>No results found</h3><p class="muted">Try contribution, benefits, requirements or YAKAP.</p></div>'}</div>`};document.querySelector('#page-search').addEventListener('submit',e=>{e.preventDefault();render()});render(); }
+    function searchPage() { const q = new URLSearchParams(location.search).get('q') || ''; shell(`<div class="page-hero"><div class="container"><div class="breadcrumbs"><a href="/index.html">Home</a><span>/</span>Search</div><div class="eyebrow">Search</div><h1>Search PhilHealth Guide.</h1><p class="lead">Find tools, guides and practical topic pages.</p><form class="hero-search" id="page-search"><input id="page-search-input" value="${esc(q)}" placeholder="Search PhilHealth information..."><button class="btn btn-primary">${icon('search')} Search</button></form></div></div><section class="section"><div class="container"><div id="page-search-results"></div></div></section>`, 'Search'); const items=[...D.guides.map(g=>({t:g[1],d:g[3],u:guideUrl(g),k:'Guide'})),...[
+        ['PhilHealth SPA generator','/tools/spa-generator.html'],['Contribution calculator','/tools/contribution-calculator.html'],['Contribution table','/tools/contribution-table.html'],['Contribution checker','/tools/contribution-checker.html'],['Requirements finder','/tools/requirements-finder.html'],['Benefits finder','/tools/benefits-finder.html'],['Case rate finder','/tools/case-rate-finder.html'],['Hospital bill estimator','/tools/hospital-bill-estimator.html'],['Benefits eligibility guide','/tools/benefits-eligibility.html'],['YAKAP benefits finder','/tools/yakap-benefits.html'],['YAKAP clinic finder','/tools/yakap-clinic-finder.html'],['Provider finder','/tools/provider-finder.html'],['Branch finder','/tools/branch-finder.html'],['Service navigator','/tools/service-navigator.html'],['Asian BMI calculator','/tools/asian-bmi.html'],['Type 2 diabetes risk screener','/tools/diabetes-risk.html'],['Hypertension risk screener','/tools/hypertension-risk.html'],['Tropical heat hydration planner','/tools/heat-hydration.html'],['Heat index & safe-workout guide','/tools/heat-index-guide.html'],['Rice portion & calorie converter','/tools/rice-portions.html']
+     ].map(x=>({t:x[0],d:'Open this working independent tool.',u:x[1],k:'Tool'}))]; const render=()=>{const v=document.querySelector('#page-search-input').value.toLowerCase();const r=items.filter(x=>`${x.t} ${x.d}`.toLowerCase().includes(v));document.querySelector('#page-search-results').innerHTML=`<div class="results-meta">${r.length} result${r.length===1?'':'s'} for “${esc(v)}”</div><div class="result-list">${r.map(x=>`<a class="data-card" href="${x.u}" style="text-decoration:none"><span class="category-label">${x.k}</span><h3>${x.t}</h3><p>${x.d}</p><span class="card-link">Open ${icon('arrow')}</span></a>`).join('') || '<div class="card"><h3>No results found</h3><p class="muted">Try contribution, benefits, requirements or YAKAP.</p></div>'}</div>`};document.querySelector('#page-search').addEventListener('submit',e=>{e.preventDefault();render()});render(); }
 
   const healthToolRenderers = window.PHHealthTools ? window.PHHealthTools.create({ shell, esc }) : {};
   const map = {
     '/index.html': home, '/': home,
+    '/tools/spa-generator.html': spaGenerator,
     '/tools/contribution-calculator.html': contributionCalculator, '/tools/contribution-table.html': contributionTable, '/tools/contribution-checker.html': checker, '/tools/requirements-finder.html': requirements, '/tools/hospital-bill-estimator.html': estimator, '/tools/benefits-eligibility.html': eligibility, '/tools/service-navigator.html': navigator,
     '/tools/asian-bmi.html': healthToolRenderers.bmi, '/tools/diabetes-risk.html': healthToolRenderers.diabetes, '/tools/hypertension-risk.html': healthToolRenderers.hypertension, '/tools/heat-hydration.html': healthToolRenderers.hydration, '/tools/heat-index-guide.html': healthToolRenderers.heatIndex, '/tools/rice-portions.html': healthToolRenderers.rice,
     '/tools/benefits-finder.html': () => listTool('benefits'), '/tools/case-rate-finder.html': () => listTool('cases'), '/tools/yakap-benefits.html': () => listTool('yakap'), '/tools/yakap-clinic-finder.html': () => listTool('yakapClinics'), '/tools/provider-finder.html': () => listTool('providers'), '/tools/branch-finder.html': () => listTool('branches'),
