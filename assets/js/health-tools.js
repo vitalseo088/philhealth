@@ -183,6 +183,65 @@
       </div>
       <div class="field"><label class="label" for="${prefix}-cutoff">Compare with which Asian waist cutoff?</label><select id="${prefix}-cutoff" required><option value="90">90 cm — adult-men reference</option><option value="80">80 cm — adult-women reference</option></select><span class="field-error">These are screening cutoffs; local clinical guidance may differ.</span></div>`;
 
+    const yakapCoveragePromo = () => `
+      <div class="article-spa-promo" style="margin:2.5rem 0 1.5rem;border-left:4px solid var(--blue);background:#f0f7fc;border:1px solid #b9d9f0;border-radius:10px;padding:1.5rem">
+        <div class="spa-promo-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem">
+          <span class="category-label" style="background:var(--blue);color:#fff">PhilHealth YAKAP Benefit</span>
+          <span class="status verified">Free Primary Care &amp; GAMOT</span>
+        </div>
+        <h3 style="font-size:1.15rem;margin:.4rem 0 .5rem;color:var(--navy)">Covered consultations, lab tests &amp; medicines under PhilHealth</h3>
+        <p style="margin:0 0 1rem;line-height:1.5;color:var(--text)">Under PhilHealth YAKAP (Konsulta Plus), registered members and their dependents can access free outpatient consultations, annual health risk screening (fasting blood sugar, blood pressure, lipid profile, and ECG), plus free maintenance medicines under the ₱20,000/year GAMOT limit for diabetes, hypertension, and asthma.</p>
+        <div class="button-row" style="display:flex;flex-wrap:wrap;gap:.75rem">
+          <a class="btn btn-primary" href="/tools/yakap-clinic-finder.html">Find YAKAP Clinics Near You →</a>
+          <a class="btn btn-ghost" href="/guides/how-to-select-yakap-clinic.html">How to Choose a Clinic</a>
+          <a class="btn btn-ghost" href="/tools/yakap-benefits.html">Covered GAMOT Medicines</a>
+        </div>
+      </div>
+      <div class="tool-related-guides" style="margin-top:2rem;border-top:1px solid var(--border);padding-top:1.5rem">
+        <div class="section-heading" style="margin-bottom:1.25rem">
+          <div>
+            <div class="eyebrow">Related PhilHealth reading</div>
+            <h2 style="font-size:1.25rem">Primary care, medicines &amp; health screening guides</h2>
+            <p>Practical guides on accessing YAKAP consultations, free diagnostic laboratory tests, and GAMOT outpatient pharmacies.</p>
+          </div>
+        </div>
+        <div class="grid grid-3">
+          <a class="card" href="/guides/how-to-select-yakap-clinic.html" style="text-decoration:none">
+            <span class="category-label">YAKAP</span>
+            <h3 style="font-size:1.02rem;margin:.4rem 0">How to Select a PhilHealth YAKAP Clinic</h3>
+            <p class="small muted">Step-by-step guide to choosing and registering with an accredited primary care provider.</p>
+            <span class="card-link">Read guide →</span>
+          </a>
+          <a class="card" href="/guides/philhealth-yakap-benefits-2026.html" style="text-decoration:none">
+            <span class="category-label">YAKAP</span>
+            <h3 style="font-size:1.02rem;margin:.4rem 0">PhilHealth YAKAP Benefits 2026</h3>
+            <p class="small muted">Full breakdown of covered consultations, laboratory tests, and the ₱20,000 GAMOT limit.</p>
+            <span class="card-link">Read guide →</span>
+          </a>
+          <a class="card" href="/guides/philhealth-yakap-laboratory-tests.html" style="text-decoration:none">
+            <span class="category-label">YAKAP</span>
+            <h3 style="font-size:1.02rem;margin:.4rem 0">Covered YAKAP Laboratory Tests</h3>
+            <p class="small muted">Free diagnostic tests including fasting blood sugar, complete blood count, lipid profile, and ECG.</p>
+            <span class="card-link">Read guide →</span>
+          </a>
+        </div>
+      </div>`;
+
+    const heatHospitalPromo = () => `
+      <div class="article-spa-promo" style="margin:2.5rem 0 1.5rem;border-left:4px solid var(--yellow);background:#fffbf0;border:1px solid #f4deb3;border-radius:10px;padding:1.5rem">
+        <div class="spa-promo-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem">
+          <span class="category-label" style="background:#b37d00;color:#fff">PhilHealth Emergency Care</span>
+          <span class="status verified">Hospital Coverage</span>
+        </div>
+        <h3 style="font-size:1.15rem;margin:.4rem 0 .5rem;color:var(--navy)">Emergency hospital coverage &amp; accredited facilities</h3>
+        <p style="margin:0 0 1rem;line-height:1.5;color:var(--text)">Severe heat illnesses (heat exhaustion and heat stroke) require emergency medical attention. PhilHealth covers emergency room treatment and inpatient hospital admissions at accredited private and government facilities across the Philippines.</p>
+        <div class="button-row" style="display:flex;flex-wrap:wrap;gap:.75rem">
+          <a class="btn btn-primary" href="/tools/provider-finder.html">Search Accredited Hospitals →</a>
+          <a class="btn btn-ghost" href="/guides/philhealth-accredited-hospital-near-me.html">Accredited Hospitals Near Me</a>
+          <a class="btn btn-ghost" href="/tools/hospital-bill-estimator.html">Hospital Bill Estimator</a>
+        </div>
+      </div>`;
+
     function bmi() {
       const title = 'Asian BMI calculator';
       shell(page(title, 'Check adult BMI with the lower WHO Western Pacific Asia-Pacific risk bands. Switch between kg/lb and cm/ft-in.', `
@@ -206,6 +265,7 @@
           ${empty('Enter your measurements to calculate BMI and see the Asia-Pacific reference band.')}
         </div>
         ${referenceBlock('bmi', 'The WHO Western Pacific report proposed provisional adult Asia-Pacific bands: overweight/increased-risk at BMI ≥23 and obesity at BMI ≥25. They are regional reference points, not a universal WHO classification or a diagnosis.')}
+        ${yakapCoveragePromo()}
       `), title);
 
       const form = document.querySelector('#asian-bmi-form');
@@ -290,6 +350,7 @@
           ${empty('Enter age and waist, then choose any risk factors that apply.')}
         </div>
         ${referenceBlock('diabetes', 'The checklist summarizes common factors used in public-health screening and adds the Asian waist flag. It is deliberately not a points score: the combination has not been validated as a Philippines-specific prediction model. Consider asking a health professional whether HbA1c or fasting glucose testing is appropriate.')}
+        ${yakapCoveragePromo()}
       `), title);
       const form = document.querySelector('#diabetes-risk-form');
       const waist = form.querySelector('#diabetes-waist');
@@ -359,6 +420,7 @@
           ${empty('Enter age and waist, then choose any risk factors that apply.')}
         </div>
         ${referenceBlock('hypertension', 'The Asian waist measurement is one risk marker only. The USPSTF recommends blood-pressure screening for adults and confirmation with measurements outside the clinic before diagnosis or treatment decisions. This checklist is not a substitute for either step.')}
+        ${yakapCoveragePromo()}
       `), title);
       const form = document.querySelector('#hypertension-risk-form');
       const waist = form.querySelector('#hypertension-waist');
@@ -434,6 +496,7 @@
         <div class="notice info health-emergency"><strong>Know the warning signs</strong>Confusion, collapse, seizures or loss of consciousness in the heat need emergency help. Move the person to a cooler place and begin cooling while help is on the way.</div>
         <p class="small"><a href="/tools/heat-hydration.html">Open the heat hydration planner</a></p>
         ${referenceBlock('heat', 'The heat-index formula is an empirical approximation and is shown only from 80°F (about 26.7°C), where the NWS regression is used. Heat bands follow PAGASA’s Philippines guidance.')}
+        ${heatHospitalPromo()}
       `), title);
       const form = document.querySelector('#heat-index-form');
       const unit = form.querySelector('#heat-unit');
@@ -500,6 +563,7 @@
         <div class="notice info"><strong>How to use this estimate</strong>NIOSH advises about 1 cup (8 oz / 240 mL) of water every 15–20 minutes for moderate work in heat for under 2 hours. This planner uses the slower 20-minute interval and estimates only the first 2 hours. Longer or heavy work needs a planned work/rest and electrolyte strategy.</div>
         <div class="notice health-disclaimer"><strong>Do not overdrink</strong>NIOSH advises workers not to drink more than 48 oz (about 1.4 L) per hour. This is an upper limit, not a target. People with heart or kidney conditions or fluid restrictions should ask their clinician for personal advice.</div>
         ${referenceBlock('hydration', 'Humidity is included through the heat-index estimate. The drinking interval is not increased just because humidity is high: a larger water target is not a substitute for shade, cooling, rest, acclimatization or reducing exertion.')}
+        ${heatHospitalPromo()}
       `), title);
       const form = document.querySelector('#hydration-form');
       const unit = form.querySelector('#hydration-unit');
@@ -569,6 +633,7 @@
           <article class="card"><span class="category-label">Half rice + vegetables</span><h3>Make room for vegetables</h3><p class="muted">Try half your usual rice portion with extra non-starchy vegetables. The calorie estimate counts rice only; vegetables, sauce and oil are not included.</p></article>
         </div>
         ${referenceBlock('rice', 'Reference values used: about 205 kcal per USDA cup (158 g) of cooked white long-grain rice and 248 kcal per USDA cup (202 g) of cooked long-grain brown rice. The different gram weights explain why volume-based comparisons may surprise. Optional cost uses USDA dry-to-cooked yield estimates (about 7 cooked cups/lb white and 5.5 cups/lb brown); actual local yield varies.')}
+        ${yakapCoveragePromo()}
       `), title);
       const form = document.querySelector('#rice-form');
       const result = document.querySelector('#health-result');

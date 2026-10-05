@@ -256,6 +256,213 @@
   function guideLinks(items) {
     return items.map(g => `<a class="sidebar-guide" href="${guideUrl(g)}"><span class="sidebar-guide-category">${esc(g[2])}</span><strong>${esc(g[1])}</strong></a>`).join('');
   }
+  function toolRelatedGuides(toolKey, inContainer = false) {
+    const slugMap = {
+      'spa-generator': {
+        title: 'In-depth guides for self-paying & direct contributors',
+        subtitle: 'Everything you need to know about 2026 contribution rates, SPA requirements, and payment troubleshooting.',
+        slugs: [
+          'philhealth-spa-generator-2026.html',
+          'philhealth-no-spa-no-payment-2026.html',
+          'philhealth-prn-online-2026.html',
+          'philhealth-contribution-2026-self-paying-members.html',
+          'philhealth-contribution-for-ofws.html',
+          'philhealth-payment-not-reflected-2026.html'
+        ]
+      },
+      'contribution-calculator': {
+        title: 'Guides for contribution computation & payment rules',
+        subtitle: 'Detailed walkthroughs on the 5% rate, salary brackets, and split computations for all contributor categories.',
+        slugs: [
+          'philhealth-contribution-calculator-2026.html',
+          'philhealth-contribution-salary-25000-2026.html',
+          'philhealth-contribution-for-employed-2026.html',
+          'philhealth-contribution-2026-self-paying-members.html',
+          'philhealth-contribution-for-ofws.html',
+          'philhealth-spa-generator-2026.html'
+        ]
+      },
+      'contribution-table': {
+        title: 'Official contribution schedules & payment policies',
+        subtitle: 'Compare income floors, ceilings, and payment requirements under PhilHealth Circulars.',
+        slugs: [
+          'philhealth-contribution-calculator-2026.html',
+          'philhealth-contribution-salary-25000-2026.html',
+          'philhealth-contribution-for-employed-2026.html',
+          'philhealth-contribution-2026-self-paying-members.html',
+          'philhealth-no-spa-no-payment-2026.html',
+          'philhealth-contribution-for-ofws.html'
+        ]
+      },
+      'contribution-checker': {
+        title: 'Troubleshooting missing payments & unposted contributions',
+        subtitle: 'Steps to reconcile your payment history, Member Portal records, and employer remittances.',
+        slugs: [
+          'philhealth-contribution-not-updated-2026.html',
+          'philhealth-payment-not-reflected-2026.html',
+          'philhealth-missed-contribution-2026.html',
+          'philhealth-missed-payment-self-paying-2026.html',
+          'philhealth-member-portal-guide-2026.html',
+          'philhealth-spa-generator-2026.html'
+        ]
+      },
+      'requirements-finder': {
+        title: 'In-depth document guides by membership & dependent category',
+        subtitle: 'Specific requirements and checklists for registration, adding family members, and updating records.',
+        slugs: [
+          'philhealth-requirements-for-dependent-2026.html',
+          'philhealth-dependent-child-requirements-2026.html',
+          'philhealth-spouse-dependent-requirements.html',
+          'philhealth-parent-dependent-requirements.html',
+          'philhealth-requirements-senior-citizen-2026.html',
+          'philhealth-requirements-for-ofw-2026.html',
+          'philhealth-requirements-freelancers-2026.html',
+          'philhealth-requirements-change-name.html',
+          'philhealth-requirements-change-address.html'
+        ]
+      },
+      'benefits-finder': {
+        title: 'In-depth PhilHealth benefit & package guides',
+        subtitle: 'Explore coverage amounts, admission rules, and eligibility criteria for covered conditions.',
+        slugs: [
+          'philhealth-maternity-benefit-2026.html',
+          'philhealth-cesarean-coverage-2026.html',
+          'philhealth-normal-delivery-2026.html',
+          'philhealth-dialysis-sessions-per-year-2026.html',
+          'philhealth-hemodialysis-coverage-2026.html',
+          'philhealth-prenatal-checkup-benefits-2026.html'
+        ]
+      },
+      'benefits-eligibility': {
+        title: 'Benefit eligibility & claim preparation guides',
+        subtitle: 'Verify the qualifying requirements and procedures before availing of inpatient and outpatient benefits.',
+        slugs: [
+          'philhealth-maternity-benefit-2026.html',
+          'philhealth-cesarean-benefit-2026.html',
+          'philhealth-normal-delivery-2026.html',
+          'philhealth-dialysis-coverage-2026.html',
+          'philhealth-hemodialysis-coverage-2026.html',
+          'philhealth-yakap-benefits-2026.html'
+        ]
+      },
+      'case-rate-finder': {
+        title: 'Case-rate guides & facility deduction breakdowns',
+        subtitle: 'Understand how PhilHealth calculates fixed case-rate reimbursements across accredited hospitals.',
+        slugs: [
+          'philhealth-cesarean-benefit-2026.html',
+          'philhealth-normal-delivery-2026.html',
+          'philhealth-hemodialysis-coverage-2026.html',
+          'philhealth-accredited-tb-dots-center-2026.html',
+          'philhealth-accredited-animal-bite-center-2026.html',
+          'philhealth-accredited-mental-health-facility-2026.html'
+        ]
+      },
+      'hospital-bill-estimator': {
+        title: 'Understanding hospital bills, case rates, and claim deductions',
+        subtitle: 'How case-rate deductions work at accredited facilities and how to estimate out-of-pocket costs.',
+        slugs: [
+          'philhealth-accredited-hospital-near-me.html',
+          'how-to-check-philhealth-accredited-hospital.html',
+          'philhealth-cesarean-coverage-2026.html',
+          'philhealth-normal-delivery-2026.html',
+          'philhealth-maternity-benefits.html',
+          'philhealth-hemodialysis-coverage-2026.html'
+        ]
+      },
+      'provider-finder': {
+        title: 'Guides to finding & verifying accredited health facilities',
+        subtitle: 'Step-by-step instructions to verify hospital, dental, eye, laboratory, and clinic accreditations.',
+        slugs: [
+          'philhealth-provider-verification-2026.html',
+          'philhealth-accredited-hospital-near-me.html',
+          'how-to-check-philhealth-accredited-hospital.html',
+          'philhealth-accredited-maternity-hospital-2026.html',
+          'philhealth-accredited-dental-clinic-2026.html',
+          'philhealth-accredited-eye-clinic.html',
+          'philhealth-accredited-laboratory-2026.html',
+          'philhealth-accredited-animal-bite-center-2026.html',
+          'philhealth-accredited-mental-health-facility-2026.html'
+        ]
+      },
+      'yakap-clinic-finder': {
+        title: 'Guides to YAKAP primary care, consultations, & GAMOT medicines',
+        subtitle: 'How to register at a primary care clinic, avail of free lab tests, and claim outpatient medications.',
+        slugs: [
+          'how-to-select-yakap-clinic.html',
+          'philhealth-yakap-requirements.html',
+          'philhealth-yakap-benefits-2026.html',
+          'philhealth-yakap-consultation-2026.html',
+          'philhealth-yakap-medicines.html',
+          'philhealth-yakap-gamot.html',
+          'philhealth-yakap-laboratory-tests.html',
+          'philhealth-gamot-pharmacy-2026.html',
+          'philhealth-gamot-provider-2026.html'
+        ]
+      },
+      'yakap-benefits': {
+        title: 'Comprehensive guides to YAKAP benefits & coverage',
+        subtitle: 'Full details on covered consultations, cancer screenings, and the ₱20,000 GAMOT medicine limit.',
+        slugs: [
+          'philhealth-yakap-benefits-2026.html',
+          'philhealth-yakap-requirements.html',
+          'philhealth-yakap-consultation-2026.html',
+          'philhealth-yakap-medicines.html',
+          'philhealth-yakap-gamot.html',
+          'philhealth-yakap-laboratory-tests.html',
+          'philhealth-yakap-cancer-screening-2026.html',
+          'philhealth-yakap-dependent-2026.html',
+          'philhealth-yakap-beneficiaries-2026.html'
+        ]
+      },
+      'branch-finder': {
+        title: 'Guides for in-person transactions & PhilHealth office visits',
+        subtitle: 'When to visit a Local Health Insurance Office (LHIO) and what to bring for in-person support.',
+        slugs: [
+          'philhealth-portal-not-working.html',
+          'philhealth-requirements-change-address.html',
+          'philhealth-requirements-change-name.html',
+          'philhealth-contribution-not-updated-2026.html',
+          'philhealth-login-guide-2026.html',
+          'philhealth-requirements-voluntary-members-2026.html'
+        ]
+      }
+    };
+    const key = toolKey === 'cases' ? 'case-rate-finder'
+      : toolKey === 'benefits' ? 'benefits-finder'
+      : toolKey === 'providers' ? 'provider-finder'
+      : toolKey === 'yakapClinics' ? 'yakap-clinic-finder'
+      : toolKey === 'yakap' ? 'yakap-benefits'
+      : toolKey === 'branches' ? 'branch-finder'
+      : toolKey;
+
+    const config = slugMap[key];
+    if (!config) return '';
+    const guides = config.slugs.map(s => findGuide(s)).filter(Boolean).slice(0, 6);
+    if (!guides.length) return '';
+
+    const content = `
+      <div class="tool-related-guides"${inContainer ? ' style="margin-top:2.5rem;border-top:1px solid var(--border);padding-top:2rem"' : ''}>
+        <div class="section-heading" style="margin-bottom:1.25rem">
+          <div>
+            <div class="eyebrow">Related reading</div>
+            <h2>${esc(config.title)}</h2>
+            <p>${esc(config.subtitle)}</p>
+          </div>
+        </div>
+        <div class="grid grid-3">
+          ${guides.map(guide => `
+            <a class="card" href="${guideUrl(guide)}" style="text-decoration:none">
+              <span class="category-label">${esc(guide[2])}</span>
+              <h3 style="font-size:1.02rem;margin:.4rem 0">${esc(guide[1])}</h3>
+              <p class="small muted">${esc(guide[3])}</p>
+              <span class="card-link">Read guide ${icon('arrow')}</span>
+            </a>
+          `).join('')}
+        </div>
+      </div>`;
+
+    return inContainer ? content : `<section class="section"><div class="container">${content}</div></section>`;
+  }
   function guideSidebar(current) {
     const related = D.guides.filter(g => g[0] !== current[0] && g[2] === current[2]).slice(0, 3);
     const fallback = D.guides.filter(g => g[0] !== current[0] && !related.some(r => r[0] === g[0])).slice(0, 3 - related.length);
@@ -263,14 +470,54 @@
     const shareUrl = encodeURIComponent(location.href);
     const shareTitle = encodeURIComponent(current[1]);
     const isSpaRelevant = current[2] === 'Contributions' || current[2] === 'Portal' || /spa|payment|contribution|prn|salary|freelance|ofw|voluntary|missed/i.test(`${current[0]} ${current[1]}`);
-    const spaSideBox = isSpaRelevant ? `
-      <div class="side-box" style="background:#eef7f3;border:1px solid #b7dcce;border-radius:10px">
-        <span class="category-label" style="background:var(--green);color:#fff">2026 Mandate</span>
-        <h4 style="font-size:.95rem;margin:.55rem 0 .3rem;color:var(--navy)">PhilHealth SPA Generator</h4>
-        <p class="small muted" style="margin:0 0 .8rem;line-height:1.45">Under the "No SPA, No Payment" policy, generate your official Statement of Premium Account and payment QR code before paying.</p>
-        <a class="btn btn-primary small" href="/tools/spa-generator.html" style="width:100%;text-align:center;box-sizing:border-box">Generate SPA ${icon('arrow')}</a>
-      </div>` : '';
-    return `${spaSideBox}<div class="side-box"><h3>Share this guide</h3><div class="share-grid"><a class="share-btn share-reddit" href="https://www.reddit.com/submit?url=${shareUrl}&title=${shareTitle}" target="_blank" rel="noreferrer" aria-label="Share on Reddit">${icon('reddit')}<span>Reddit</span></a><a class="share-btn share-linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}" target="_blank" rel="noreferrer" aria-label="Share on LinkedIn">${icon('linkedin')}<span>LinkedIn</span></a><a class="share-btn share-x" href="https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}" target="_blank" rel="noreferrer" aria-label="Share on X">${icon('x')}<span>X</span></a><a class="share-btn share-facebook" href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" target="_blank" rel="noreferrer" aria-label="Share on Facebook">${icon('facebook')}<span>Facebook</span></a><a class="share-btn share-pinterest" href="https://pinterest.com/pin/create/button/?url=${shareUrl}&description=${shareTitle}" target="_blank" rel="noreferrer" aria-label="Share on Pinterest">${icon('pinterest')}<span>Pinterest</span></a><button class="share-btn share-copy js-copy-link" type="button" aria-label="Copy guide link">${icon('link')}<span>Copy link</span></button></div></div><div class="side-box"><h3>Related to this page</h3><div class="sidebar-guide-list">${guideLinks(related.length ? related : fallback)}</div><a class="sidebar-more" href="/guides.html">Browse all guides ${icon('arrow')}</a></div><div class="side-box"><h3>Popular guides</h3><div class="sidebar-guide-list">${guideLinks(popular)}</div></div>`;
+    const isRequirementsRelevant = current[2] === 'Requirements' || current[2] === 'Documents' || /requirement|dependent|child|spouse|parent|senior|student|pmrf|change name|change address/i.test(`${current[0]} ${current[1]}`);
+    const isYakapRelevant = current[2] === 'YAKAP' || /yakap|gamot|primary care|konsulta|clinic selection|empanelment|cancer screening|maintenance medicine/i.test(`${current[0]} ${current[1]}`);
+    const isBenefitsRelevant = current[2] === 'Benefits' || /benefit|cesarean|delivery|maternity|dialysis|hemodialysis|case rate|package|hospital bill|claim/i.test(`${current[0]} ${current[1]}`);
+    const isProvidersRelevant = current[2] === 'Providers' || /provider|hospital|clinic|dental|eye|bite|dots|laboratory|mental health|accredited/i.test(`${current[0]} ${current[1]}`);
+
+    let toolSideBox = '';
+    if (isSpaRelevant) {
+      toolSideBox = `
+        <div class="side-box" style="background:#eef7f3;border:1px solid #b7dcce;border-radius:10px">
+          <span class="category-label" style="background:var(--green);color:#fff">2026 Mandate</span>
+          <h4 style="font-size:.95rem;margin:.55rem 0 .3rem;color:var(--navy)">PhilHealth SPA Generator</h4>
+          <p class="small muted" style="margin:0 0 .8rem;line-height:1.45">Under the "No SPA, No Payment" policy, generate your official Statement of Premium Account and payment QR code before paying.</p>
+          <a class="btn btn-primary small" href="/tools/spa-generator.html" style="width:100%;text-align:center;box-sizing:border-box">Generate SPA ${icon('arrow')}</a>
+        </div>`;
+    } else if (isRequirementsRelevant) {
+      toolSideBox = `
+        <div class="side-box" style="background:#f3f6fa;border:1px solid #c8d7e8;border-radius:10px">
+          <span class="category-label" style="background:var(--navy);color:#fff">Document Tool</span>
+          <h4 style="font-size:.95rem;margin:.55rem 0 .3rem;color:var(--navy)">Requirements Finder</h4>
+          <p class="small muted" style="margin:0 0 .8rem;line-height:1.45">Generate a personalized checklist of required IDs, forms, and documents for your transaction before visiting PhilHealth.</p>
+          <a class="btn btn-primary small" href="/tools/requirements-finder.html" style="width:100%;text-align:center;box-sizing:border-box">Build Checklist ${icon('arrow')}</a>
+        </div>`;
+    } else if (isYakapRelevant) {
+      toolSideBox = `
+        <div class="side-box" style="background:#f0f7fc;border:1px solid #b9d9f0;border-radius:10px">
+          <span class="category-label" style="background:var(--blue);color:#fff">YAKAP Primary Care</span>
+          <h4 style="font-size:.95rem;margin:.55rem 0 .3rem;color:var(--navy)">YAKAP Clinic Finder</h4>
+          <p class="small muted" style="margin:0 0 .8rem;line-height:1.45">Search accredited YAKAP clinics and health centers to register for free consultations, diagnostics, and GAMOT medicines.</p>
+          <a class="btn btn-primary small" href="/tools/yakap-clinic-finder.html" style="width:100%;text-align:center;box-sizing:border-box">Find YAKAP Clinics ${icon('arrow')}</a>
+        </div>`;
+    } else if (isBenefitsRelevant) {
+      toolSideBox = `
+        <div class="side-box" style="background:#f7f2fa;border:1px solid #dac9ea;border-radius:10px">
+          <span class="category-label" style="background:var(--purple);color:#fff">Benefit Planning</span>
+          <h4 style="font-size:.95rem;margin:.55rem 0 .3rem;color:var(--navy)">Case Rate &amp; Bill Estimator</h4>
+          <p class="small muted" style="margin:0 0 .8rem;line-height:1.45">Search PhilHealth case rates (Cesarean, delivery, dialysis) and calculate estimated out-of-pocket hospital bills.</p>
+          <a class="btn btn-primary small" href="/tools/case-rate-finder.html" style="width:100%;text-align:center;box-sizing:border-box">Check Case Rates ${icon('arrow')}</a>
+        </div>`;
+    } else if (isProvidersRelevant) {
+      toolSideBox = `
+        <div class="side-box" style="background:#fffbf0;border:1px solid #f4deb3;border-radius:10px">
+          <span class="category-label" style="background:#b37d00;color:#fff">Accreditation</span>
+          <h4 style="font-size:.95rem;margin:.55rem 0 .3rem;color:var(--navy)">Provider Finder</h4>
+          <p class="small muted" style="margin:0 0 .8rem;line-height:1.45">Verify accredited hospitals, clinics, dental centers, and animal bite facilities before booking your visit.</p>
+          <a class="btn btn-primary small" href="/tools/provider-finder.html" style="width:100%;text-align:center;box-sizing:border-box">Search Facilities ${icon('arrow')}</a>
+        </div>`;
+    }
+    return `${toolSideBox}<div class="side-box"><h3>Share this guide</h3><div class="share-grid"><a class="share-btn share-reddit" href="https://www.reddit.com/submit?url=${shareUrl}&title=${shareTitle}" target="_blank" rel="noreferrer" aria-label="Share on Reddit">${icon('reddit')}<span>Reddit</span></a><a class="share-btn share-linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}" target="_blank" rel="noreferrer" aria-label="Share on LinkedIn">${icon('linkedin')}<span>LinkedIn</span></a><a class="share-btn share-x" href="https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}" target="_blank" rel="noreferrer" aria-label="Share on X">${icon('x')}<span>X</span></a><a class="share-btn share-facebook" href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" target="_blank" rel="noreferrer" aria-label="Share on Facebook">${icon('facebook')}<span>Facebook</span></a><a class="share-btn share-pinterest" href="https://pinterest.com/pin/create/button/?url=${shareUrl}&description=${shareTitle}" target="_blank" rel="noreferrer" aria-label="Share on Pinterest">${icon('pinterest')}<span>Pinterest</span></a><button class="share-btn share-copy js-copy-link" type="button" aria-label="Copy guide link">${icon('link')}<span>Copy link</span></button></div></div><div class="side-box"><h3>Related to this page</h3><div class="sidebar-guide-list">${guideLinks(related.length ? related : fallback)}</div><a class="sidebar-more" href="/guides.html">Browse all guides ${icon('arrow')}</a></div><div class="side-box"><h3>Popular guides</h3><div class="sidebar-guide-list">${guideLinks(popular)}</div></div>`;
   }
   function markdownInline(value) {
     const links = [];
@@ -342,15 +589,42 @@
               : officialUrl;
       return ` (verify with [the official PhilHealth source](${url}))`;
     });
-    // Smart contextual in-text linking to SPA Generator
-    let spaLinksCount = 0;
-    body = body.replace(/\b(SPA generator|Statement of Premium Account \(SPA\)|Statement of Premium Account|No SPA, No Payment policy|No SPA, No Payment)\b/gi, (match, phrase) => {
-      if (spaLinksCount < 2) {
-        spaLinksCount++;
-        return `[${phrase}](/tools/spa-generator.html)`;
-      }
-      return match;
+    // Safely protect existing markdown links before performing in-text tool linking
+    const existingLinks = [];
+    body = body.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match) => {
+      existingLinks.push(match);
+      return `PHEXISTINGLINK${existingLinks.length - 1}END`;
     });
+
+    // Intelligent contextual in-text tool linking across all relevant tools
+    const toolRules = [
+      { regex: /\b(SPA generator|Statement of Premium Account \(SPA\)|Statement of Premium Account|No SPA, No Payment policy|No SPA, No Payment)\b/i, url: '/tools/spa-generator.html', max: 2 },
+      { regex: /\b(contribution calculator|compute your premium|calculate your contribution)\b/i, url: '/tools/contribution-calculator.html', max: 1 },
+      { regex: /\b(contribution table|contribution schedule)\b/i, url: '/tools/contribution-table.html', max: 1 },
+      { regex: /\b(contribution checker|reconcile your records)\b/i, url: '/tools/contribution-checker.html', max: 1 },
+      { regex: /\b(requirements finder|requirements checklist|starting checklist)\b/i, url: '/tools/requirements-finder.html', max: 1 },
+      { regex: /\b(case rate finder|case rate schedule|case-rate finder)\b/i, url: '/tools/case-rate-finder.html', max: 1 },
+      { regex: /\b(hospital bill estimator|bill estimator)\b/i, url: '/tools/hospital-bill-estimator.html', max: 1 },
+      { regex: /\b(benefits finder|benefits eligibility guide)\b/i, url: '/tools/benefits-finder.html', max: 1 },
+      { regex: /\b(provider finder|accredited facility directory|accredited provider directory)\b/i, url: '/tools/provider-finder.html', max: 1 },
+      { regex: /\b(YAKAP clinic finder|select a YAKAP clinic|choose a YAKAP clinic|list of accredited YAKAP clinics)\b/i, url: '/tools/yakap-clinic-finder.html', max: 1 },
+      { regex: /\b(YAKAP benefits finder|YAKAP primary care benefit package)\b/i, url: '/tools/yakap-benefits.html', max: 1 },
+      { regex: /\b(branch finder|PhilHealth branch directory|Local Health Insurance Office \(LHIO\))\b/i, url: '/tools/branch-finder.html', max: 1 }
+    ];
+
+    toolRules.forEach(rule => {
+      let count = 0;
+      body = body.replace(rule.regex, (match) => {
+        if (count < rule.max) {
+          count++;
+          return `[${match}](${rule.url})`;
+        }
+        return match;
+      });
+    });
+
+    // Restore existing links
+    body = body.replace(/PHEXISTINGLINK(\d+)END/g, (_, index) => existingLinks[Number(index)]);
 
     return body.replace(/^---\s*$/gm, '').trim();
   }
@@ -359,21 +633,85 @@
   }
   function internalGuideLinks(current) {
     const isSpaRelevant = current[2] === 'Contributions' || current[2] === 'Portal' || /spa|payment|contribution|prn|salary|freelance|ofw|voluntary|missed/i.test(`${current[0]} ${current[1]}`);
-    const spaPromo = isSpaRelevant ? `
-      <div class="article-spa-promo">
-        <div class="spa-promo-header">
-          <span class="category-label" style="background:var(--green);color:#fff">2026 Interactive Tool</span>
-          <span class="status verified">Advisory No. 2026-0016</span>
-        </div>
-        <h3>Need to generate your Statement of Premium Account (SPA)?</h3>
-        <p>Under PhilHealth's "No SPA, No Payment" policy for direct contributors, self-paying members, OFWs, and freelancers must present an official SPA reference number and QR code before paying at collecting agents or online (GCash, Maya, Link.BizPortal). Use our verified browser tool to compute your exact premium and generate a printable voucher.</p>
-        <div class="button-row">
-          <a class="btn btn-primary" href="/tools/spa-generator.html">Generate Your SPA Now ${icon('arrow')}</a>
-          <a class="btn btn-ghost" href="/tools/contribution-calculator.html">Contribution Calculator</a>
-        </div>
-      </div>` : '';
+    const isRequirementsRelevant = current[2] === 'Requirements' || current[2] === 'Documents' || /requirement|dependent|child|spouse|parent|senior|student|pmrf|change name|change address/i.test(`${current[0]} ${current[1]}`);
+    const isYakapRelevant = current[2] === 'YAKAP' || /yakap|gamot|primary care|konsulta|clinic selection|empanelment|cancer screening|maintenance medicine/i.test(`${current[0]} ${current[1]}`);
+    const isBenefitsRelevant = current[2] === 'Benefits' || /benefit|cesarean|delivery|maternity|dialysis|hemodialysis|case rate|package|hospital bill|claim/i.test(`${current[0]} ${current[1]}`);
+    const isProvidersRelevant = current[2] === 'Providers' || /provider|hospital|clinic|dental|eye|bite|dots|laboratory|mental health|accredited/i.test(`${current[0]} ${current[1]}`);
+
+    let toolPromo = '';
+    if (isSpaRelevant) {
+      toolPromo = `
+        <div class="article-spa-promo">
+          <div class="spa-promo-header">
+            <span class="category-label" style="background:var(--green);color:#fff">2026 Interactive Tool</span>
+            <span class="status verified">Advisory No. 2026-0016</span>
+          </div>
+          <h3>Need to generate your Statement of Premium Account (SPA)?</h3>
+          <p>Under PhilHealth's "No SPA, No Payment" policy for direct contributors, self-paying members, OFWs, and freelancers must present an official SPA reference number and QR code before paying at collecting agents or online (GCash, Maya, Link.BizPortal). Use our verified browser tool to compute your exact premium and generate a printable voucher.</p>
+          <div class="button-row">
+            <a class="btn btn-primary" href="/tools/spa-generator.html">Generate Your SPA Now ${icon('arrow')}</a>
+            <a class="btn btn-ghost" href="/tools/contribution-calculator.html">Contribution Calculator</a>
+          </div>
+        </div>`;
+    } else if (isRequirementsRelevant) {
+      toolPromo = `
+        <div class="article-spa-promo" style="border-left-color:var(--navy);background:#f3f6fa;border-color:#c8d7e8">
+          <div class="spa-promo-header">
+            <span class="category-label" style="background:var(--navy);color:#fff">Interactive Checklist</span>
+            <span class="status verified">Official 2026 Requirements</span>
+          </div>
+          <h3>Building your document checklist before visiting PhilHealth?</h3>
+          <p>Avoid repeat trips to Local Health Insurance Offices (LHIO). Use our interactive Requirements Finder to generate a tailored checklist of required IDs, certificates, and forms based on your transaction and member type.</p>
+          <div class="button-row">
+            <a class="btn btn-primary" href="/tools/requirements-finder.html">Build Your Checklist Now ${icon('arrow')}</a>
+            <a class="btn btn-ghost" href="/tools/branch-finder.html">Find Nearest PhilHealth Office</a>
+          </div>
+        </div>`;
+    } else if (isYakapRelevant) {
+      toolPromo = `
+        <div class="article-spa-promo" style="border-left-color:var(--blue);background:#f0f7fc;border-color:#b9d9f0">
+          <div class="spa-promo-header">
+            <span class="category-label" style="background:var(--blue);color:#fff">YAKAP Primary Care</span>
+            <span class="status verified">Konsulta Plus 2026</span>
+          </div>
+          <h3>Ready to choose your YAKAP primary care clinic?</h3>
+          <p>Every PhilHealth member and dependent is entitled to free consultations, routine diagnostic tests, and up to ₱20,000/year in free outpatient medicines under GAMOT. Search accredited YAKAP clinics near you and explore covered primary care packages.</p>
+          <div class="button-row">
+            <a class="btn btn-primary" href="/tools/yakap-clinic-finder.html">Find YAKAP Clinics ${icon('arrow')}</a>
+            <a class="btn btn-ghost" href="/tools/yakap-benefits.html">Explore YAKAP Benefits</a>
+          </div>
+        </div>`;
+    } else if (isBenefitsRelevant) {
+      toolPromo = `
+        <div class="article-spa-promo" style="border-left-color:var(--purple);background:#f7f2fa;border-color:#dac9ea">
+          <div class="spa-promo-header">
+            <span class="category-label" style="background:var(--purple);color:#fff">Benefit Estimators</span>
+            <span class="status verified">2026 Case Rates</span>
+          </div>
+          <h3>Estimating your hospital bill deduction or case rate?</h3>
+          <p>PhilHealth pays accredited hospitals via fixed case rates (deducted directly from your hospital bill). Check the official case rate schedule or calculate your estimated remaining out-of-pocket balance before admission.</p>
+          <div class="button-row">
+            <a class="btn btn-primary" href="/tools/case-rate-finder.html">Check Case Rates ${icon('arrow')}</a>
+            <a class="btn btn-ghost" href="/tools/hospital-bill-estimator.html">Estimate Hospital Bill</a>
+          </div>
+        </div>`;
+    } else if (isProvidersRelevant) {
+      toolPromo = `
+        <div class="article-spa-promo" style="border-left-color:var(--yellow);background:#fffbf0;border-color:#f4deb3">
+          <div class="spa-promo-header">
+            <span class="category-label" style="background:#b37d00;color:#fff">Accreditation Directory</span>
+            <span class="status verified">CY 2026 Verified</span>
+          </div>
+          <h3>Verify an accredited hospital, clinic, or specialized facility</h3>
+          <p>Ensure your chosen facility has active PhilHealth accreditation for the specific package you need before your procedure or admission to guarantee direct billing deductions.</p>
+          <div class="button-row">
+            <a class="btn btn-primary" href="/tools/provider-finder.html">Search Provider Directory ${icon('arrow')}</a>
+            <a class="btn btn-ghost" href="/tools/branch-finder.html">Find PhilHealth Office</a>
+          </div>
+        </div>`;
+    }
     const related = D.guides.filter(guide => guide[0] !== current[0] && guide[2] === current[2]);
-    return `${spaPromo}<section class="internal-guides"><h2>Related ${esc(current[2])} guides</h2><p>Continue with more practical information in this ${esc(current[2].toLowerCase())} series:</p><div class="related-guide-links">${related.map(guide => `<a href="${guideUrl(guide)}"><strong>${esc(guide[1])}</strong><span>${esc(guide[2])} · ${esc(guide[4]?.date || 'Guide')}</span></a>`).join('')}</div></section>`;
+    return `${toolPromo}<section class="internal-guides"><h2>Related ${esc(current[2])} guides</h2><p>Continue with more practical information in this ${esc(current[2].toLowerCase())} series:</p><div class="related-guide-links">${related.map(guide => `<a href="${guideUrl(guide)}"><strong>${esc(guide[1])}</strong><span>${esc(guide[2])} · ${esc(guide[4]?.date || 'Guide')}</span></a>`).join('')}</div></section>`;
   }
   function loadUploadedArticle() {
     const current = findGuide(path);
@@ -423,7 +761,21 @@
   function contributionCalculator() {
     const rule = D.contributionRules[0];
     shell(`${toolBase('contribution-calculator','Contribution calculator','Calculate a monthly premium from the latest official schedule loaded in this resource. This tool cannot confirm your membership record or payment status.','Contributions')}
-      <section class="section"><div class="container"><div class="tool-layout"><div class="tool-card-shell"><h2>Enter your details</h2><p class="subcopy">Use monthly basic salary—not take-home pay. The source schedule below is the latest premium schedule loaded here; verify whether a newer rule applies to your situation.</p><form id="contribution-form" novalidate><div class="field"><label class="label" for="member">Member category</label><select id="member" required><option value="">Choose a category</option><option>Employed direct contributor</option><option>Self-paying direct contributor</option><option>OFW direct contributor</option><option>Kasambahay direct contributor</option><option>Other direct contributor</option></select></div><div class="field"><label class="label" for="income">Monthly basic salary</label><input id="income" type="number" min="0.01" max="10000000" step="0.01" inputmode="decimal" placeholder="e.g. 30000" required><span class="field-error" id="income-error"></span></div><div class="field"><label class="label" for="schedule">Official schedule used</label><select id="schedule" required><option value="${rule?.id || ''}">${rule ? `${rule.title} · ${rule.year}` : 'No verified schedule loaded'}</option></select></div><div class="notice info"><strong>Calculation boundary</strong>This uses the published rate, floor and ceiling only. It does not decide who owes the premium or split the amount between an employee and employer.</div><div class="button-row"><button class="btn btn-primary" type="submit" ${rule ? '' : 'disabled'}>Calculate ${icon('arrow')}</button><button class="btn btn-ghost" type="reset">Reset</button></div></form></div><div id="contribution-result">${emptyResult(rule ? 'Enter a monthly basic salary to calculate from the official schedule.' : 'No verified contribution schedule is loaded.')}</div></div><div class="tool-below"><h2>How it works</h2><p class="explain">The published schedule applies ${rule ? `${rule.rate * 100}%` : 'the published rate'} to monthly basic salary after applying the ${rule ? `${money(rule.floor)} floor and ${money(rule.ceiling)} ceiling` : 'published income limits'}. For an employed member, the result is the total premium; this tool intentionally does not guess the employee/employer allocation.</p>${sourcePanel(rule?.status || 'needs-review', rule?.source || D.official.name, rule?.sourceUrl || D.official.contributionUrl || D.official.url, rule ? 'Source checked 13 August 2026. A newer official schedule may supersede this result; confirm before payroll or payment.' : 'No verified schedule is available in the local data.')}</div></div></section>`, 'Contribution calculator');
+      <section class="section"><div class="container"><div class="tool-layout"><div class="tool-card-shell"><h2>Enter your details</h2><p class="subcopy">Use monthly basic salary—not take-home pay. The source schedule below is the latest premium schedule loaded here; verify whether a newer rule applies to your situation.</p><form id="contribution-form" novalidate><div class="field"><label class="label" for="member">Member category</label><select id="member" required><option value="">Choose a category</option><option>Employed direct contributor</option><option>Self-paying direct contributor</option><option>OFW direct contributor</option><option>Kasambahay direct contributor</option><option>Other direct contributor</option></select></div><div class="field"><label class="label" for="income">Monthly basic salary</label><input id="income" type="number" min="0.01" max="10000000" step="0.01" inputmode="decimal" placeholder="e.g. 30000" required><span class="field-error" id="income-error"></span></div><div class="field"><label class="label" for="schedule">Official schedule used</label><select id="schedule" required><option value="${rule?.id || ''}">${rule ? `${rule.title} · ${rule.year}` : 'No verified schedule loaded'}</option></select></div><div class="notice info"><strong>Calculation boundary</strong>This uses the published rate, floor and ceiling only. It does not decide who owes the premium or split the amount between an employee and employer.</div><div class="button-row"><button class="btn btn-primary" type="submit" ${rule ? '' : 'disabled'}>Calculate ${icon('arrow')}</button><button class="btn btn-ghost" type="reset">Reset</button></div></form></div><div id="contribution-result">${emptyResult(rule ? 'Enter a monthly basic salary to calculate from the official schedule.' : 'No verified contribution schedule is loaded.')}</div></div><div class="tool-below"><h2>How it works</h2><p class="explain">The published schedule applies ${rule ? `${rule.rate * 100}%` : 'the published rate'} to monthly basic salary after applying the ${rule ? `${money(rule.floor)} floor and ${money(rule.ceiling)} ceiling` : 'published income limits'}. For an employed member, the result is the total premium; this tool intentionally does not guess the employee/employer allocation.</p>${sourcePanel(rule?.status || 'needs-review', rule?.source || D.official.name, rule?.sourceUrl || D.official.contributionUrl || D.official.url, rule ? 'Source checked 13 August 2026. A newer official schedule may supersede this result; confirm before payroll or payment.' : 'No verified schedule is available in the local data.')}
+        <div class="article-spa-promo" style="margin-top:2rem">
+          <div class="spa-promo-header">
+            <span class="category-label" style="background:var(--green);color:#fff">2026 Payment Requirement</span>
+            <span class="status verified">Advisory No. 2026-0016</span>
+          </div>
+          <h3>Need an official Statement of Premium Account (SPA) to pay?</h3>
+          <p>Under PhilHealth's "No SPA, No Payment" policy, self-paying members, freelancers, and OFWs must present an official SPA reference number and QR code before paying at collecting agents or online (GCash, Maya, Link.BizPortal). Generate your billing voucher directly in your browser.</p>
+          <div class="button-row">
+            <a class="btn btn-primary" href="/tools/spa-generator.html">Open PhilHealth SPA Generator ${icon('arrow')}</a>
+            <a class="btn btn-ghost" href="/tools/contribution-table.html">View 2026 Contribution Table</a>
+          </div>
+        </div>
+        ${toolRelatedGuides('contribution-calculator', true)}
+      </div></div></section>`, 'Contribution calculator');
     const form = document.querySelector('#contribution-form');
     form.addEventListener('submit', e => {
       e.preventDefault();
@@ -574,53 +926,7 @@
           </details>
         </div>
         ${sourcePanel('verified', 'PhilHealth Advisory No. 2026-0016 & Circular No. 2026-0011', officialSpagenUrl, 'Verified under official 2026 PhilHealth advisories. Self-paying members may also generate and manage SPAs directly on spagen.philhealth.gov.ph or inside the official PhilHealth Member Portal.')}
-        <div class="tool-related-guides" style="margin-top:2.5rem;border-top:1px solid var(--border);padding-top:2rem">
-          <div class="section-heading" style="margin-bottom:1.25rem">
-            <div>
-              <div class="eyebrow">Related reading</div>
-              <h2>In-depth guides for self-paying &amp; direct contributors</h2>
-              <p>Everything you need to know about the 2026 contribution rates, SPA requirements, and payment troubleshooting.</p>
-            </div>
-          </div>
-          <div class="grid grid-3">
-            <a class="card" href="/philhealth-spa-generator-2026/" style="text-decoration:none">
-              <span class="category-label">Contributions</span>
-              <h3 style="font-size:1.02rem;margin:.4rem 0">PhilHealth SPA Generator: Step-by-Step Guide</h3>
-              <p class="small muted">Detailed walkthrough on using spagen.philhealth.gov.ph and avoiding rejected payments.</p>
-              <span class="card-link">Read guide ${icon('arrow')}</span>
-            </a>
-            <a class="card" href="/philhealth-no-spa-no-payment-2026/" style="text-decoration:none">
-              <span class="category-label">Contributions</span>
-              <h3 style="font-size:1.02rem;margin:.4rem 0">"No SPA, No Payment" Policy Explained</h3>
-              <p class="small muted">Understand Circular 2026-0011, Advisory 2026-0016, and transition rules for collecting agents.</p>
-              <span class="card-link">Read guide ${icon('arrow')}</span>
-            </a>
-            <a class="card" href="/guides/philhealth-prn-online-2026/" style="text-decoration:none">
-              <span class="category-label">Contributions</span>
-              <h3 style="font-size:1.02rem;margin:.4rem 0">PhilHealth PRN Online: It's Now the SPA</h3>
-              <p class="small muted">Why older Payment Reference Numbers (PRN) were replaced by the SPA system in 2026.</p>
-              <span class="card-link">Read guide ${icon('arrow')}</span>
-            </a>
-            <a class="card" href="/guides/philhealth-contribution-2026-self-paying-members.html" style="text-decoration:none">
-              <span class="category-label">Contributions</span>
-              <h3 style="font-size:1.02rem;margin:.4rem 0">Self-Paying Members Contribution Guide</h3>
-              <p class="small muted">How the 5% rate, ₱10,000 floor, and ₱100,000 ceiling apply to freelancers and professionals.</p>
-              <span class="card-link">Read guide ${icon('arrow')}</span>
-            </a>
-            <a class="card" href="/guides/philhealth-contribution-for-ofws.html" style="text-decoration:none">
-              <span class="category-label">Contributions</span>
-              <h3 style="font-size:1.02rem;margin:.4rem 0">PhilHealth Contribution for OFWs</h3>
-              <p class="small muted">Rules for land-based overseas Filipino workers, income verification, and dependents.</p>
-              <span class="card-link">Read guide ${icon('arrow')}</span>
-            </a>
-            <a class="card" href="/philhealth-payment-not-reflected-2026/" style="text-decoration:none">
-              <span class="category-label">Contributions</span>
-              <h3 style="font-size:1.02rem;margin:.4rem 0">Payment Not Reflected? What to Check</h3>
-              <p class="small muted">Posting timeframes across GCash, Maya, and banks, plus how the SPA prevents lost payments.</p>
-              <span class="card-link">Read guide ${icon('arrow')}</span>
-            </a>
-          </div>
-        </div>
+        ${toolRelatedGuides('spa-generator', true)}
       </div></div></section>`, 'PhilHealth SPA generator');
 
     const form = document.querySelector('#spa-form');
@@ -847,41 +1153,41 @@
       const noDataLabel = kind === 'cases' ? 'No verified case-rate data is loaded.' : 'No verified local records are loaded.';
       const noDataTitle = kind === 'cases' ? 'No verified case-rate data is loaded' : 'This tool has no local directory data yet';
       const noDataMeta = kind === 'cases' ? 'No verified case-rate records loaded' : 'No verified local records loaded';
-       shell(`${toolBase(c[0],c[1],`${c[2]} ${c[4].length} verified record${c[4].length === 1 ? '' : 's'} are loaded below. Use the filters to narrow the official-source dataset.`,c[3])}<section class="section finder-results-section"><div class="container"><div class="filter-bar"><div class="field"><label class="label" for="search-filter">Search</label><input id="search-filter" placeholder="Search loaded records"></div><div class="field"><label class="label" for="category-filter">Category</label><select id="category-filter"><option value="">All categories</option>${[...new Set(c[4].map(x => x.category || x.type || x.province).filter(Boolean))].map(x => `<option>${esc(x)}</option>`).join('')}</select></div>${['providers','branches'].includes(kind) ? `<div class="field"><label class="label" for="city-filter">City</label><select id="city-filter"><option value="">All cities</option>${[...new Set(c[4].map(x => x.city).filter(Boolean))].map(x => `<option>${esc(x)}</option>`).join('')}</select></div>` : '<div class="field"><label class="label" for="status-filter">Data status</label><select id="status-filter"><option value="">All statuses</option><option>needs-review</option><option>verified</option></select></div>'}<div class="field"><label class="label" for="sort-filter">Sort</label><select id="sort-filter"><option value="title">Name A–Z</option><option value="status">Status</option></select></div></div><div class="finder-summary notice info"><strong>${c[4].length} verified record${c[4].length === 1 ? '' : 's'}</strong><span class="finder-record-names">${c[4].map(x => esc(x.title)).join(' · ')}</span><span>These entries were checked against the linked official PhilHealth source on 20 August 2026. Confirm current accreditation, participation and contact details before acting.</span></div><div class="results-meta" id="results-meta"></div><div class="result-list" id="result-list"></div>${sourcePanel(c[4].length && c[4].every(x => x.status === 'verified') ? 'verified' : 'needs-review', D.official.name, directoryUrl, c[4].length ? 'Local records were checked against the linked official source on 20 August 2026. Confirm current accreditation, participation and contact details at the official source.' : `${noDataLabel} ${directoryLabel} to check current information.`)}</div></section>`, c[1]);
+       shell(`${toolBase(c[0],c[1],`${c[2]} ${c[4].length} verified record${c[4].length === 1 ? '' : 's'} are loaded below. Use the filters to narrow the official-source dataset.`,c[3])}<section class="section finder-results-section"><div class="container"><div class="filter-bar"><div class="field"><label class="label" for="search-filter">Search</label><input id="search-filter" placeholder="Search loaded records"></div><div class="field"><label class="label" for="category-filter">Category</label><select id="category-filter"><option value="">All categories</option>${[...new Set(c[4].map(x => x.category || x.type || x.province).filter(Boolean))].map(x => `<option>${esc(x)}</option>`).join('')}</select></div>${['providers','branches'].includes(kind) ? `<div class="field"><label class="label" for="city-filter">City</label><select id="city-filter"><option value="">All cities</option>${[...new Set(c[4].map(x => x.city).filter(Boolean))].map(x => `<option>${esc(x)}</option>`).join('')}</select></div>` : '<div class="field"><label class="label" for="status-filter">Data status</label><select id="status-filter"><option value="">All statuses</option><option>needs-review</option><option>verified</option></select></div>'}<div class="field"><label class="label" for="sort-filter">Sort</label><select id="sort-filter"><option value="title">Name A–Z</option><option value="status">Status</option></select></div></div><div class="finder-summary notice info"><strong>${c[4].length} verified record${c[4].length === 1 ? '' : 's'}</strong><span class="finder-record-names">${c[4].map(x => esc(x.title)).join(' · ')}</span><span>These entries were checked against the linked official PhilHealth source on 20 August 2026. Confirm current accreditation, participation and contact details before acting.</span></div><div class="results-meta" id="results-meta"></div><div class="result-list" id="result-list"></div>${sourcePanel(c[4].length && c[4].every(x => x.status === 'verified') ? 'verified' : 'needs-review', D.official.name, directoryUrl, c[4].length ? 'Local records were checked against the linked official source on 20 August 2026. Confirm current accreditation, participation and contact details at the official source.' : `${noDataLabel} ${directoryLabel} to check current information.`)}</div></section>${toolRelatedGuides(c[0])}`, c[1]);
       const render = () => { const q = document.querySelector('#search-filter').value.toLowerCase(), cat = document.querySelector('#category-filter').value, status = document.querySelector('#status-filter')?.value || '', city = document.querySelector('#city-filter')?.value || ''; let items = c[4].filter(x => `${x.title} ${x.description || ''} ${x.code || ''} ${x.services || ''}`.toLowerCase().includes(q) && (!cat || (x.category || x.type || x.province) === cat) && (!status || x.status === status) && (!city || x.city === city)); if (document.querySelector('#sort-filter').value === 'status') items.sort((a,b) => (a.status || '').localeCompare(b.status || '')); else items.sort((a,b) => a.title.localeCompare(b.title)); document.querySelector('#result-list').innerHTML = items.length ? rows(items) : `<div class="card empty-data"><span class="category-label">${kind === 'cases' ? 'No verified case-rate records' : 'No verified local records'}</span><h3>${c[4].length ? 'No matching records' : noDataTitle}</h3><p class="muted">${c[4].length ? 'Try a broader search or remove one filter.' : 'To avoid showing invented names, amounts or contact details, this page does not publish sample rows. Use the official source for the current list.'}</p><a class="card-link" href="${esc(directoryUrl)}" target="_blank" rel="noreferrer">${directoryLabel} ${icon('arrow')}</a></div>`; document.querySelector('#results-meta').textContent = c[4].length ? `${items.length} result${items.length === 1 ? '' : 's'} in the reviewed local dataset` : noDataMeta; };
     document.querySelectorAll('#search-filter,#category-filter,#status-filter,#city-filter,#sort-filter').forEach(x => x?.addEventListener('input', render)); render();
   }
 
    function contributionTable() {
-     shell(`${toolBase('contribution-table','Contribution table','Review the official premium schedule loaded in this resource. The table is not a substitute for a current member-specific assessment.','Contributions')}<section class="section"><div class="container"><div class="filter-bar"><div class="field"><label class="label" for="table-search">Search table</label><input id="table-search" placeholder="Search year or rule"></div><div class="field"><label class="label" for="table-year">Year</label><select id="table-year"><option value="">All years</option>${[...new Set(D.contributionRules.map(x => x.year))].map(x => `<option>${esc(x)}</option>`).join('')}</select></div><div class="field"><label class="label" for="table-sort">Sort</label><select id="table-sort"><option value="year">Year</option><option value="rate">Rate</option></select></div></div><div class="card table-wrap"><table><thead><tr><th>Year</th><th>Who it covers</th><th>Rate / rule</th><th>Published floor</th><th>Published ceiling</th><th>Status</th></tr></thead><tbody id="contribution-rows"></tbody></table></div><div class="button-row"><button class="btn btn-ghost js-print">Print table</button><button class="btn btn-ghost js-copy" data-copy="#contribution-rows">Copy rows</button><a class="btn btn-primary" href="/tools/contribution-calculator.html">Use calculator</a></div>${D.contributionRules.length ? sourcePanel(D.contributionRules[0].status, D.contributionRules[0].source, D.contributionRules[0].sourceUrl, 'Source checked 13 August 2026. Confirm whether a newer official schedule applies.') : sourceFor('needs-review','No verified contribution schedule is loaded.')}</div></section>`, 'Contribution table');
+     shell(`${toolBase('contribution-table','Contribution table','Review the official premium schedule loaded in this resource. The table is not a substitute for a current member-specific assessment.','Contributions')}<section class="section"><div class="container"><div class="filter-bar"><div class="field"><label class="label" for="table-search">Search table</label><input id="table-search" placeholder="Search year or rule"></div><div class="field"><label class="label" for="table-year">Year</label><select id="table-year"><option value="">All years</option>${[...new Set(D.contributionRules.map(x => x.year))].map(x => `<option>${esc(x)}</option>`).join('')}</select></div><div class="field"><label class="label" for="table-sort">Sort</label><select id="table-sort"><option value="year">Year</option><option value="rate">Rate</option></select></div></div><div class="card table-wrap"><table><thead><tr><th>Year</th><th>Who it covers</th><th>Rate / rule</th><th>Published floor</th><th>Published ceiling</th><th>Status</th></tr></thead><tbody id="contribution-rows"></tbody></table></div><div class="button-row"><button class="btn btn-ghost js-print">Print table</button><button class="btn btn-ghost js-copy" data-copy="#contribution-rows">Copy rows</button><a class="btn btn-primary" href="/tools/contribution-calculator.html">Use calculator</a></div>${D.contributionRules.length ? sourcePanel(D.contributionRules[0].status, D.contributionRules[0].source, D.contributionRules[0].sourceUrl, 'Source checked 13 August 2026. Confirm whether a newer official schedule applies.') : sourceFor('needs-review','No verified contribution schedule is loaded.')}</div></section>${toolRelatedGuides('contribution-table')}`, 'Contribution table');
      const render = () => { const q = document.querySelector('#table-search').value.toLowerCase(), year = document.querySelector('#table-year').value; let r = D.contributionRules.filter(x => `${x.year} ${x.title}`.toLowerCase().includes(q) && (!year || String(x.year) === year)); if (document.querySelector('#table-sort').value === 'rate') r.sort((a,b)=>a.rate-b.rate); document.querySelector('#contribution-rows').innerHTML = r.length ? r.map(x => `<tr><td>${x.year}</td><td>${esc(x.description)}</td><td>${x.rate*100}% applied to monthly basic salary within the published range</td><td>${money(x.floor)}</td><td>${money(x.ceiling)}</td><td><span class="status ${x.status}">${x.status}</span></td></tr>`).join('') : '<tr><td colspan="6">No verified schedule matches this filter.</td></tr>'; }; document.querySelectorAll('#table-search,#table-year,#table-sort').forEach(x=>x.addEventListener('input',render)); render();
    }
 
    function checker() {
-     shell(`${toolBase('contribution-checker','Contribution checker','Compare your own expected contribution periods with the records you hold. This tool never accesses PhilHealth records.','Contributions')}<section class="section"><div class="container"><div class="tool-layout"><div class="tool-card-shell"><h2>Reconcile your records</h2><p class="subcopy">Use payslips, receipts or your own notes. Keep private records on your device.</p><form id="checker-form" novalidate><div class="field"><label class="label" for="periods">Expected number of periods</label><input id="periods" type="number" min="1" max="600" step="1" required placeholder="e.g. 12"></div><div class="field"><label class="label" for="expected">Expected amount per period</label><input id="expected" type="number" min="0" step=".01" required placeholder="e.g. 1500"></div><div class="field"><label class="label" for="recorded">Recorded total amount</label><input id="recorded" type="number" min="0" step=".01" required placeholder="e.g. 1500"></div><div class="field"><label class="label" for="actualPeriods">Recorded number of periods</label><input id="actualPeriods" type="number" min="0" max="600" step="1" required placeholder="e.g. 12"></div><div class="button-row"><button class="btn btn-primary" type="submit">Check records ${icon('arrow')}</button><button class="btn btn-ghost" type="reset">Reset</button></div><p class="field-error" id="checker-error" role="alert"></p></form></div><div id="checker-result">${emptyResult('Enter the expected and recorded figures to compare totals, period counts and differences.')}</div></div><div class="tool-below"><div class="notice info"><strong>Privacy boundary</strong>This is a manual reconciliation aid. It does not log in to PhilHealth, retrieve records or determine whether your account is complete.</div>${sourcePanel('needs-review','PhilHealth member services','https://www.philhealth.gov.ph/','Use official member channels for record corrections or account-specific questions.')}</div></div></section>`, 'Contribution checker');
+     shell(`${toolBase('contribution-checker','Contribution checker','Compare your own expected contribution periods with the records you hold. This tool never accesses PhilHealth records.','Contributions')}<section class="section"><div class="container"><div class="tool-layout"><div class="tool-card-shell"><h2>Reconcile your records</h2><p class="subcopy">Use payslips, receipts or your own notes. Keep private records on your device.</p><form id="checker-form" novalidate><div class="field"><label class="label" for="periods">Expected number of periods</label><input id="periods" type="number" min="1" max="600" step="1" required placeholder="e.g. 12"></div><div class="field"><label class="label" for="expected">Expected amount per period</label><input id="expected" type="number" min="0" step=".01" required placeholder="e.g. 1500"></div><div class="field"><label class="label" for="recorded">Recorded total amount</label><input id="recorded" type="number" min="0" step=".01" required placeholder="e.g. 1500"></div><div class="field"><label class="label" for="actualPeriods">Recorded number of periods</label><input id="actualPeriods" type="number" min="0" max="600" step="1" required placeholder="e.g. 12"></div><div class="button-row"><button class="btn btn-primary" type="submit">Check records ${icon('arrow')}</button><button class="btn btn-ghost" type="reset">Reset</button></div><p class="field-error" id="checker-error" role="alert"></p></form></div><div id="checker-result">${emptyResult('Enter the expected and recorded figures to compare totals, period counts and differences.')}</div></div><div class="tool-below"><div class="notice info"><strong>Privacy boundary</strong>This is a manual reconciliation aid. It does not log in to PhilHealth, retrieve records or determine whether your account is complete.</div>${sourcePanel('needs-review','PhilHealth member services','https://www.philhealth.gov.ph/','Use official member channels for record corrections or account-specific questions.')}${toolRelatedGuides('contribution-checker', true)}</div></div></section>`, 'Contribution checker');
      document.querySelector('#checker-form').addEventListener('submit', e => { e.preventDefault(); const periods = Number(document.querySelector('#periods').value), expected = Number(document.querySelector('#expected').value), recorded = Number(document.querySelector('#recorded').value), actual = Number(document.querySelector('#actualPeriods').value); const error = document.querySelector('#checker-error'); if (!Number.isInteger(periods) || periods < 1 || !Number.isFinite(expected) || expected < 0 || !Number.isFinite(recorded) || recorded < 0 || !Number.isInteger(actual) || actual < 0) { error.textContent = 'Enter valid non-negative amounts and whole-number period counts.'; return; } error.textContent = ''; const total = periods * expected, diff = recorded - total, missing = periods - actual, amountMatch = total === 0 ? (recorded === 0 ? 100 : 0) : Math.max(0, Math.min(100, recorded / total * 100)), status = Math.abs(diff) < .01 && missing === 0 ? 'Totals and periods match' : 'Difference found'; document.querySelector('#checker-result').innerHTML = `<div class="result-panel" id="checker-copy"><div class="result-kicker">${status}</div><div class="result-value">${amountMatch.toFixed(1)}%</div><p class="small muted">Amount comparison only; this does not verify whether a payment posted to your PhilHealth record.</p><div class="breakdown"><div><span>Expected total</span><strong>${money(total)}</strong></div><div><span>Recorded total</span><strong>${money(recorded)}</strong></div><div><span>Amount difference</span><strong>${money(Math.abs(diff))}${diff < 0 ? ' below expected' : diff > 0 ? ' above expected' : ''}</strong></div><div><span>Expected periods</span><strong>${periods}</strong></div><div><span>Recorded periods</span><strong>${actual}</strong></div></div><div class="notice ${status === 'Totals and periods match' ? 'success' : ''}" style="margin-top:1rem"><strong>Next step</strong>${status === 'Totals and periods match' ? 'Keep the dated records together. A numerical match still does not confirm that PhilHealth has posted every period.' : `${missing > 0 ? `${missing} expected period${missing === 1 ? '' : 's'} are not represented in the recorded count. ` : ''}Compare the period dates, payslips or payment receipts, then ask the employer or payment channel for supporting details before contacting PhilHealth.`}</div><div class="button-row"><button class="btn btn-ghost js-copy" data-copy="#checker-copy">Copy result</button><button class="btn btn-ghost js-print">Print</button></div></div>`; bindGlobal(); });
      document.querySelector('#checker-form').addEventListener('reset', () => setTimeout(() => { document.querySelector('#checker-error').textContent = ''; document.querySelector('#checker-result').innerHTML = emptyResult('Enter the expected and recorded figures to compare totals, period counts and differences.'); }, 0));
    }
 
   function requirements() {
-    shell(`${toolBase('requirements-finder','Requirements finder','Build a practical starting checklist for common PhilHealth transactions. Requirements can vary, so verify before visiting a service point.','Documents')}<section class="section"><div class="container"><div class="tool-layout"><div class="tool-card-shell"><div class="stepper"><span class="step active"><b>1</b>Goal</span><span class="step"><b>2</b>Member</span><span class="step"><b>3</b>Situation</span></div><form id="req-form"><div class="field"><label class="label" for="req-action">What are you trying to do?</label><select id="req-action" required><option value="">Choose a transaction</option>${['Register','Update information','Add dependent','Get MDR','Get ID','Pay contribution','Claim benefits','Other'].map(x => `<option>${x}</option>`).join('')}</select></div><div class="field"><label class="label" for="req-type">Member type</label><select id="req-type" required><option value="">Choose a member type</option><option>Employed</option><option>Self-employed</option><option>Voluntary / Individual</option><option>OFW</option><option>Kasambahay</option><option>Other</option></select></div><div class="field"><label class="label" for="req-situation">Situation</label><select id="req-situation" required><option value="">Choose a situation</option><option>New member</option><option>Requesting a record</option><option>Preparing a claim</option><option>Correcting records</option><option>Planning a payment</option></select></div><div class="button-row"><button class="btn btn-primary">Build checklist ${icon('arrow')}</button><button class="btn btn-ghost" type="reset">Start over</button></div></form></div><div id="req-result">${emptyResult('Choose a transaction, member type and situation to build a checklist.')}</div></div></div></section>`, 'Requirements finder');
+    shell(`${toolBase('requirements-finder','Requirements finder','Build a practical starting checklist for common PhilHealth transactions. Requirements can vary, so verify before visiting a service point.','Documents')}<section class="section"><div class="container"><div class="tool-layout"><div class="tool-card-shell"><div class="stepper"><span class="step active"><b>1</b>Goal</span><span class="step"><b>2</b>Member</span><span class="step"><b>3</b>Situation</span></div><form id="req-form"><div class="field"><label class="label" for="req-action">What are you trying to do?</label><select id="req-action" required><option value="">Choose a transaction</option>${['Register','Update information','Add dependent','Get MDR','Get ID','Pay contribution','Claim benefits','Other'].map(x => `<option>${x}</option>`).join('')}</select></div><div class="field"><label class="label" for="req-type">Member type</label><select id="req-type" required><option value="">Choose a member type</option><option>Employed</option><option>Self-employed</option><option>Voluntary / Individual</option><option>OFW</option><option>Kasambahay</option><option>Other</option></select></div><div class="field"><label class="label" for="req-situation">Situation</label><select id="req-situation" required><option value="">Choose a situation</option><option>New member</option><option>Requesting a record</option><option>Preparing a claim</option><option>Correcting records</option><option>Planning a payment</option></select></div><div class="button-row"><button class="btn btn-primary">Build checklist ${icon('arrow')}</button><button class="btn btn-ghost" type="reset">Start over</button></div></form></div><div id="req-result">${emptyResult('Choose a transaction, member type and situation to build a checklist.')}</div></div></div></section>${toolRelatedGuides('requirements-finder')}`, 'Requirements finder');
     document.querySelector('#req-form').addEventListener('submit', e => { e.preventDefault(); const action = document.querySelector('#req-action').value, type = document.querySelector('#req-type').value, situation = document.querySelector('#req-situation').value; if (!action || !type || !situation) return; let data = D.requirements.find(x => x.action === action) || D.requirements.find(x => x.situation === situation) || D.requirements[0]; document.querySelector('#req-result').innerHTML = `<div class="result-panel" id="req-copy"><div class="result-kicker">Requirements checklist</div><h2 style="margin:.4rem 0 1rem">${esc(action)}</h2><p class="small muted">For a ${esc(type)} member in the “${esc(situation)}” situation.</p><ul class="mini-list">${data.items.map((i,n)=>`<li><span class="check">${n < 2 ? icon('check') : '○'}</span><span><strong>${esc(i[0])}</strong><br><span class="small muted">${esc(i[1])} · ${esc(i[2])}</span></span></li>`).join('')}</ul><div class="notice" style="margin-top:1rem"><strong>Before you go</strong>Confirm the latest form, acceptable IDs, office process and any situation-specific documents with the official source.</div><div class="button-row"><button class="btn btn-ghost js-copy" data-copy="#req-copy">Copy checklist</button><button class="btn btn-ghost js-print">Print</button></div>${sourceFor('needs-review')}</div>`; bindGlobal(); });
     document.querySelector('#req-form').addEventListener('reset', () => setTimeout(() => document.querySelector('#req-result').innerHTML = emptyResult(), 0));
   }
 
    function estimator() {
-     shell(`${toolBase('hospital-bill-estimator','Hospital bill estimator','Calculate a remaining balance from figures quoted by the facility. This tool never guesses a PhilHealth package or deduction.','Planning')}<section class="section"><div class="container"><div class="tool-layout"><div class="tool-card-shell"><h2>Use your itemized quote</h2><p class="subcopy">Enter the total bill and the PhilHealth deduction or payment amount quoted by the facility. Do not use a percentage unless the facility gave you one and you convert it first.</p><form id="estimate-form" novalidate><div class="field"><label class="label" for="bill">Total bill quoted by facility</label><input id="bill" type="number" min="0.01" max="100000000" step=".01" required placeholder="e.g. 80000"></div><div class="field"><label class="label" for="deduction">PhilHealth deduction / benefit amount quoted</label><input id="deduction" type="number" min="0" max="100000000" step=".01" required placeholder="e.g. 12000"><span class="field-error" id="estimate-error"></span></div><div class="field"><label class="label" for="other">Other confirmed payments or discounts</label><input id="other" type="number" min="0" max="100000000" step=".01" value="0" placeholder="e.g. 5000"></div><div class="button-row"><button class="btn btn-primary" type="submit">Calculate balance ${icon('arrow')}</button><button class="btn btn-ghost" type="reset">Reset</button></div></form></div><div id="estimate-result">${emptyResult('Enter the facility quote to calculate the arithmetic balance.')}</div></div><div class="tool-below"><div class="notice info"><strong>Calculation boundary</strong>The result is arithmetic only: total bill minus the deduction and other confirmed payments. Actual eligibility, claim assessment, package rules and final billing remain with PhilHealth and the facility.</div>${sourcePanel('needs-review','PhilHealth official website',D.official.url,'Use the facility’s itemized quote and official PhilHealth channels for the applicable benefit and final balance. No package percentage is assumed here.')}</div></div></section>`, 'Hospital bill estimator');
+     shell(`${toolBase('hospital-bill-estimator','Hospital bill estimator','Calculate a remaining balance from figures quoted by the facility. This tool never guesses a PhilHealth package or deduction.','Planning')}<section class="section"><div class="container"><div class="tool-layout"><div class="tool-card-shell"><h2>Use your itemized quote</h2><p class="subcopy">Enter the total bill and the PhilHealth deduction or payment amount quoted by the facility. Do not use a percentage unless the facility gave you one and you convert it first.</p><form id="estimate-form" novalidate><div class="field"><label class="label" for="bill">Total bill quoted by facility</label><input id="bill" type="number" min="0.01" max="100000000" step=".01" required placeholder="e.g. 80000"></div><div class="field"><label class="label" for="deduction">PhilHealth deduction / benefit amount quoted</label><input id="deduction" type="number" min="0" max="100000000" step=".01" required placeholder="e.g. 12000"><span class="field-error" id="estimate-error"></span></div><div class="field"><label class="label" for="other">Other confirmed payments or discounts</label><input id="other" type="number" min="0" max="100000000" step=".01" value="0" placeholder="e.g. 5000"></div><div class="button-row"><button class="btn btn-primary" type="submit">Calculate balance ${icon('arrow')}</button><button class="btn btn-ghost" type="reset">Reset</button></div></form></div><div id="estimate-result">${emptyResult('Enter the facility quote to calculate the arithmetic balance.')}</div></div><div class="tool-below"><div class="notice info"><strong>Calculation boundary</strong>The result is arithmetic only: total bill minus the deduction and other confirmed payments. Actual eligibility, claim assessment, package rules and final billing remain with PhilHealth and the facility.</div>${sourcePanel('needs-review','PhilHealth official website',D.official.url,'Use the facility’s itemized quote and official PhilHealth channels for the applicable benefit and final balance. No package percentage is assumed here.')}${toolRelatedGuides('hospital-bill-estimator', true)}</div></div></section>`, 'Hospital bill estimator');
      document.querySelector('#estimate-form').addEventListener('submit', e => { e.preventDefault(); const bill = Number(document.querySelector('#bill').value), deduction = Number(document.querySelector('#deduction').value), other = Number(document.querySelector('#other').value || 0), error = document.querySelector('#estimate-error'); if (!Number.isFinite(bill) || bill <= 0 || !Number.isFinite(deduction) || deduction < 0 || !Number.isFinite(other) || other < 0 || deduction + other > bill) { error.textContent = 'Enter valid amounts. The deduction and other payments cannot exceed the total bill.'; return; } error.textContent = ''; const remaining = bill - deduction - other; document.querySelector('#estimate-result').innerHTML = `<div class="result-panel" id="estimate-copy"><div class="result-kicker">Arithmetic balance</div><div class="result-value">${money(remaining)}</div><p class="small muted">This is the balance implied by the figures you entered.</p><div class="breakdown"><div><span>Total bill quoted</span><strong>${money(bill)}</strong></div><div><span>PhilHealth deduction quoted</span><strong>− ${money(deduction)}</strong></div><div><span>Other confirmed payments / discounts</span><strong>− ${money(other)}</strong></div><div><span>Arithmetic balance</span><strong>${money(remaining)}</strong></div></div><div class="notice" style="margin-top:1rem"><strong>Confirm before paying</strong>Compare this with the facility’s itemized statement and ask which package, eligibility assessment and charges produced the quoted deduction. This tool cannot confirm the claim or promise the balance.</div><div class="button-row"><button class="btn btn-ghost js-copy" data-copy="#estimate-copy">Copy result</button><button class="btn btn-ghost js-print">Print</button></div></div>`; bindGlobal(); });
      document.querySelector('#estimate-form').addEventListener('reset', () => setTimeout(() => { document.querySelector('#estimate-error').textContent = ''; document.querySelector('#estimate-result').innerHTML = emptyResult('Enter the facility quote to calculate the arithmetic balance.'); }, 0));
    }
 
   function eligibility() {
-    shell(`${toolBase('benefits-eligibility','Benefits eligibility guide','Answer a few planning questions to identify a potentially applicable benefit. Only PhilHealth or a facility can assess eligibility.','Benefits')}<section class="section"><div class="container"><div class="tool-layout"><div class="tool-card-shell"><h2>Start with your situation</h2><p class="subcopy">This is a question guide, not an official eligibility determination.</p><form id="elig-form"><div class="field"><label class="label">Member category</label><select id="elig-member" required><option value="">Choose one</option><option>Employed</option><option>Self-employed</option><option>Voluntary / Individual</option><option>OFW</option><option>Other</option></select></div><div class="field"><label class="label">Treatment or service</label><select id="elig-service" required><option value="">Choose one</option><option>Hospital admission</option><option>Maternity care</option><option>Dialysis</option><option>Primary care</option><option>Outpatient consultation</option></select></div><div class="field"><label class="label">Facility</label><select id="elig-facility" required><option value="">Choose one</option><option>Hospital</option><option>Clinic</option><option>Dialysis center</option><option>Not sure</option></select></div><div class="field"><label class="label">Situation</label><select id="elig-situation" required><option value="">Choose one</option><option>Planning care</option><option>Already receiving care</option><option>Preparing a claim</option><option>Asking about a bill</option></select></div><button class="btn btn-primary">Show planning guidance ${icon('arrow')}</button></form></div><div id="elig-result">${emptyResult('Answer the questions to see what may be relevant and what to verify next.')}</div></div></div></section>`, 'Benefits eligibility guide');
+    shell(`${toolBase('benefits-eligibility','Benefits eligibility guide','Answer a few planning questions to identify a potentially applicable benefit. Only PhilHealth or a facility can assess eligibility.','Benefits')}<section class="section"><div class="container"><div class="tool-layout"><div class="tool-card-shell"><h2>Start with your situation</h2><p class="subcopy">This is a question guide, not an official eligibility determination.</p><form id="elig-form"><div class="field"><label class="label">Member category</label><select id="elig-member" required><option value="">Choose one</option><option>Employed</option><option>Self-employed</option><option>Voluntary / Individual</option><option>OFW</option><option>Other</option></select></div><div class="field"><label class="label">Treatment or service</label><select id="elig-service" required><option value="">Choose one</option><option>Hospital admission</option><option>Maternity care</option><option>Dialysis</option><option>Primary care</option><option>Outpatient consultation</option></select></div><div class="field"><label class="label">Facility</label><select id="elig-facility" required><option value="">Choose one</option><option>Hospital</option><option>Clinic</option><option>Dialysis center</option><option>Not sure</option></select></div><div class="field"><label class="label">Situation</label><select id="elig-situation" required><option value="">Choose one</option><option>Planning care</option><option>Already receiving care</option><option>Preparing a claim</option><option>Asking about a bill</option></select></div><button class="btn btn-primary">Show planning guidance ${icon('arrow')}</button></form></div><div id="elig-result">${emptyResult('Answer the questions to see what may be relevant and what to verify next.')}</div></div></div></section>${toolRelatedGuides('benefits-eligibility')}`, 'Benefits eligibility guide');
     document.querySelector('#elig-form').addEventListener('submit', e => { e.preventDefault(); const service = document.querySelector('#elig-service').value, facility = document.querySelector('#elig-facility').value, situation = document.querySelector('#elig-situation').value; if (!service) return; const map = {'Hospital admission':['Inpatient hospital care','A case-rate or package may be relevant to an eligible admission.'],'Maternity care':['Maternity care','A maternity-related package may be relevant depending on the service and facility.'],'Dialysis':['Dialysis services','A dialysis-related package may be relevant depending on current rules and facility participation.'],'Primary care':['YAKAP primary care services','A YAKAP pathway may be relevant if the provider participates.'],'Outpatient consultation':['Outpatient consultations','An outpatient package or referral pathway may be relevant.']}; const x = map[service] || map['Outpatient consultation']; document.querySelector('#elig-result').innerHTML = `<div class="result-panel"><div class="result-kicker">Potentially applicable — verify with PhilHealth/facility</div><h2 style="margin:.5rem 0">${x[0]}</h2><p class="explain">${x[1]}</p><div class="breakdown"><div><span>Why it may apply</span><strong>${esc(service)} at a ${esc(facility)}</strong></div><div><span>Situation considered</span><strong>${esc(situation)}</strong></div><div><span>What to verify</span><strong>Eligibility, current package, facility process</strong></div></div><div class="notice" style="margin-top:1rem"><strong>Recommended next step</strong>Ask the facility billing or member-service team which current package applies, what documents are needed and how the claim will be assessed.</div><a class="card-link" href="/tools/benefits-finder.html">Browse related benefits ${icon('arrow')}</a>${sourceFor('needs-review')}</div>`; });
   }
 
   function navigator() {
-     const options = {'Generate SPA (Payment)':['Generate your Statement of Premium Account','PhilHealth SPA generator','PhilHealth SPA generator guide','/tools/spa-generator.html'],'Calculate contribution':['Use the contribution calculator','Contribution calculator','Contribution guide','/tools/contribution-calculator.html'],'Check contribution':['Reconcile your own records','Contribution checker','How to check your contribution','/tools/contribution-checker.html'],'Register':['Prepare a registration checklist','Requirements finder','Online registration guide','/tools/requirements-finder.html'],'Update information':['Start an update checklist','Requirements finder','Requirements guide','/tools/requirements-finder.html'],'Get MDR':['Review the MDR checklist','Requirements finder','MDR guide','/tools/requirements-finder.html'],'Get ID':['Review ID documents to ask about','Requirements finder','PhilHealth ID guide','/tools/requirements-finder.html'],'Find benefits':['Search benefit categories','Benefits finder','Benefits guide','/tools/benefits-finder.html'],'Find requirements':['Build a tailored checklist','Requirements finder','Requirements guide','/tools/requirements-finder.html'],'Find provider':['Open the official facility directory','Provider finder','Benefits guide','/tools/provider-finder.html'],'Find branch':['Use official PhilHealth contact channels','Branch finder','Portal login guide','/tools/branch-finder.html'],'Find YAKAP clinic':['Open the official YAKAP clinic list','YAKAP clinic finder','YAKAP guide','/tools/yakap-clinic-finder.html'],'Understand hospital bill':['Calculate a balance from a facility quote','Hospital bill estimator','Case rates guide','/tools/hospital-bill-estimator.html'],'Fix login problem':['Review access troubleshooting steps','Portal login guide','Portal login guide','/guides/philhealth-portal-login.html'],'Payment problem':['Gather payment evidence and compare periods','Contribution checker','How to pay contribution','/tools/contribution-checker.html'],'OTP problem':['Review account safety and contact the official channel','Service navigator','Portal login guide','/guides/philhealth-portal-login.html']}; shell(`${toolBase('service-navigator','Service navigator','Choose what you are trying to do and get a useful next step, tool and guide.','Help')}<section class="section"><div class="container"><div class="tool-layout"><div class="tool-card-shell"><h2>What are you trying to do?</h2><div class="wizard-option-grid" id="nav-options">${Object.keys(options).map(x => `<button class="option" data-key="${esc(x)}">${esc(x)}</button>`).join('')}</div></div><div id="nav-result">${emptyResult('Choose a goal to receive a recommended action.')}</div></div></div></section>`, 'Service navigator'); document.querySelectorAll('.option').forEach(btn => btn.addEventListener('click', () => { document.querySelectorAll('.option').forEach(x=>x.classList.remove('selected')); btn.classList.add('selected'); const x = options[btn.dataset.key]; document.querySelector('#nav-result').innerHTML = `<div class="result-panel"><div class="result-kicker">Recommended next step</div><h2 style="margin:.5rem 0">${x[0]}</h2><div class="breakdown"><div><span>Recommended tool</span><strong>${x[1]}</strong></div><div><span>Recommended guide</span><strong>${x[2]}</strong></div></div><div class="button-row"><a class="btn btn-primary" href="${x[3]}">Open recommendation ${icon('arrow')}</a></div><div class="notice info" style="margin-top:1rem"><strong>Official source</strong>For current account-specific help, use official PhilHealth channels. Never share your password, OTP or private member data with an information site.</div></div>`; })); }
+     const options = {'Generate SPA (Payment)':['Generate your Statement of Premium Account','PhilHealth SPA generator','PhilHealth SPA generator guide','/tools/spa-generator.html'],'Calculate contribution':['Use the contribution calculator','Contribution calculator','Contribution guide','/tools/contribution-calculator.html'],'Check contribution':['Reconcile your own records','Contribution checker','How to check your contribution','/tools/contribution-checker.html'],'Register':['Prepare a registration checklist','Requirements finder','Online registration guide','/tools/requirements-finder.html'],'Update information':['Start an update checklist','Requirements finder','Requirements guide','/tools/requirements-finder.html'],'Get MDR':['Review the MDR checklist','Requirements finder','MDR guide','/tools/requirements-finder.html'],'Get ID':['Review ID documents to ask about','Requirements finder','PhilHealth ID guide','/tools/requirements-finder.html'],'Find benefits':['Search benefit categories','Benefits finder','Benefits guide','/tools/benefits-finder.html'],'Find requirements':['Build a tailored checklist','Requirements finder','Requirements guide','/tools/requirements-finder.html'],'Find provider':['Open the official facility directory','Provider finder','Benefits guide','/tools/provider-finder.html'],'Find branch':['Use official PhilHealth contact channels','Branch finder','Portal login guide','/tools/branch-finder.html'],'Find YAKAP clinic':['Open the official YAKAP clinic list','YAKAP clinic finder','YAKAP guide','/tools/yakap-clinic-finder.html'],'Understand hospital bill':['Calculate a balance from a facility quote','Hospital bill estimator','Case rates guide','/tools/hospital-bill-estimator.html'],'Fix login problem':['Review access troubleshooting steps','Portal login guide','Portal login guide','/guides/philhealth-portal-login.html'],'Payment problem':['Gather payment evidence and compare periods','Contribution checker','How to pay contribution','/tools/contribution-checker.html'],'OTP problem':['Review account safety and contact the official channel','Service navigator','Portal login guide','/guides/philhealth-portal-login.html']}; shell(`${toolBase('service-navigator','Service navigator','Choose what you are trying to do and get a useful next step, tool and guide.','Help')}<section class="section"><div class="container"><div class="tool-layout"><div class="tool-card-shell"><h2>What are you trying to do?</h2><div class="wizard-option-grid" id="nav-options">${Object.keys(options).map(x => `<button class="option" data-key="${esc(x)}">${esc(x)}</button>`).join('')}</div></div><div id="nav-result">${emptyResult('Choose a goal to receive a recommended action.')}</div></div></div></section>${toolRelatedGuides('spa-generator')}`, 'Service navigator'); document.querySelectorAll('.option').forEach(btn => btn.addEventListener('click', () => { document.querySelectorAll('.option').forEach(x=>x.classList.remove('selected')); btn.classList.add('selected'); const x = options[btn.dataset.key]; document.querySelector('#nav-result').innerHTML = `<div class="result-panel"><div class="result-kicker">Recommended next step</div><h2 style="margin:.5rem 0">${x[0]}</h2><div class="breakdown"><div><span>Recommended tool</span><strong>${x[1]}</strong></div><div><span>Recommended guide</span><strong>${x[2]}</strong></div></div><div class="button-row"><a class="btn btn-primary" href="${x[3]}">Open recommendation ${icon('arrow')}</a></div><div class="notice info" style="margin-top:1rem"><strong>Official source</strong>For current account-specific help, use official PhilHealth channels. Never share your password, OTP or private member data with an information site.</div></div>`; })); }
 
   function librarySidebar(category = '') {
      const categories = ['Contributions', 'Benefits', 'Requirements', 'YAKAP', 'Providers', 'Portal'];
@@ -949,12 +1255,13 @@
       return;
     }
     const articleData = g[4] || {};
-    const toc = (articleData.content || '').split(/\r?\n/).filter(line => /^##\s+/.test(line)).slice(0, 8).map((line, i) => `<a href="#section-${i}">${esc(line.replace(/^##\s+/, ''))}</a>`).join('');
-    let rendered = markdownHtml(articleData.content || '');
+    const content = uploadedArticleBody(articleData.content || '', articleData);
+    const toc = (content || '').split(/\r?\n/).filter(line => /^##\s+/.test(line)).slice(0, 8).map((line, i) => `<a href="#section-${i}">${esc(line.replace(/^##\s+/, ''))}</a>`).join('');
+    let rendered = markdownHtml(content || '');
     let sectionIndex = 0;
     rendered = rendered.replace(/<h2>/g, () => `<h2 id="section-${sectionIndex++}">`);
     const officialSource = articleData.category === 'Providers' ? D.official.providerDirectoryUrl : articleData.category === 'Contributions' ? D.official.contributionUrl : articleData.category === 'YAKAP' ? D.official.yakapDirectoryUrl : D.official.url;
-    shell(`<div class="page-hero"><div class="container"><div class="breadcrumbs"><a href="/index.html">Home</a><span>/</span><a href="/guides.html">Guides</a><span>/</span>${esc(g[1])}</div><div class="eyebrow">${esc(g[2])}</div><h1>${esc(g[1])}</h1><p class="lead">${esc(g[3])}</p><p class="small" style="color:#d7eee4">By ${esc(articleData.author || 'PhilHealth Guide')} · Published ${esc(articleData.date || '')} · 8 min read</p></div></div><section class="section"><div class="container article-layout"><article class="article"><div class="article-hero-art"><img src="${esc(articleData.image || guideAsset(g, 0))}" alt=""><span style="margin-left:.7rem;font-weight:600">${icon('book')} ${esc(g[2])} guide</span></div><div class="notice info"><strong>Independent guide</strong>This article is for general information. Confirm current rates, packages, provider status and requirements with official PhilHealth channels before acting.</div><div class="article-body">${rendered}</div>${sourcePanel('needs-review', D.official.name, officialSource, `Article published ${articleData.date || ''}. Official information can change after publication; verify the current source before relying on a detail.`)}</article><aside class="article-sidebar"><div class="side-box"><h3>On this page</h3>${toc || '<a href="#article-content">Article sections</a>'}<a href="#faq">FAQ</a></div>${guideSidebar(g)}${librarySidebar(g[2])}</aside></div></section><section class="section compact" id="faq"><div class="container faq"><h2>Frequently asked questions</h2><details><summary>Is this an official PhilHealth page?</summary><p>No. PhilHealth Guide is an independent informational resource and does not access member records or make official decisions.</p></details><details><summary>Can I rely on the numbers shown?</summary><p>Use the article as a planning and reading aid, then verify current rates, packages, facilities, documents and dates with PhilHealth or the relevant facility.</p></details></div></section>`, g[1]); }
+    shell(`<div class="page-hero"><div class="container"><div class="breadcrumbs"><a href="/index.html">Home</a><span>/</span><a href="/guides.html">Guides</a><span>/</span>${esc(g[1])}</div><div class="eyebrow">${esc(g[2])}</div><h1>${esc(g[1])}</h1><p class="lead">${esc(g[3])}</p><p class="small" style="color:#d7eee4">By ${esc(articleData.author || 'PhilHealth Guide')} · Published ${esc(articleData.date || '')} · 8 min read</p></div></div><section class="section"><div class="container article-layout"><article class="article"><div class="article-hero-art"><img src="${esc(articleData.image || guideAsset(g, 0))}" alt=""><span style="margin-left:.7rem;font-weight:600">${icon('book')} ${esc(g[2])} guide</span></div><div class="notice info"><strong>Independent guide</strong>This article is for general information. Confirm current rates, packages, provider status and requirements with official PhilHealth channels before acting.</div><div class="article-body">${rendered}${internalGuideLinks(g)}</div>${sourcePanel('needs-review', D.official.name, officialSource, `Article published ${articleData.date || ''}. Official information can change after publication; verify the current source before relying on a detail.`)}</article><aside class="article-sidebar"><div class="side-box"><h3>On this page</h3>${toc || '<a href="#article-content">Article sections</a>'}<a href="#faq">FAQ</a></div>${guideSidebar(g)}${librarySidebar(g[2])}</aside></div></section><section class="section compact" id="faq"><div class="container faq"><h2>Frequently asked questions</h2><details><summary>Is this an official PhilHealth page?</summary><p>No. PhilHealth Guide is an independent informational resource and does not access member records or make official decisions.</p></details><details><summary>Can I rely on the numbers shown?</summary><p>Use the article as a planning and reading aid, then verify current rates, packages, facilities, documents and dates with PhilHealth or the relevant facility.</p></details></div></section>`, g[1]); }
   function sources() { shell(`<div class="page-hero"><div class="container"><div class="breadcrumbs"><a href="/index.html">Home</a><span>/</span>Sources</div><div class="eyebrow">Trust library</div><h1>Sources behind the guide.</h1><p class="lead">A transparent index of official and program sources used as review starting points.</p></div></div><section class="section"><div class="container"><div class="grid grid-3">${D.sources.map(s => `<article class="card"><span class="category-label">${s[1]}</span><h3 style="margin-top:.5rem">${s[0]}</h3><p class="muted small">${s[2]}</p><div class="small muted">Last reviewed: ${D.reviewed}</div><a class="card-link" href="${D.official.url}" target="_blank" rel="noreferrer">Open source ${icon('arrow')}</a></article>`).join('')}</div><div class="notice info" style="margin-top:1.5rem"><strong>Source discipline</strong>Source links are starting points for verification. A source page can change, so check the current official content before publishing or acting on a detail.</div></div></section>`, 'Sources'); }
   function trustPage(kind) { const data = {about:['About PhilHealth Guide','An independent information resource for practical questions.',['Independent status','This site is not affiliated with, endorsed by, or operated by PhilHealth. It provides plain-language organization, calculators and source links.'],['Purpose','Help people understand what to ask, prepare their own records and find the right next step without exposing private member data.'],['Update process','Calculation rules, benefit notes and directory records carry a status and review date. Unverified records are withheld rather than presented as facts.']], 'editorial-policy':['Editorial policy','How this resource approaches research, review and corrections.',['Research process','Start with official PhilHealth sources and use a status label for each factual record.'],['Source selection','Prefer official policies, advisories and program pages. Add a direct source URL and a review date.'],['Review and updates','Recheck time-sensitive information before publication. Mark uncertain records as needs-review rather than presenting assumptions as facts.'],['AI-assisted content policy','AI may help with structure or drafting, but published factual claims require human review and source checking.'],['Editorial independence','This independent resource does not claim official endorsement or access to member records.']], 'disclaimer':['Disclaimer','Read this before using the tools.',['Independent resource','PhilHealth Guide is an independent informational resource and is not affiliated with, endorsed by, or operated by PhilHealth.'],['Planning only','Calculators, finders and estimates organize questions and demonstrate logic. They are not official determinations, records or guarantees.'],['Current information','Rates, benefits, requirements, provider participation, addresses, hours and policies can change. Verify them with official sources.']], 'privacy':['Privacy','A clear statement about the boundaries of this static site.',['Local-first tools','The static calculators and finders run in your browser. Do not enter private member numbers, passwords or OTPs.'],['Contact forms','The contact and correction forms validate input in the browser. They do not claim to deliver email until a site owner configures a backend.'],['Your responsibility','Use safe browsing practices and only submit information you are comfortable sharing through a configured channel.']], 'terms':['Terms','Terms for using this independent information resource.',['Use of tools','Use the tools as planning aids and verify current information before making decisions.'],['No guarantee','The site does not guarantee completeness, accuracy or current official status of every record.'],['Respect sources','Do not misrepresent this resource as official or reproduce source material without permission.']], 'accessibility':['Accessibility','A commitment to a usable, keyboard-friendly experience.',['Standards','The site aims for WCAG 2.2 AA practices including visible focus, labels, semantic landmarks and reduced motion.'],['Feedback','If a page creates an accessibility barrier, use the correction or contact page to describe the issue.']]}; const x = data[kind] || data.about; shell(`<div class="page-hero"><div class="container"><div class="breadcrumbs"><a href="/index.html">Home</a><span>/</span>${x[0]}</div><div class="eyebrow">Trust &amp; transparency</div><h1>${x[0]}</h1><p class="lead">${x[1]}</p></div></div><section class="section"><div class="container prose">${x.slice(2).map(section => `<h2>${section[0]}</h2><p>${section[1]}</p>`).join('')}<div class="notice" style="margin-top:2rem"><strong>Questions or corrections?</strong><a href="/corrections.html">Report an issue</a> or <a href="/contact.html">contact the site owner</a>.</div></div></section>`, x[0]); }
    function trustPage(kind) {
