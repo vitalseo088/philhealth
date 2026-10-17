@@ -526,7 +526,7 @@
     } else if (isBenefitsRelevant) {
       toolSideBox = `
         <div class="side-box" style="background:#f7f2fa;border:1px solid #dac9ea;border-radius:10px">
-          <span class="category-label" style="background:var(--purple);color:#fff">Benefit Planning</span>
+          <span class="category-label" style="background:var(--yellow);color:var(--navy)">Benefit Planning</span>
           <h4 style="font-size:.95rem;margin:.55rem 0 .3rem;color:var(--navy)">Case Rate &amp; Bill Estimator</h4>
           <p class="small muted" style="margin:0 0 .8rem;line-height:1.45">Search PhilHealth case rates (Cesarean, delivery, dialysis) and calculate estimated out-of-pocket hospital bills.</p>
           <a class="btn btn-primary small" href="/tools/case-rate-finder.html" style="width:100%;text-align:center;box-sizing:border-box">Check Case Rates ${icon('arrow')}</a>
@@ -717,7 +717,7 @@
       toolPromo = `
         <div class="article-spa-promo" style="border-left-color:var(--purple);background:#f7f2fa;border-color:#dac9ea">
           <div class="spa-promo-header">
-            <span class="category-label" style="background:var(--purple);color:#fff">Benefit Estimators</span>
+            <span class="category-label" style="background:var(--yellow);color:var(--navy)">Benefit Estimators</span>
             <span class="status verified">2026 Case Rates</span>
           </div>
           <h3>Estimating your hospital bill deduction or case rate?</h3>
