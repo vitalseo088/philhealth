@@ -2,6 +2,13 @@
   'use strict';
   const SITE_ORIGIN = 'https://philbenefits.com';
   const GA_MEASUREMENT_ID = 'G-P7GBYEKLYJ';
+  if (!document.querySelector('script[src*="pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"]')) {
+    const adsenseScript = document.createElement('script');
+    adsenseScript.async = true;
+    adsenseScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4672678126434211';
+    adsenseScript.crossOrigin = 'anonymous';
+    document.head.appendChild(adsenseScript);
+  }
   if (!window.__philHealthAnalyticsInstalled) {
     window.__philHealthAnalyticsInstalled = true;
     window.dataLayer = window.dataLayer || [];
