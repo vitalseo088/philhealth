@@ -1,6 +1,5 @@
 (function () {
   'use strict';
-  const SITE_ORIGIN = 'https://philbenefits.com';
   const GA_MEASUREMENT_ID = 'G-P7GBYEKLYJ';
   if (!document.querySelector('script[src*="pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"]')) {
     const adsenseScript = document.createElement('script');
@@ -145,15 +144,6 @@
         : requestedPath !== '/' && !requestedPath.endsWith('.html')
           ? `${requestedPath}.html`
           : requestedPath;
-  const canonicalPath = requestedPath === '/' || requestedPath === '/index.html'
-    ? '/'
-    : requestedPath.endsWith('/index.html')
-      ? requestedPath.replace(/index\.html$/, '')
-      : requestedPath.endsWith('.html')
-        ? `${requestedPath.slice(0, -5)}/`
-        : requestedPath.endsWith('/')
-          ? requestedPath
-          : `${requestedPath}/`;
   function addContactDetails() {
     const email = '<a href="mailto:hello@philbenefits.com">hello@philbenefits.com</a>';
     if (path === '/contact.html') {
@@ -223,10 +213,6 @@
       </div><div class="container footer-bottom"><p>This is an independent informational resource and is not affiliated with, endorsed by, or operated by the Philippine Health Insurance Corporation (PhilHealth).</p><p class="footer-legal-links"><a href="/privacy.html">Privacy</a><span> · </span><a href="/terms.html">Terms</a><span> · </span><a href="/disclaimer.html">Disclaimer</a></p></div></footer>`;
   }
   function shell(content, title='PhilHealth Guide') {
-    const pageGuide = D.guides.find(guide => guide[0] === path.split('/').pop());
-    const description = pageGuide?.[4]?.metaDescription || 'Independent PhilHealth information, calculators, guides and practical tools.';
-    document.title = `${title} | PhilHealth Guide`;
-    document.head.insertAdjacentHTML('beforeend', `<meta name="description" content="${esc(description)}"><meta property="og:title" content="${esc(title)} | PhilHealth Guide"><meta property="og:description" content="${esc(description)}"><meta property="og:type" content="website"><link rel="canonical" href="${SITE_ORIGIN}${canonicalPath}"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","url":"${SITE_ORIGIN}"}</script>`);
     const mainContent = content.trimStart().startsWith('<main') ? content : `<main id="main">${content}</main>`;
     document.body.innerHTML = header() + mainContent + footer() + `<div class="toast" role="status" aria-live="polite"></div><div class="search-overlay" aria-hidden="true"><div class="search-dialog" role="dialog" aria-modal="true" aria-label="Search PhilHealth Guide"><div class="search-dialog-head"><h2 style="font-size:1.25rem;margin:0">Search the guide</h2><button class="icon-btn js-close-search" aria-label="Close search">${icon('close')}</button></div><input class="global-search" type="search" placeholder="Search contributions, benefits, guides..." autocomplete="off"><div class="search-results"></div></div></div>`;
     bindGlobal();

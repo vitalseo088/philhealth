@@ -7,10 +7,11 @@ PhilHealth Guide is an independent, static HTML/CSS/JavaScript information resou
 ## Run locally
 
 ```bash
-python3 -m http.server 5000
+npm install
+npm run dev
 ```
 
-Open `index.html` through the server. The Replit preview workflow uses the same command on port 5000.
+The server listens on port 5000. It serves the static pages and adds page-specific SEO metadata and structured data to the initial HTML response.
 
 ## Updating data
 
