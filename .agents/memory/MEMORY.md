@@ -2,3 +2,4 @@
 - [Article route resolution](article-route-resolution.md) — normalize clean and `.html` guide URLs; never silently substitute an unrelated article.
 - [Static article data loading](static-article-data-loading.md) — pages that render shared article records must load the article dataset before the shared renderer.
 - [Deployable article sources](article-source-deployment.md) — store published Markdown under `data/articles`; `attached_assets` is globally Git-ignored here.
+- [Cloudflare npm lockfile URLs](cloudflare-pages-lockfile.md) — Cloudflare Pages cannot install dependencies from Replit’s private package mirror.
