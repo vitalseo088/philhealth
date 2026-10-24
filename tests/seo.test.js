@@ -2,6 +2,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const test = require('node:test');
+const { buildPublicSite } = require('../build');
 const {
   getPageMetadata,
   injectSeoHead,
@@ -12,7 +13,7 @@ const {
 const ROOT = path.resolve(__dirname, '..');
 
 function listHtmlFiles(directory) {
-  const ignored = new Set(['.git', '.cache', '.local', '.agents', 'attached_assets', 'node_modules']);
+  const ignored = new Set(['.git', '.cache', '.local', '.agents', 'attached_assets', 'node_modules', 'dist']);
   const files = [];
   for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
     if (entry.isDirectory() && ignored.has(entry.name)) continue;
@@ -84,4 +85,33 @@ test('homepage metadata is descriptive and site search is excluded from indexing
   assert.match(homepage.title, /PhilHealth Guide/);
   assert.match(homepage.description, /benefit|contribution|tool/i);
   assert.equal(getPageMetadata('/search.html').noIndex, true);
+});
+
+test('static production build embeds Article and FAQ schema in article source HTML', () => {
+  const build = buildPublicSite();
+  assert.equal(build.htmlFileCount, listHtmlFiles(ROOT).length);
+  assert.ok(build.articlePageCount > 80);
+
+  const outputHtmlFiles = listHtmlFiles(build.outputDirectory);
+  const articleHtmlFiles = outputHtmlFiles.filter(file => {
+    const html = fs.readFileSync(file, 'utf8');
+    const route = `/${path.relative(build.outputDirectory, file).split(path.sep).join('/')}`;
+    return getPageMetadata(route, html).article;
+  });
+  assert.equal(articleHtmlFiles.length, build.articlePageCount);
+  for (const file of articleHtmlFiles) {
+    const html = fs.readFileSync(file, 'utf8');
+    const types = getJsonLd(html)['@graph'].map(item => item['@type']);
+    assert.ok(types.includes('Article'), `${file}: Article schema`);
+    assert.ok(types.includes('FAQPage'), `${file}: FAQPage schema`);
+  }
+
+  const articlePath = path.join(build.outputDirectory, 'philhealth-surgery-coverage-2026', 'index.html');
+  const articleHtml = fs.readFileSync(articlePath, 'utf8');
+  const schema = getJsonLd(articleHtml);
+  const types = schema['@graph'].map(item => item['@type']);
+
+  assert.ok(types.includes('Article'));
+  assert.ok(types.includes('FAQPage'));
+  assert.match(articleHtml, /<link rel="canonical" href="https:\/\/philbenefits\.com\/philhealth-surgery-coverage-2026\/">/);
 });

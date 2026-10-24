@@ -13,6 +13,14 @@ npm run dev
 
 The server listens on port 5000. It serves the static pages and adds page-specific SEO metadata and structured data to the initial HTML response.
 
+## Build for static hosting
+
+```bash
+npm run build
+```
+
+This creates a `dist/` directory with SEO tags and JSON-LD embedded in each HTML file. For static hosting, configure the host to publish `dist/` after running the build; publishing the source HTML directly bypasses the metadata middleware.
+
 ## Updating data
 
 The local data layer is in `data/site-data.js`. Add a record only after checking the current official source, and preserve its `status`, `source`, source URL, effective/review date and explanatory fields. Keep uncertain facts as `needs-review`; do not present invented rates, benefit amounts, facilities, addresses, phone numbers or hours as verified. When no verified local record is available, the UI should link to the official directory instead of showing a sample row.
