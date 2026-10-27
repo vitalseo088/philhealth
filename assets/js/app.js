@@ -560,7 +560,8 @@
     const links = [];
     let text = esc(value).replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, href) => {
       const isInternal = href.startsWith('/') || href.startsWith('#');
-      links.push(`<a href="${href}" ${isInternal ? '' : 'target="_blank" rel="noreferrer'}>${label}</a>`);
+      const targetAttributes = isInternal ? '' : ' target="_blank" rel="noopener noreferrer"';
+      links.push(`<a href="${href}"${targetAttributes}>${label}</a>`);
       return `PHMARKDOWNLINK${links.length - 1}END`;
     });
     const portalBase = 'https://memberinquiry.philhealth.gov.ph/member/';
