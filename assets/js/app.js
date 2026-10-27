@@ -123,6 +123,13 @@
     { slug: 'philhealth-accredited-cancer-hospital.html', title: 'PhilHealth Accredited Cancer Hospital: How to Find One (2026)', category: 'Providers', date: 'October 27, 2026', author: 'PhilHealth Guide Editorial Team', image: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=82', excerpt: 'Find the right PhilHealth list for cancer treatment, screening, hospital admissions, and Z Benefit packages, and check a facility before visiting.', metaDescription: 'Find a PhilHealth accredited cancer hospital in 2026. Learn the difference between accredited, Z Benefit-contracted, and cancer screening providers, and how to check each.', sourceFile: '/data/articles/philhealth-accredited-cancer-hospital_1793086364258.md', url: '/philhealth-accredited-cancer-hospital/', seoImport: true }
 
   ];
+  const articleImageOverrides = window.PHArticleImageOverrides || {};
+  for (const article of [...articles, ...seoArticles]) {
+    const imageId = articleImageOverrides[article.slug];
+    if (imageId) {
+      article.image = `https://images.unsplash.com/${imageId}?auto=format&fit=crop&w=1200&q=82`;
+    }
+  }
   const importedGuides = seoArticles
     .map(article => [article.slug, article.title, article.category, article.excerpt, article])
     .sort((a, b) => Date.parse(b[4]?.date || '') - Date.parse(a[4]?.date || ''));

@@ -7,4 +7,4 @@ For Cloudflare Pages builds, `package-lock.json` must use publicly reachable npm
 
 **Why:** Cloudflare's isolated build runner cannot reach Replit's private package mirror; `npm clean-install` fails before the static SEO build can run.
 
-**How to apply:** Before publishing to Cloudflare Pages, check that every lockfile `resolved` URL uses `https://registry.npmjs.org/`, then verify the Pages install/build phase.
+**How to apply:** Before publishing to Cloudflare Pages, check that every lockfile `resolved` URL uses `https://registry.npmjs.org/`, then verify the Pages install/build phase. Replit's npm installer may rewrite the installed package URL to its private mirror, so recheck after dependency repair.
